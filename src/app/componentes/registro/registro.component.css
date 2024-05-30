@@ -1,3 +1,29 @@
 .body{
-    margin-top: 5%; 
+    height: 100%;
+    background-color: rgba(206, 206, 206, 0.31);
+}
+.form-container{
+    margin: 4% auto; 
+    width: 50%;
+    padding-bottom: 30%;
+}
+
+.titulo{
+    /* text-align: center; */
+    margin-left: 1%;
+    margin-bottom: 0px;
+    font-size: 25px;
+}
+
+.linea{
+    margin-top: 0px;
+    color: #E4002B;
+    border-width: 2px;
+    margin-top: 0;
+}
+
+.card{
+    border-radius: 15px;
+    padding: 2%;
+    /* margin-top: 70px; */
 }
