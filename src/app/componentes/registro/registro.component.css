@@ -1,15 +1,24 @@
 .body{
-    height: 100%;
-    background-color: rgba(206, 206, 206, 0.31);
+    padding-top: 2%;
 }
-.form-container{
-    margin: 4% auto; 
-    width: 50%;
-    padding-bottom: 30%;
+.formContainer{
+    margin: 4% auto 0 auto; 
+    width: 40%;
+    max-height: 50%;
+    padding-bottom: 4%;
+}
+
+.span{
+    font-family: 'Merriweather', serif;
+    font-size: medium;
+    font-weight: 400;
+    padding-left: 60%;
 }
 
 .titulo{
-    /* text-align: center; */
+    /* font-family: 'Roboto', sans-serif; */
+    font-family: 'Merriweather', serif;
+    font-weight: 400;
     margin-left: 1%;
     margin-bottom: 0px;
     font-size: 25px;
@@ -25,5 +34,19 @@
 .card{
     border-radius: 15px;
     padding: 2%;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.5);
     /* margin-top: 70px; */
+}
+
+.btn{
+    background-color: #E4002B;
+    border: #E4002B;
+}
+
+.btn:hover{
+    box-shadow: 0px 0px 7px rgb(206, 206, 206, 0.5);
+}
+
+.inputDiv{
+    width: 100%;
 }

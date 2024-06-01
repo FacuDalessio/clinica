@@ -5,3 +5,8 @@
 .logo{
     width: 20%;
 }
+
+.titulo{
+    /* font-size: 1px; */
+    font-weight: 600;
+}

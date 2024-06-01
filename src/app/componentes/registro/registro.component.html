@@ -1,40 +1,90 @@
-<body class="body">
-    <div class="form-container">
+<div class="body bg-body-secondary">
+    <div class="formContainer">
         <div class="card">
-            <p class="titulo">Crear cuenta</p>
+            <p class="titulo">Crear cuenta<span class="span">Paciente</span></p>
             <hr class="linea">
             <div class="card-body">
-                <form>
-                    <div class="mb-2">
-                        <label class="form-label" for="inputNombre">Nombre</label>
-                        <input placeholder="Ingrese su nombre" type="text" class="form-control" id="inputNombre">
+                <form [formGroup]="form">
+                    <div class="alert alert-danger mb-2" *ngIf="mensajeError">
+                        {{mensajeError}}
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label" for="inputApellido">Apellido</label>
-                        <input placeholder="Ingrese su apellido" type="text" class="form-control" id="inputApellido">
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="nombreHasError()">
+                            <label class="form-label" for="inputNombre">Nombre</label>
+                            <input [class.is-invalid]="nombreHasError()" formControlName="nombre" placeholder="Ingrese su nombre" type="text" class="form-control" id="inputNombre">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{nombreHasError()}}
+                        </div>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label" for="inputEdad">Edad</label>
-                        <input placeholder="Ingrese su edad" type="number" class="form-control" id="inputEdad">
+                    <div class="mb-2 input-group has-validation">
+                        <div [class.is-invalid]="apellidoHasError()" class="inputDiv">
+                            <label class="form-label" for="inputApellido">Apellido</label>
+                            <input class="input" [class.is-invalid]="apellidoHasError()" formControlName="apellido" placeholder="Ingrese su apellido" type="text" class="form-control" id="inputApellido">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{apellidoHasError()}}
+                        </div>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label" for="inputDni">Dni</label>
-                        <input placeholder="Ingrese su DNI" type="number" class="form-control" id="inputDni">
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="edadHasError()">
+                            <label class="form-label" for="inputEdad">Edad</label>
+                            <input class="form-control" [class.is-invalid]="edadHasError()" formControlName="edad" placeholder="Ingrese su edad" type="number" class="form-control" id="inputEdad">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{edadHasError()}}
+                        </div>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label" for="inputObraSocial">Obra social</label>
-                        <input placeholder="Ingrese su obra social" type="text" class="form-control" id="inputObraSocial">
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="dniHasError()">
+                            <label class="form-label" for="inputDni">Dni</label>
+                            <input [class.is-invalid]="dniHasError()" formControlName="dni" placeholder="Ingrese su DNI" type="text" class="form-control" id="inputDni">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{dniHasError()}}
+                        </div>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label" for="inputMail">Mail</label>
-                        <input placeholder="Ingrese su mail" type="email" class="form-control" id="inputMail">
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="obraSocialHasError()">
+                            <label class="form-label" for="inputObraSocial">Obra social</label>
+                            <input [class.is-invalid]="obraSocialHasError()" formControlName="obraSocial" placeholder="Ingrese su obra social" type="text" class="form-control" id="inputObraSocial">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{obraSocialHasError()}}
+                        </div>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label" for="inputContraseña">Contraseña</label>
-                        <input placeholder="Ingrese su contraseña" type="password" class="form-control" id="inputContraseña">
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="mailHasError()">
+                            <label class="form-label" for="inputMail">Mail</label>
+                            <input [class.is-invalid]="mailHasError()" formControlName="mail" placeholder="Ingrese su mail" type="email" class="form-control" id="inputMail">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{mailHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="passwordHasError()">
+                            <label class="form-label" for="inputContraseña">Contraseña</label>
+                            <input [class.is-invalid]="passwordHasError()" formControlName="password" placeholder="Ingrese su contraseña" type="password" class="form-control" id="inputContraseña">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{passwordHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="repetirPassword?.getError('noCoincide') && (repetirPassword?.dirty || repetirPassword?.touched)">
+                            <label class="form-label" for="inputRepetirContraseña">Repetir contraseña</label>
+                            <input [class.is-invalid]="repetirPassword?.getError('noCoincide') && (repetirPassword?.dirty || repetirPassword?.touched)" formControlName="repetirPassword" placeholder="Ingrese su contraseña" type="password" class="form-control" id="inputRepetirContraseña">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{repetirPassword?.getError('noCoincide')}}
+                        </div>
+                    </div>
+                    <div class="mb-2 mt-3">
+                        <button (click)="registroPaciente()" class="btn btn-primary" [disabled]="!form.valid">Crear cuenta</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</body>
+</div>
