@@ -80,6 +80,15 @@
                             {{repetirPassword?.getError('noCoincide')}}
                         </div>
                     </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="false">
+                            <label class="form-label" for="inputImgs">Imagenes</label>
+                            <input [class.is-invalid]="false" formControlName="imgs" placeholder="Suba 2 imagenes" type="file" multiple class="form-control" id="inputImgs">
+                        </div>
+                        <div class="invalid-feedback">
+                            <!-- {{passwordHasError()}} -->
+                        </div>
+                    </div>
                     <div class="mb-2 mt-3">
                         <button (click)="registroPaciente()" class="btn btn-primary" [disabled]="!form.valid">Crear cuenta</button>
                     </div>

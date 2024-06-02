@@ -17,12 +17,9 @@
           <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
         </form>
 
-        <div class="text-end" *ngIf="!userService.usuarioLogeado">
+        <div class="text-end">
           <button type="button" routerLink="login" class="btn btn-outline-light me-2">Iniciar sesion</button>
           <button type="button" routerLink="registro" class="btn btn-light">Registrarse</button>
-        </div>
-        <div class="text-end" *ngIf="userService.usuarioLogeado">
-          {{userService.usuarioLogeado.nombre}}
         </div>
       </div>
     </div>

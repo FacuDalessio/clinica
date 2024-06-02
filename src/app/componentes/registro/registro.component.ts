@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { repetirClaveValidator } from '../../validadores/clave.validator';
 import { Paciente } from '../../entidades/paciente';
-import { UsuarioService } from '../../validadores/servicios/usuario/usuario.service';
+import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { Router } from '@angular/router';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
-import { Auth, sendEmailVerification } from '@angular/fire/auth';
+import { sendEmailVerification } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-registro',
@@ -29,14 +29,14 @@ export class RegistroComponent {
     'obraSocial': new FormControl('', [Validators.required]),
     'mail': new FormControl('', [Validators.required, Validators.email]),
     'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
-    'repetirPassword': new FormControl('', [Validators.required])
+    'repetirPassword': new FormControl('', [Validators.required]),
+    'imgs': new FormControl('', [Validators.required])
   }, repetirClaveValidator());
 
   constructor(
     private router: Router,
     private usuarioService: UsuarioService,
-    private firestore: Firestore,
-    private auth: Auth
+    private firestore: Firestore
   ){}
 
   get nombre(){
@@ -69,6 +69,10 @@ export class RegistroComponent {
 
   get repetirPassword() {
     return this.form.get('repetirPassword');
+  }
+
+  get imgs() {
+    return this.form.get('imgs');
   }
 
   nombreHasError() : string{
@@ -140,46 +144,47 @@ export class RegistroComponent {
   }
 
   registroPaciente(){
-    const paciente = new Paciente(
-      {nombre: this.nombre?.value, apellido: this.apellido?.value},
-      this.edad?.value,
-      this.dni?.value,
-      this.obraSocial?.value,
-      this.mail?.value,
-      this.password?.value,
-      []
-    )
-    this.mensajeError = '';
+    console.log(this.imgs);
+    // const paciente = new Paciente(
+    //   {nombre: this.nombre?.value, apellido: this.apellido?.value},
+    //   this.edad?.value,
+    //   this.dni?.value,
+    //   this.obraSocial?.value,
+    //   this.mail?.value,
+    //   this.password?.value,
+    //   []
+    // )
+    // this.mensajeError = '';
     
-    this.usuarioService.registro(this.mail?.value, this.password?.value)
-    .then(response =>{
-      let col = collection(this.firestore, 'pacientes');
-      addDoc(col, {
-        nombre: paciente.nombre,
-        apellido: paciente.apellido,
-        edad: paciente.edad,
-        dni: paciente.dni,
-        obraSocial: paciente.obraSocial,
-        mail: paciente.mail,
-        password: paciente.password,
-        imgs: paciente.imgs,
-      })
-      this.usuarioService.usuarioLogeado = paciente;
-      sendEmailVerification(this.usuarioService.getUserLogeado()!)
-      .then(response => {
-        this.router.navigate(['/']);
-      })
-      .catch(err => console.log(err));
-    })
-    .catch(error => {
-      console.log(error);
-      if (error.code === 'auth/email-already-in-use') {
-        this.mensajeError = 'Ya existe una cuenta con ese mail';
-      } else if (error.code === 'auth/weak-password') {
-        this.mensajeError = 'La contraseña tiene que tener mas de 5 caracteres';
-      } else if (error.code === 'auth/invalid-email'){
-        this.mensajeError = 'El mail es invalido';
-      }
-    });
+    // this.usuarioService.registro(this.mail?.value, this.password?.value)
+    // .then(response =>{
+    //   let col = collection(this.firestore, 'pacientes');
+    //   addDoc(col, {
+    //     nombre: paciente.nombre,
+    //     apellido: paciente.apellido,
+    //     edad: paciente.edad,
+    //     dni: paciente.dni,
+    //     obraSocial: paciente.obraSocial,
+    //     mail: paciente.mail,
+    //     password: paciente.password,
+    //     imgs: paciente.imgs,
+    //   })
+    //   sendEmailVerification(this.usuarioService.getUserLogeado()!)
+    //   .then(response => {
+    //     this.usuarioService.logOut();
+    //     this.router.navigate(['/login']);
+    //   })
+    //   .catch(err => console.log(err));
+    // })
+    // .catch(error => {
+    //   console.log(error);
+    //   if (error.code === 'auth/email-already-in-use') {
+    //     this.mensajeError = 'Ya existe una cuenta con ese mail';
+    //   } else if (error.code === 'auth/weak-password') {
+    //     this.mensajeError = 'La contraseña tiene que tener mas de 5 caracteres';
+    //   } else if (error.code === 'auth/invalid-email'){
+    //     this.mensajeError = 'El mail es invalido';
+    //   }
+    // });
   }
 }

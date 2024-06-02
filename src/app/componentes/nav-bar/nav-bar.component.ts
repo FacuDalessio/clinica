@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { UsuarioService } from '../../validadores/servicios/usuario/usuario.service';
+import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

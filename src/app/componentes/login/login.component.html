@@ -1,1 +1,37 @@
-
+<div class="body bg-body-secondary">
+    <div class="formContainer">
+        <div class="card">
+            <p class="titulo">Iniciar sesion</p>
+            <hr class="linea">
+            <div class="card-body">
+                <form [formGroup]="form">
+                    <div class="alert alert-danger mb-2" *ngIf="mensajeError">
+                        {{mensajeError}}
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="mailHasError()">
+                            <label class="form-label" for="inputMail">Mail</label>
+                            <input [class.is-invalid]="mailHasError()" formControlName="mail" placeholder="Ingrese su mail" type="email" class="form-control" id="inputMail">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{mailHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="passwordHasError()">
+                            <label class="form-label" for="inputContraseña">Contraseña</label>
+                            <input [class.is-invalid]="passwordHasError()" formControlName="password" placeholder="Ingrese su contraseña" type="password" class="form-control" id="inputContraseña">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{passwordHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 mt-3">
+                        <button (click)="login()" class="btn btn-primary" [disabled]="!form.valid">Iniciar sesion</button>
+                    </div>
+                    <p class="mt-3 mb-1">Si no tenes cuenta, podes crearte una <span><a href="/registro">aca</a></span>.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
