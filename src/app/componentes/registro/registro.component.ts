@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { sendEmailVerification } from '@angular/fire/auth';
+import { Storage, ref, uploadBytes } from '@angular/fire/storage';
+import { getDownloadURL } from 'firebase/storage';
 
 @Component({
   selector: 'app-registro',
@@ -21,6 +23,8 @@ import { sendEmailVerification } from '@angular/fire/auth';
 export class RegistroComponent {
 
   mensajeError: string = '';
+  imgsInput: string[] = [];
+  imgsUrl: string[] = [];
   form: FormGroup = new FormGroup({
     'nombre': new FormControl('', [Validators.required]),
     'apellido': new FormControl('', [Validators.required]),
@@ -36,7 +40,8 @@ export class RegistroComponent {
   constructor(
     private router: Router,
     private usuarioService: UsuarioService,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private storage: Storage
   ){}
 
   get nombre(){
@@ -79,6 +84,14 @@ export class RegistroComponent {
     if (this.nombre?.dirty || this.nombre?.touched) {
       if(this.nombre?.hasError('required'))
         return 'El nombre es requerido';
+    }
+    return '';
+  }
+
+  imgsHasError() : string{
+    if (this.imgs?.dirty || this.imgs?.touched) {
+      if(this.imgs?.hasError('required'))
+        return 'Las imagenes son requeridas';
     }
     return '';
   }
@@ -143,48 +156,70 @@ export class RegistroComponent {
     return '';
   }
 
-  registroPaciente(){
-    console.log(this.imgs);
-    // const paciente = new Paciente(
-    //   {nombre: this.nombre?.value, apellido: this.apellido?.value},
-    //   this.edad?.value,
-    //   this.dni?.value,
-    //   this.obraSocial?.value,
-    //   this.mail?.value,
-    //   this.password?.value,
-    //   []
-    // )
-    // this.mensajeError = '';
-    
-    // this.usuarioService.registro(this.mail?.value, this.password?.value)
-    // .then(response =>{
-    //   let col = collection(this.firestore, 'pacientes');
-    //   addDoc(col, {
-    //     nombre: paciente.nombre,
-    //     apellido: paciente.apellido,
-    //     edad: paciente.edad,
-    //     dni: paciente.dni,
-    //     obraSocial: paciente.obraSocial,
-    //     mail: paciente.mail,
-    //     password: paciente.password,
-    //     imgs: paciente.imgs,
-    //   })
-    //   sendEmailVerification(this.usuarioService.getUserLogeado()!)
-    //   .then(response => {
-    //     this.usuarioService.logOut();
-    //     this.router.navigate(['/login']);
-    //   })
-    //   .catch(err => console.log(err));
-    // })
-    // .catch(error => {
-    //   console.log(error);
-    //   if (error.code === 'auth/email-already-in-use') {
-    //     this.mensajeError = 'Ya existe una cuenta con ese mail';
-    //   } else if (error.code === 'auth/weak-password') {
-    //     this.mensajeError = 'La contraseña tiene que tener mas de 5 caracteres';
-    //   } else if (error.code === 'auth/invalid-email'){
-    //     this.mensajeError = 'El mail es invalido';
-    //   }
-    // });
+  uploadImage(file: any): Promise<any> {
+    const imgRef = ref(this.storage, `images/${file.name}`);
+    return uploadBytes(imgRef, file)
+      .then(async response => {
+          const url = await getDownloadURL(imgRef);
+          this.imgsUrl.push(url);
+          return url;
+      })
+      .catch(error => console.log(error));
+  }
+
+  getFiles($event: any){
+    this.imgsInput.push($event.target.files[0]);
+    this.imgsInput.push($event.target.files[1]);
+  }
+
+  registroPaciente() {
+    const paciente = new Paciente(
+        { nombre: this.nombre?.value, apellido: this.apellido?.value },
+        this.edad?.value,
+        this.dni?.value,
+        this.obraSocial?.value,
+        this.mail?.value,
+        this.password?.value,
+        []
+    );
+
+    this.mensajeError = '';
+
+    this.usuarioService.registro(this.mail?.value, this.password?.value)
+        .then(response => {
+            let uploadPromises = this.imgsInput.map(file => this.uploadImage(file));
+            return Promise.all(uploadPromises);
+        })
+        .then(() => {
+            let col = collection(this.firestore, 'pacientes');
+            return addDoc(col, {
+                nombre: paciente.nombre,
+                apellido: paciente.apellido,
+                edad: paciente.edad,
+                dni: paciente.dni,
+                obraSocial: paciente.obraSocial,
+                mail: paciente.mail,
+                password: paciente.password,
+                imgs: this.imgsUrl
+            });
+        })
+        .then(response => {
+            console.log(response);
+            return sendEmailVerification(this.usuarioService.getUserLogeado()!);
+        })
+        .then(response => {
+            this.usuarioService.logOut();
+            this.router.navigate(['/login']);
+        })
+        .catch(error => {
+            console.log(error);
+            if (error.code === 'auth/email-already-in-use') {
+                this.mensajeError = 'Ya existe una cuenta con ese mail';
+            } else if (error.code === 'auth/weak-password') {
+                this.mensajeError = 'La contraseña tiene que tener mas de 5 caracteres';
+            } else if (error.code === 'auth/invalid-email') {
+                this.mensajeError = 'El mail es invalido';
+            }
+        });
   }
 }
