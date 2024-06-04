@@ -1,0 +1,15 @@
+.body{
+    padding-top: 2%;
+    margin: 4% auto 0 auto; 
+    height: 85%;
+}
+
+.table{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.titulo{
+    text-align: center;
+}
