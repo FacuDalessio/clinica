@@ -1,40 +1,43 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { repetirClaveValidator } from '../../validadores/clave.validator';
-import { Paciente } from '../../entidades/paciente';
-import { UsuarioService } from '../../servicios/usuario/usuario.service';
-import { Router } from '@angular/router';
-import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
-import { sendEmailVerification } from '@angular/fire/auth';
-import { Storage, ref, uploadBytes } from '@angular/fire/storage';
-import { getDownloadURL } from 'firebase/storage';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { repetirClaveValidator } from '../../validadores/clave.validator';
+import { Router } from '@angular/router';
+import { UsuarioService } from '../../servicios/usuario/usuario.service';
+import { Firestore, addDoc, query } from '@angular/fire/firestore';
+import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
+import { QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot } from 'firebase/firestore';
+import { Especialista } from '../../entidades/especialista';
 
 @Component({
-  selector: 'app-registro',
+  selector: 'app-registro-especialista',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
-  templateUrl: './registro.component.html',
-  styleUrl: './registro.component.css'
+  templateUrl: './registro-especialista.component.html',
+  styleUrl: './registro-especialista.component.css'
 })
-export class RegistroComponent {
+export class RegistroEspecialistaComponent implements OnInit{
 
+  agregar: boolean = false;
+  especialidades: string[] = [];
   mensajeError: string = '';
-  imgsInput: string[] = [];
-  imgsUrl: string[] = [];
+  imgInput: string = '';
+  imgUrl: string = '';
   form: FormGroup = new FormGroup({
     'nombre': new FormControl('', [Validators.required]),
     'apellido': new FormControl('', [Validators.required]),
     'edad': new FormControl('', [Validators.required, Validators.min(18), Validators.max(120)]),
     'dni': new FormControl('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]),
-    'obraSocial': new FormControl('', [Validators.required]),
+    'especialidad': new FormControl('', [Validators.required]),
     'mail': new FormControl('', [Validators.required, Validators.email]),
     'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
     'repetirPassword': new FormControl('', [Validators.required]),
-    'imgs': new FormControl('', [Validators.required])
+    'img': new FormControl('', [Validators.required]),
+    'inpAgregar': new FormControl('')
   }, repetirClaveValidator());
 
   constructor(
@@ -43,6 +46,35 @@ export class RegistroComponent {
     private firestore: Firestore,
     private storage: Storage
   ){}
+
+  ngOnInit(): void {
+    const q = query(collection(this.firestore, "especialidades"));
+    onSnapshot(q, (snapshot: QuerySnapshot) => {
+      snapshot.forEach((doc: QueryDocumentSnapshot) => {
+        this.especialidades.push(doc.data()['detalle']);
+      });
+    });
+  }
+
+  onChangeEspecialidad($event: any) {
+    if ($event.target.value == 'agregar') {
+      this.agregar = true;
+    } else {
+      this.agregar = false;
+    }
+  }
+
+  agregarEspecialidad(){
+    const especialidad = this.inpAgregar?.value.toLowerCase();
+    let col = collection(this.firestore, 'especialidades');
+    addDoc(col, { detalle: especialidad });
+    this.agregar = false;
+    this.especialidades = [];
+  }
+
+  get inpAgregar(){
+    return this.form.get('inpAgregar');
+  }
 
   get nombre(){
     return this.form.get('nombre');
@@ -60,8 +92,8 @@ export class RegistroComponent {
     return this.form.get('dni');
   }
 
-  get obraSocial() {
-    return this.form.get('obraSocial');
+  get especialidad() {
+    return this.form.get('especialidad');
   }
 
   get mail() {
@@ -76,8 +108,8 @@ export class RegistroComponent {
     return this.form.get('repetirPassword');
   }
 
-  get imgs() {
-    return this.form.get('imgs');
+  get img() {
+    return this.form.get('img');
   }
 
   nombreHasError() : string{
@@ -88,10 +120,10 @@ export class RegistroComponent {
     return '';
   }
 
-  imgsHasError() : string{
-    if (this.imgs?.dirty || this.imgs?.touched) {
-      if(this.imgs?.hasError('required'))
-        return 'Las imagenes son requeridas';
+  imgHasError() : string{
+    if (this.img?.dirty || this.img?.touched) {
+      if(this.img?.hasError('required'))
+        return 'La imagene es requerida';
     }
     return '';
   }
@@ -128,10 +160,10 @@ export class RegistroComponent {
     return '';
   }
 
-  obraSocialHasError() : string{
-    if (this.obraSocial?.dirty || this.obraSocial?.touched) {
-      if(this.obraSocial?.hasError('required'))
-        return 'La obra social es requerida';
+  especialidadHasError() : string{
+    if (this.especialidad?.dirty || this.especialidad?.touched) {
+      if(this.especialidad?.hasError('required'))
+        return 'La especialidad es requerida';
     }
     return '';
   }
@@ -156,56 +188,54 @@ export class RegistroComponent {
     return '';
   }
 
+  getFile($event: any){
+    this.imgInput =$event.target.files[0];
+  }
+
   uploadImage(file: any): Promise<any> {
     const imgRef = ref(this.storage, `images/${file.name}`);
     return uploadBytes(imgRef, file)
       .then(async response => {
           const url = await getDownloadURL(imgRef);
-          this.imgsUrl.push(url);
+          this.imgUrl = url;
           return url;
       })
       .catch(error => console.log(error));
   }
 
-  getFiles($event: any){
-    this.imgsInput.push($event.target.files[0]);
-    this.imgsInput.push($event.target.files[1]);
-  }
-
-  registroPaciente() {
-    const paciente = new Paciente(
-        { nombre: this.nombre?.value, apellido: this.apellido?.value },
-        this.edad?.value,
-        this.dni?.value,
-        this.obraSocial?.value,
-        this.mail?.value,
-        this.password?.value,
-        []
+  registroEspecialista(){
+    const especialista = new Especialista(
+      { nombre: this.nombre?.value, apellido: this.apellido?.value },
+      this.edad?.value,
+      this.dni?.value,
+      this.especialidad?.value,
+      this.mail?.value,
+      this.password?.value,
+      ''
     );
 
     this.mensajeError = '';
 
     this.usuarioService.registro(this.mail?.value, this.password?.value)
     .then(response => {
-        let uploadPromises = this.imgsInput.map(file => this.uploadImage(file));
-        return Promise.all(uploadPromises);
+      return this.uploadImage(this.imgInput);
     })
     .then(() => {
-        let col = collection(this.firestore, 'pacientes');
+        let col = collection(this.firestore, 'especialistas');
         return addDoc(col, {
-            nombre: paciente.nombre,
-            apellido: paciente.apellido,
-            edad: paciente.edad,
-            dni: paciente.dni,
-            obraSocial: paciente.obraSocial,
-            mail: paciente.mail,
-            password: paciente.password,
-            imgs: this.imgsUrl
+            nombre: especialista.nombre,
+            apellido: especialista.apellido,
+            edad: especialista.edad,
+            dni: especialista.dni,
+            especialidad: especialista.especialidad,
+            mail: especialista.mail,
+            password: especialista.password,
+            img: this.imgUrl
         });
     })
-    .then(response => {
-        return sendEmailVerification(this.usuarioService.getUserLogeado()!);
-    })
+    // .then(response => {
+    //     return sendEmailVerification(this.usuarioService.getUserLogeado()!);
+    // })
     .then(response => {
         this.usuarioService.logOut();
         this.router.navigate(['/login']);

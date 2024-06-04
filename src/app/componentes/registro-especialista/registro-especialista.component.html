@@ -1,0 +1,106 @@
+<div class="body bg-body-secondary">
+    <div class="formContainer">
+        <div class="card">
+            <p class="titulo">Crear cuenta<span class="span">Especialista</span></p>
+            <hr class="linea">
+            <div class="card-body">
+                <form [formGroup]="form">
+                    <div class="alert alert-danger mb-2" *ngIf="mensajeError">
+                        {{mensajeError}}
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="nombreHasError()">
+                            <label class="form-label" for="inputNombre">Nombre</label>
+                            <input [class.is-invalid]="nombreHasError()" formControlName="nombre" placeholder="Ingrese su nombre" type="text" class="form-control" id="inputNombre">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{nombreHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div [class.is-invalid]="apellidoHasError()" class="inputDiv">
+                            <label class="form-label" for="inputApellido">Apellido</label>
+                            <input class="input" [class.is-invalid]="apellidoHasError()" formControlName="apellido" placeholder="Ingrese su apellido" type="text" class="form-control" id="inputApellido">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{apellidoHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="edadHasError()">
+                            <label class="form-label" for="inputEdad">Edad</label>
+                            <input class="form-control" [class.is-invalid]="edadHasError()" formControlName="edad" placeholder="Ingrese su edad" type="number" class="form-control" id="inputEdad">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{edadHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="dniHasError()">
+                            <label class="form-label" for="inputDni">Dni</label>
+                            <input [class.is-invalid]="dniHasError()" formControlName="dni" placeholder="Ingrese su DNI" type="text" class="form-control" id="inputDni">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{dniHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="especialidadHasError()">
+                            <label class="form-label" for="inputEspecialidad">Especialidad</label>
+                            <select [class.is-invalid]="especialidadHasError()" id="inputEspecialidad" formControlName="especialidad" class="form-select" (change)="onChangeEspecialidad($event)">
+                                <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</option>
+                                <option value="agregar">Agregar especialidad</option>
+                            </select>
+                            <div class="mb-2 mt-3" *ngIf="agregar">
+                                <input formControlName="inpAgregar" placeholder="Ingrese la especialidad" type="text" class="form-control mb-2" id="inputAgregar">
+                                <button (click)="agregarEspecialidad()" class="btn btn-primary" [disabled]="!form.get('inpAgregar')?.value">Agregar</button>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">
+                            {{especialidadHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="mailHasError()">
+                            <label class="form-label" for="inputMail">Mail</label>
+                            <input [class.is-invalid]="mailHasError()" formControlName="mail" placeholder="Ingrese su mail" type="email" class="form-control" id="inputMail">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{mailHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="passwordHasError()">
+                            <label class="form-label" for="inputContraseña">Contraseña</label>
+                            <input [class.is-invalid]="passwordHasError()" formControlName="password" placeholder="Ingrese su contraseña" type="password" class="form-control" id="inputContraseña">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{passwordHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="repetirPassword?.getError('noCoincide') && (repetirPassword?.dirty || repetirPassword?.touched)">
+                            <label class="form-label" for="inputRepetirContraseña">Repetir contraseña</label>
+                            <input [class.is-invalid]="repetirPassword?.getError('noCoincide') && (repetirPassword?.dirty || repetirPassword?.touched)" formControlName="repetirPassword" placeholder="Ingrese su contraseña" type="password" class="form-control" id="inputRepetirContraseña">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{repetirPassword?.getError('noCoincide')}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="imgHasError()">
+                            <label class="form-label" for="inputImg">Imagen</label>
+                            <input (change)="getFile($event)" [class.is-invalid]="imgHasError()" formControlName="img" placeholder="Suba la imagen" type="file" multiple class="form-control" id="inputImg">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{imgHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 mt-3">
+                        <button (click)="registroEspecialista()" class="btn btn-primary" [disabled]="!form.valid">Crear cuenta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
