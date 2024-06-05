@@ -1,80 +1,51 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Paciente } from '../../entidades/paciente';
 import { Firestore, QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot, orderBy, query } from '@angular/fire/firestore';
-import {MatTableModule} from '@angular/material/table';
-import { Especialista } from '../../entidades/especialista';
-import { Administrador } from '../../entidades/administrador';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-usuarios-listado',
   standalone: true,
   imports: [
     CommonModule,
-    MatTableModule
+    MatProgressSpinnerModule
   ],
   templateUrl: './usuarios-listado.component.html',
   styleUrl: './usuarios-listado.component.css'
 })
 export class UsuariosListadoComponent implements OnInit{
 
-  pacientes: Paciente[] = [];
-  especialistas: Especialista[] = [];
-  administradores: Administrador[] = [];
+  usuarios: any[] = [];
+  onSpinner: boolean = true;
 
   constructor(
     private firestore: Firestore
   ){}
 
   ngOnInit(): void {
-    const qPac = query(collection(this.firestore, "pacientes"), orderBy('nombre', 'asc'));
-    onSnapshot(qPac, (snapshot: QuerySnapshot) => {
+    const q = query(collection(this.firestore, "usuarios"), orderBy('nombre', 'asc'));
+    onSnapshot(q, (snapshot: QuerySnapshot) => {
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
-        const paciente = new Paciente(
-          {nombre: doc.data()['nombre'], apellido: doc.data()['apellido']},
-          doc.data()['edad'],
-          doc.data()['dni'],
-          doc.data()['obraSocial'],
-          doc.data()['mail'],
-          doc.data()['password'],
-          doc.data()['imgs'],
-        );
+        let obraSocial = 'N/A';
+        let especialidad = 'N/A';
+        if(doc.data()['especialidad'])
+          especialidad = doc.data()['especialidad'];
+        if(doc.data()['obraSocial'])
+          obraSocial = doc.data()['obraSocial'];
+        const usuario = {
+          nombre: doc.data()['nombre'],
+          apellido: doc.data()['apellido'],
+          edad: doc.data()['edad'],
+          dni: doc.data()['dni'],
+          especialidad: especialidad,
+          obraSocial: obraSocial,
+          mail: doc.data()['mail']
+        }
 
-        this.pacientes.push(paciente);
+        this.usuarios.push(usuario);
       });
-    });
 
-    const qEspe = query(collection(this.firestore, "especialistas"), orderBy('nombre', 'asc'));
-    onSnapshot(qEspe, (snapshot: QuerySnapshot) => {
-      snapshot.forEach((doc: QueryDocumentSnapshot) => {
-        const especialista = new Especialista(
-          {nombre: doc.data()['nombre'], apellido: doc.data()['apellido']},
-          doc.data()['edad'],
-          doc.data()['dni'],
-          doc.data()['especialidad'],
-          doc.data()['mail'],
-          doc.data()['password'],
-          doc.data()['imgs'],
-        );
-
-        this.especialistas.push(especialista);
-      });
-    });
-
-    const qAdmin = query(collection(this.firestore, "administradores"), orderBy('nombre', 'asc'));
-    onSnapshot(qAdmin, (snapshot: QuerySnapshot) => {
-      snapshot.forEach((doc: QueryDocumentSnapshot) => {
-        const administrador = new Administrador(
-          {nombre: doc.data()['nombre'], apellido: doc.data()['apellido']},
-          doc.data()['edad'],
-          doc.data()['dni'],
-          doc.data()['mail'],
-          doc.data()['password'],
-          doc.data()['imgs'],
-        );
-
-        this.administradores.push(administrador);
-      });
+      this.onSpinner = false;
     });
   }
 }

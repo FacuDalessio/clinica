@@ -1,6 +1,7 @@
 <div class="body">
-    <article class="mb-5">
-        <h1 class="titulo">Lista pacientes</h1>
+    <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
+    <article class="mb-5" *ngIf="!onSpinner">
+        <h1 class="titulo">Lista Usuarios</h1>
         <table class="table shadow-sm">
             <thead>
             <tr>
@@ -9,68 +10,23 @@
                 <th scope="col">Edad</th>
                 <th scope="col">DNI</th>
                 <th scope="col">Obra Social</th>
-                <th scope="col">Mail</th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider">
-            <tr *ngFor="let paciente of pacientes">
-                <td scope="row">{{paciente.nombre}}</td>
-                <td>{{paciente.apellido}}</td>
-                <td>{{paciente.edad}}</td>
-                <td>{{paciente.dni}}</td>
-                <td>{{paciente.obraSocial}}</td>
-                <td>{{paciente.mail}}</td>
-            </tr>
-            </tbody>
-        </table>
-    </article>
-    <article class="mb-5">
-        <h1 class="titulo">Lista especialistas</h1>
-        <table class="table shadow-sm">
-            <thead>
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Edad</th>
-                <th scope="col">DNI</th>
                 <th scope="col">Especialidad</th>
                 <th scope="col">Mail</th>
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr *ngFor="let especialista of especialistas">
-                <td scope="row">{{especialista.nombre}}</td>
-                <td>{{especialista.apellido}}</td>
-                <td>{{especialista.edad}}</td>
-                <td>{{especialista.dni}}</td>
-                <td>{{especialista.especialidad}}</td>
-                <td>{{especialista.mail}}</td>
+            <tr *ngFor="let usuario of usuarios">
+                <td scope="row">{{usuario.nombre}}</td>
+                <td>{{usuario.apellido}}</td>
+                <td>{{usuario.edad}}</td>
+                <td>{{usuario.dni}}</td>
+                <td>{{usuario.obraSocial}}</td>
+                <td>{{usuario.especialidad}}</td>
+                <td>{{usuario.mail}}</td>
             </tr>
             </tbody>
         </table>
+        <p class="linkRegistro">Para crear una cuenta de un usuario administrador, ingrese <span><a href="/registroAdministrador">aca</a></span>.</p>
     </article>
-    <article class="mb-5">
-        <h1 class="titulo">Lista administradores</h1>
-        <table class="table shadow-sm">
-            <thead>
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Edad</th>
-                <th scope="col">DNI</th>
-                <th scope="col">Mail</th>
-            </tr>
-            </thead>
-            <tbody class="table-group-divider">
-            <tr *ngFor="let administrador of administradores">
-                <td scope="row">{{administrador.nombre}}</td>
-                <td>{{administrador.apellido}}</td>
-                <td>{{administrador.edad}}</td>
-                <td>{{administrador.dni}}</td>
-                <td>{{administrador.mail}}</td>
-            </tr>
-            </tbody>
-        </table>
-    </article>
-    <p class="linkRegistro">Para crear una cuenta de un usuario administrador, ingrese <span><a href="/registroAdministrador">aca</a></span>.</p>
+    
 </div>

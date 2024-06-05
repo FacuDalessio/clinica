@@ -9,19 +9,22 @@ import { CommonModule } from '@angular/common';
 import { sendEmailVerification } from '@angular/fire/auth';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL } from 'firebase/storage';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
 export class RegistroComponent {
 
+  onSpinner: boolean = false;
   mensajeError: string = '';
   imgsInput: string[] = [];
   imgsUrl: string[] = [];
@@ -173,6 +176,7 @@ export class RegistroComponent {
   }
 
   registroPaciente() {
+    this.onSpinner = true;
     const paciente = new Paciente(
         { nombre: this.nombre?.value, apellido: this.apellido?.value },
         this.edad?.value,
@@ -208,17 +212,22 @@ export class RegistroComponent {
     })
     .then(response => {
         this.usuarioService.logOut();
+        this.onSpinner = false;
         this.router.navigate(['/login']);
     })
     .catch(error => {
         console.log(error);
         if (error.code === 'auth/email-already-in-use') {
+            this.onSpinner = false;
             this.mensajeError = 'Ya existe una cuenta con ese mail';
         } else if (error.code === 'auth/weak-password') {
+            this.onSpinner = false;
             this.mensajeError = 'La contraseña tiene que tener mas de 5 caracteres';
         } else if (error.code === 'auth/invalid-email') {
+            this.onSpinner = false;
             this.mensajeError = 'El mail es invalido';
         }
     });
+    
   }
 }

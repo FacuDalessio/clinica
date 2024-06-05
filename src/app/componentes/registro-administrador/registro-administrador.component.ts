@@ -7,19 +7,22 @@ import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { Administrador } from '../../entidades/administrador';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-registro-administrador',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './registro-administrador.component.html',
   styleUrl: './registro-administrador.component.css'
 })
 export class RegistroAdministradorComponent {
 
+  onSpinner: boolean = false;
   mensajeError: string = '';
   imgInput: string = '';
   imgUrl: string = '';
@@ -157,6 +160,7 @@ export class RegistroAdministradorComponent {
   }
 
   registroAdministrador(){
+    this.onSpinner = true;
     const administrador = new Administrador(
       { nombre: this.nombre?.value, apellido: this.apellido?.value },
       this.edad?.value,
@@ -186,16 +190,20 @@ export class RegistroAdministradorComponent {
     })
     .then(response => {
         this.usuarioService.logOut();
+        this.onSpinner = false;
         this.router.navigate(['/usuarios']);
     })
     .catch(error => {
         console.log(error);
         if (error.code === 'auth/email-already-in-use') {
-            this.mensajeError = 'Ya existe una cuenta con ese mail';
+          this.onSpinner = false;
+          this.mensajeError = 'Ya existe una cuenta con ese mail';
         } else if (error.code === 'auth/weak-password') {
-            this.mensajeError = 'La contraseña tiene que tener mas de 5 caracteres';
+          this.onSpinner = false;
+          this.mensajeError = 'La contraseña tiene que tener mas de 5 caracteres';
         } else if (error.code === 'auth/invalid-email') {
-            this.mensajeError = 'El mail es invalido';
+          this.onSpinner = false;
+          this.mensajeError = 'El mail es invalido';
         }
     });
   }

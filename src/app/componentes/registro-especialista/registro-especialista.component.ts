@@ -9,6 +9,7 @@ import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage
 import { QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot } from 'firebase/firestore';
 import { Especialista } from '../../entidades/especialista';
 import { sendEmailVerification } from '@angular/fire/auth';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -16,13 +17,15 @@ import { sendEmailVerification } from '@angular/fire/auth';
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './registro-especialista.component.html',
   styleUrl: './registro-especialista.component.css'
 })
 export class RegistroEspecialistaComponent implements OnInit{
 
+  onSpinner: boolean = false;
   agregar: boolean = false;
   especialidades: string[] = [];
   mensajeError: string = '';
@@ -205,6 +208,7 @@ export class RegistroEspecialistaComponent implements OnInit{
   }
 
   registroEspecialista(){
+    this.onSpinner = true;
     const especialista = new Especialista(
       { nombre: this.nombre?.value, apellido: this.apellido?.value },
       this.edad?.value,
@@ -239,16 +243,20 @@ export class RegistroEspecialistaComponent implements OnInit{
     })
     .then(response => {
         this.usuarioService.logOut();
+        this.onSpinner = false;
         this.router.navigate(['/login']);
     })
     .catch(error => {
         console.log(error);
         if (error.code === 'auth/email-already-in-use') {
-            this.mensajeError = 'Ya existe una cuenta con ese mail';
+          this.onSpinner = false;
+          this.mensajeError = 'Ya existe una cuenta con ese mail';
         } else if (error.code === 'auth/weak-password') {
-            this.mensajeError = 'La contraseña tiene que tener mas de 5 caracteres';
+          this.onSpinner = false;
+          this.mensajeError = 'La contraseña tiene que tener mas de 5 caracteres';
         } else if (error.code === 'auth/invalid-email') {
-            this.mensajeError = 'El mail es invalido';
+          this.onSpinner = false;
+          this.mensajeError = 'El mail es invalido';
         }
     });
   }
