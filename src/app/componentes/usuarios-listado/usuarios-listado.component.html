@@ -49,4 +49,28 @@
             </tbody>
         </table>
     </article>
+    <article class="mb-5">
+        <h1 class="titulo">Lista administradores</h1>
+        <table class="table shadow-sm">
+            <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Edad</th>
+                <th scope="col">DNI</th>
+                <th scope="col">Mail</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr *ngFor="let administrador of administradores">
+                <td scope="row">{{administrador.nombre}}</td>
+                <td>{{administrador.apellido}}</td>
+                <td>{{administrador.edad}}</td>
+                <td>{{administrador.dni}}</td>
+                <td>{{administrador.mail}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </article>
+    <p class="linkRegistro">Para crear una cuenta de un usuario administrador, ingrese <span><a href="/registroAdministrador">aca</a></span>.</p>
 </div>

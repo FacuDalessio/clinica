@@ -11,6 +11,9 @@ export const routes: Routes = [
     { path: 'registroEspecialista',
         loadComponent: () => import('./componentes/registro-especialista/registro-especialista.component').then(c => c.RegistroEspecialistaComponent) 
     },
+    { path: 'registroAdministrador',
+        loadComponent: () => import('./componentes/registro-administrador/registro-administrador.component').then(c => c.RegistroAdministradorComponent) 
+    },
     { path: 'login',
         loadComponent: () => import('./componentes/login/login.component').then(c => c.LoginComponent) 
     },

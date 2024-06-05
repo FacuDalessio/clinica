@@ -4,6 +4,7 @@ import { Paciente } from '../../entidades/paciente';
 import { Firestore, QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot, orderBy, query } from '@angular/fire/firestore';
 import {MatTableModule} from '@angular/material/table';
 import { Especialista } from '../../entidades/especialista';
+import { Administrador } from '../../entidades/administrador';
 
 @Component({
   selector: 'app-usuarios-listado',
@@ -19,6 +20,7 @@ export class UsuariosListadoComponent implements OnInit{
 
   pacientes: Paciente[] = [];
   especialistas: Especialista[] = [];
+  administradores: Administrador[] = [];
 
   constructor(
     private firestore: Firestore
@@ -56,6 +58,22 @@ export class UsuariosListadoComponent implements OnInit{
         );
 
         this.especialistas.push(especialista);
+      });
+    });
+
+    const qAdmin = query(collection(this.firestore, "administradores"), orderBy('nombre', 'asc'));
+    onSnapshot(qAdmin, (snapshot: QuerySnapshot) => {
+      snapshot.forEach((doc: QueryDocumentSnapshot) => {
+        const administrador = new Administrador(
+          {nombre: doc.data()['nombre'], apellido: doc.data()['apellido']},
+          doc.data()['edad'],
+          doc.data()['dni'],
+          doc.data()['mail'],
+          doc.data()['password'],
+          doc.data()['imgs'],
+        );
+
+        this.administradores.push(administrador);
       });
     });
   }

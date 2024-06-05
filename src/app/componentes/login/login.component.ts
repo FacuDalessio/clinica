@@ -63,19 +63,20 @@ export class LoginComponent {
     this.mensajeError = '';
     this.usuarioService.login(this.mail?.value, this.password?.value)
     .then(response =>{ 
-      this.usuarioService.getUserByMail(this.usuarioService.getUserLogeado()?.email?.valueOf()!)
-      .then(user => {
-          this.usuarioService.usuarioLogeado = user;
-          if (this.usuarioService.isMailVerificated()) {
-            this.router.navigate(['/']);
-          }else{
-            this.mensajeError = 'No verificaste el mail';
-            this.usuarioService.logOut();
-          }
-      })
-      .catch(error => {
-          console.error("Error al obtener usuario por correo:", error);
-      });
+      if (this.usuarioService.isMailVerificated()) {
+        this.router.navigate(['/']);
+      }else{
+        this.mensajeError = 'No verificaste el mail';
+        this.usuarioService.logOut();
+      }
+      // this.usuarioService.getUserByMail(this.usuarioService.getUserLogeado()?.email?.valueOf()!)
+      // .then(user => {
+      //     this.usuarioService.usuarioLogeado = user;
+          
+      // })
+      // .catch(error => {
+      //     console.error("Error al obtener usuario por correo:", error);
+      // });
     })
     .catch(error => {
       console.log(error);

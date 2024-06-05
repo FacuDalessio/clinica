@@ -191,7 +191,7 @@ export class RegistroComponent {
         return Promise.all(uploadPromises);
     })
     .then(() => {
-        let col = collection(this.firestore, 'pacientes');
+        let col = collection(this.firestore, 'usuarios');
         return addDoc(col, {
             nombre: paciente.nombre,
             apellido: paciente.apellido,

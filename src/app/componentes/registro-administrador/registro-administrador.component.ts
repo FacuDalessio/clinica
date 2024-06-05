@@ -1,30 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { repetirClaveValidator } from '../../validadores/clave.validator';
+import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
-import { Firestore, addDoc, query } from '@angular/fire/firestore';
-import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
-import { QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot } from 'firebase/firestore';
-import { Especialista } from '../../entidades/especialista';
-import { sendEmailVerification } from '@angular/fire/auth';
+import { Administrador } from '../../entidades/administrador';
 
 @Component({
-  selector: 'app-registro-especialista',
+  selector: 'app-registro-administrador',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule,
-    FormsModule
+    CommonModule
   ],
-  templateUrl: './registro-especialista.component.html',
-  styleUrl: './registro-especialista.component.css'
+  templateUrl: './registro-administrador.component.html',
+  styleUrl: './registro-administrador.component.css'
 })
-export class RegistroEspecialistaComponent implements OnInit{
+export class RegistroAdministradorComponent {
 
-  agregar: boolean = false;
-  especialidades: string[] = [];
   mensajeError: string = '';
   imgInput: string = '';
   imgUrl: string = '';
@@ -33,12 +28,10 @@ export class RegistroEspecialistaComponent implements OnInit{
     'apellido': new FormControl('', [Validators.required]),
     'edad': new FormControl('', [Validators.required, Validators.min(18), Validators.max(120)]),
     'dni': new FormControl('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]),
-    'especialidad': new FormControl('', [Validators.required]),
     'mail': new FormControl('', [Validators.required, Validators.email]),
     'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
     'repetirPassword': new FormControl('', [Validators.required]),
-    'img': new FormControl('', [Validators.required]),
-    'inpAgregar': new FormControl('')
+    'img': new FormControl('', [Validators.required])
   }, repetirClaveValidator());
 
   constructor(
@@ -47,35 +40,6 @@ export class RegistroEspecialistaComponent implements OnInit{
     private firestore: Firestore,
     private storage: Storage
   ){}
-
-  ngOnInit(): void {
-    const q = query(collection(this.firestore, "especialidades"));
-    onSnapshot(q, (snapshot: QuerySnapshot) => {
-      snapshot.forEach((doc: QueryDocumentSnapshot) => {
-        this.especialidades.push(doc.data()['detalle']);
-      });
-    });
-  }
-
-  onChangeEspecialidad($event: any) {
-    if ($event.target.value == 'agregar') {
-      this.agregar = true;
-    } else {
-      this.agregar = false;
-    }
-  }
-
-  agregarEspecialidad(){
-    const especialidad = this.inpAgregar?.value.toLowerCase();
-    let col = collection(this.firestore, 'especialidades');
-    addDoc(col, { detalle: especialidad });
-    this.agregar = false;
-    this.especialidades = [];
-  }
-
-  get inpAgregar(){
-    return this.form.get('inpAgregar');
-  }
 
   get nombre(){
     return this.form.get('nombre');
@@ -91,10 +55,6 @@ export class RegistroEspecialistaComponent implements OnInit{
 
   get dni() {
     return this.form.get('dni');
-  }
-
-  get especialidad() {
-    return this.form.get('especialidad');
   }
 
   get mail() {
@@ -161,14 +121,6 @@ export class RegistroEspecialistaComponent implements OnInit{
     return '';
   }
 
-  especialidadHasError() : string{
-    if (this.especialidad?.dirty || this.especialidad?.touched) {
-      if(this.especialidad?.hasError('required'))
-        return 'La especialidad es requerida';
-    }
-    return '';
-  }
-
   mailHasError() : string{
     if (this.mail?.dirty || this.mail?.touched) {
       if(this.mail?.hasError('required'))
@@ -204,12 +156,11 @@ export class RegistroEspecialistaComponent implements OnInit{
       .catch(error => console.log(error));
   }
 
-  registroEspecialista(){
-    const especialista = new Especialista(
+  registroAdministrador(){
+    const administrador = new Administrador(
       { nombre: this.nombre?.value, apellido: this.apellido?.value },
       this.edad?.value,
       this.dni?.value,
-      this.especialidad?.value,
       this.mail?.value,
       this.password?.value,
       ''
@@ -224,22 +175,18 @@ export class RegistroEspecialistaComponent implements OnInit{
     .then(() => {
         let col = collection(this.firestore, 'usuarios');
         return addDoc(col, {
-            nombre: especialista.nombre,
-            apellido: especialista.apellido,
-            edad: especialista.edad,
-            dni: especialista.dni,
-            especialidad: especialista.especialidad,
-            mail: especialista.mail,
-            password: especialista.password,
+            nombre: administrador.nombre,
+            apellido: administrador.apellido,
+            edad: administrador.edad,
+            dni: administrador.dni,
+            mail: administrador.mail,
+            password: administrador.password,
             img: this.imgUrl
         });
     })
     .then(response => {
-        return sendEmailVerification(this.usuarioService.getUserLogeado()!);
-    })
-    .then(response => {
         this.usuarioService.logOut();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/usuarios']);
     })
     .catch(error => {
         console.log(error);
