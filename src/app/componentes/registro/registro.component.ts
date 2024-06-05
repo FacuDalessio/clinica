@@ -204,7 +204,8 @@ export class RegistroComponent {
             obraSocial: paciente.obraSocial,
             mail: paciente.mail,
             password: paciente.password,
-            imgs: this.imgsUrl
+            imgs: this.imgsUrl,
+            admin: false
         });
     })
     .then(response => {

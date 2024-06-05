@@ -185,7 +185,8 @@ export class RegistroAdministradorComponent {
             dni: administrador.dni,
             mail: administrador.mail,
             password: administrador.password,
-            img: this.imgUrl
+            img: this.imgUrl,
+            admin: false
         });
     })
     .then(response => {
