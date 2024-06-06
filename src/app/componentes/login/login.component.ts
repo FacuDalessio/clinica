@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   
   mensajeError: string = '';
   form: FormGroup = new FormGroup({
@@ -26,6 +26,10 @@ export class LoginComponent {
     private usuarioService: UsuarioService,
     private router: Router
   ){}
+
+  ngOnInit(): void {
+      
+  }
 
   get mail() {
     return this.form.get('mail');
@@ -64,19 +68,19 @@ export class LoginComponent {
     this.usuarioService.login(this.mail?.value, this.password?.value)
     .then(response =>{ 
       if (this.usuarioService.isMailVerificated()) {
-        this.router.navigate(['/']);
+        this.usuarioService.isVerificadoPorAdmin()
+        .then(response =>{
+          if(response){
+            this.router.navigate(['/']);
+          }else{
+            this.mensajeError = 'El admin no te verifico';
+            this.usuarioService.logOut();    
+          }
+        });
       }else{
         this.mensajeError = 'No verificaste el mail';
         this.usuarioService.logOut();
       }
-      // this.usuarioService.getUserByMail(this.usuarioService.getUserLogeado()?.email?.valueOf()!)
-      // .then(user => {
-      //     this.usuarioService.usuarioLogeado = user;
-          
-      // })
-      // .catch(error => {
-      //     console.error("Error al obtener usuario por correo:", error);
-      // });
     })
     .catch(error => {
       console.log(error);

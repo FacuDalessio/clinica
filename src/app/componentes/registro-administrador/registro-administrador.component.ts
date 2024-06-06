@@ -186,7 +186,7 @@ export class RegistroAdministradorComponent {
             mail: administrador.mail,
             password: administrador.password,
             img: this.imgUrl,
-            admin: false
+            user: 'admin'
         });
     })
     .then(response => {

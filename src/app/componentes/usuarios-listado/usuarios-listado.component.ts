@@ -28,10 +28,13 @@ export class UsuariosListadoComponent implements OnInit{
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
         let obraSocial = 'N/A';
         let especialidad = 'N/A';
+        let verificado = 'N/A';
         if(doc.data()['especialidad'])
           especialidad = doc.data()['especialidad'];
         if(doc.data()['obraSocial'])
           obraSocial = doc.data()['obraSocial'];
+        if(doc.data()['verificado'])
+          verificado = doc.data()['verificado'];
         const usuario = {
           nombre: doc.data()['nombre'],
           apellido: doc.data()['apellido'],
@@ -39,7 +42,9 @@ export class UsuariosListadoComponent implements OnInit{
           dni: doc.data()['dni'],
           especialidad: especialidad,
           obraSocial: obraSocial,
-          mail: doc.data()['mail']
+          mail: doc.data()['mail'],
+          user: doc.data()['user'],
+          verificado: verificado
         }
 
         this.usuarios.push(usuario);

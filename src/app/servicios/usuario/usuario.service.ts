@@ -9,8 +9,6 @@ import { query, where } from 'firebase/firestore';
 })
 export class UsuarioService {
 
-  usuarioLogeado: any;
-
   constructor(
     private auth:Auth,
     private firestore: Firestore
@@ -25,12 +23,42 @@ export class UsuarioService {
   }
 
   logOut(){
-    this.usuarioLogeado = null;
     return signOut(this.auth);
   }
 
   getUserLogeado(){
     return this.auth.currentUser;
+  }
+
+  async isAdmin(){
+    const user = this.getUserLogeado()?.email;
+    if (user) {
+      try {
+          const userObj: any = await this.getUserByMail(user);
+          return userObj?.user == 'admin';
+      } catch (err) {
+          console.log(err);
+          return false;
+      }
+    }
+    return false;
+  }
+
+  async isVerificadoPorAdmin() {
+    const user = this.getUserLogeado()?.email;
+    if (user) {
+      try {
+          const userObj: any = await this.getUserByMail(user);
+          if (userObj?.user == 'especialista') {
+            return userObj?.verificado;
+          }
+          return true;
+      } catch (err) {
+          console.log(err);
+          return false;
+      }
+    }
+    return false;
   }
 
   async getUserByMail (mail: string){

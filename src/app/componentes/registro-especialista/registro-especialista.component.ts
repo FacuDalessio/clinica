@@ -236,7 +236,8 @@ export class RegistroEspecialistaComponent implements OnInit{
             mail: especialista.mail,
             password: especialista.password,
             img: this.imgUrl,
-            admin: false
+            user: 'especialista',
+            verificado: false
         });
     })
     .then(response => {

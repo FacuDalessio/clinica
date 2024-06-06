@@ -205,7 +205,7 @@ export class RegistroComponent {
             mail: paciente.mail,
             password: paciente.password,
             imgs: this.imgsUrl,
-            admin: false
+            user: 'paciente'
         });
     })
     .then(response => {

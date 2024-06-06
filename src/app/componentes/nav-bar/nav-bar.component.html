@@ -1,7 +1,7 @@
 <header class="p-3 header fixed-top">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <a routerLink="home" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           <img class="bi me-2" width="60" height="52" aria-label="Logo" src="../../../assets/logo.png" alt="Logo">
         </a>
 
@@ -11,8 +11,9 @@
         </ul>
 
         <div class="text-end">
-          <button type="button" routerLink="login" class="btn btn-outline-light me-2">Iniciar sesion</button>
-          <button type="button" routerLink="usuarios" class="btn btn-light">Usuarios</button>
+          <button type="button" routerLink="login" class="btn btn-outline-light me-2" *ngIf="!userService.getUserLogeado()">Iniciar sesion</button>
+          <button type="button" (click)="userService.logOut()" routerLink="login" class="btn btn-outline-light me-2"*ngIf="userService.getUserLogeado()">Cerrar sesion</button>
+          <button *ngIf="userService.isAdmin()" type="button" routerLink="usuarios" class="btn btn-light">Usuarios</button>
         </div>
       </div>
     </div>
