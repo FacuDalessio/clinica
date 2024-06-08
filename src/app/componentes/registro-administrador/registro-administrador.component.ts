@@ -183,7 +183,7 @@ export class RegistroAdministradorComponent {
             apellido: administrador.apellido,
             edad: administrador.edad,
             dni: administrador.dni,
-            mail: administrador.mail,
+            mail: administrador.mail.toLowerCase(),
             password: administrador.password,
             img: this.imgUrl,
             user: 'admin'

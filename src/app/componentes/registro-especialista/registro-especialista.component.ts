@@ -233,7 +233,7 @@ export class RegistroEspecialistaComponent implements OnInit{
             edad: especialista.edad,
             dni: especialista.dni,
             especialidad: especialista.especialidad,
-            mail: especialista.mail,
+            mail: especialista.mail.toLowerCase(),
             password: especialista.password,
             img: this.imgUrl,
             user: 'especialista',

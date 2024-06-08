@@ -1,14 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Firestore, QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot, orderBy, query } from '@angular/fire/firestore';
+import { DocumentData, DocumentReference, Firestore, QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot, orderBy, query } from '@angular/fire/firestore';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { UsuarioService } from '../../servicios/usuario/usuario.service';
 
 @Component({
   selector: 'app-usuarios-listado',
   standalone: true,
   imports: [
     CommonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatIconModule
   ],
   templateUrl: './usuarios-listado.component.html',
   styleUrl: './usuarios-listado.component.css'
@@ -19,22 +22,25 @@ export class UsuariosListadoComponent implements OnInit{
   onSpinner: boolean = true;
 
   constructor(
-    private firestore: Firestore
+    private firestore: Firestore,
+    private usuarioService: UsuarioService
   ){}
 
   ngOnInit(): void {
     const q = query(collection(this.firestore, "usuarios"), orderBy('nombre', 'asc'));
     onSnapshot(q, (snapshot: QuerySnapshot) => {
+      this.usuarios = [];
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
         let obraSocial = 'N/A';
         let especialidad = 'N/A';
         let verificado = 'N/A';
-        if(doc.data()['especialidad'])
+        if(doc.data()['especialidad']){
           especialidad = doc.data()['especialidad'];
+          verificado = doc.data()['verificado'];
+        }
         if(doc.data()['obraSocial'])
           obraSocial = doc.data()['obraSocial'];
-        if(doc.data()['verificado'])
-          verificado = doc.data()['verificado'];
+          
         const usuario = {
           nombre: doc.data()['nombre'],
           apellido: doc.data()['apellido'],
@@ -44,13 +50,25 @@ export class UsuariosListadoComponent implements OnInit{
           obraSocial: obraSocial,
           mail: doc.data()['mail'],
           user: doc.data()['user'],
-          verificado: verificado
+          verificado: verificado,
+          ref: doc.ref
         }
-
         this.usuarios.push(usuario);
       });
-
       this.onSpinner = false;
     });
+  }
+
+  async habilitarDeshabilitar(usuario: any){
+    usuario.verificado = !usuario.verificado;
+    const ref = usuario.ref;
+    delete usuario.ref;
+    const result = await this.usuarioService.updateUsuario(usuario, ref);
+    if (result) {
+      console.log('se actualizo el usuario');
+    }else{
+      console.log('error en actualizar');
+      usuario.verificado = false;
+    }
   }
 }

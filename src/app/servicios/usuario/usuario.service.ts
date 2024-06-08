@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, doc, getDocs, updateDoc } from '@angular/fire/firestore';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { query, where } from 'firebase/firestore';
+import { DocumentData, DocumentReference, query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -44,22 +44,22 @@ export class UsuarioService {
     return false;
   }
 
-  async isVerificadoPorAdmin() {
+  async isVerificadoPorAdmin(): Promise<boolean> {
     const user = this.getUserLogeado()?.email;
     if (user) {
-      try {
-          const userObj: any = await this.getUserByMail(user);
-          if (userObj?.user == 'especialista') {
-            return userObj?.verificado;
-          }
-          return true;
-      } catch (err) {
-          console.log(err);
-          return false;
-      }
+        try {
+            const userObj: any = await this.getUserByMail(user);
+            if (userObj?.user === 'especialista') {
+                return !!userObj?.verificado;
+            }
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
     }
-    return false;
-  }
+    return true;
+}
 
   async getUserByMail (mail: string){
     const collPacientes = collection(this.firestore, "usuarios");
@@ -79,6 +79,16 @@ export class UsuarioService {
 
   isMailVerificated() : boolean{
     return this.auth.currentUser?.emailVerified!;
+  }
+
+  async updateUsuario(usuario: any, ref: DocumentReference<DocumentData, DocumentData>): Promise<boolean> {
+    try {
+        await updateDoc(ref, usuario);
+        return true;
+    } catch (error) {
+        console.error("Error al actualizar usuario:", error);
+        return false;
+    }
   }
 }
 

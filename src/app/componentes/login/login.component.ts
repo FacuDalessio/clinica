@@ -63,15 +63,15 @@ export class LoginComponent implements OnInit{
     return '';
   }
 
-  login(){
+  async login(){
     this.mensajeError = '';
     this.usuarioService.login(this.mail?.value, this.password?.value)
     .then(response =>{ 
       if (this.usuarioService.isMailVerificated()) {
         this.usuarioService.isVerificadoPorAdmin()
         .then(response =>{
-          if(response){
-            this.router.navigate(['/']);
+          if(!!response){
+            this.router.navigate(['/home']);
           }else{
             this.mensajeError = 'El admin no te verifico';
             this.usuarioService.logOut();    

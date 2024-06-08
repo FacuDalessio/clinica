@@ -202,7 +202,7 @@ export class RegistroComponent {
             edad: paciente.edad,
             dni: paciente.dni,
             obraSocial: paciente.obraSocial,
-            mail: paciente.mail,
+            mail: paciente.mail.toLowerCase(),
             password: paciente.password,
             imgs: this.imgsUrl,
             user: 'paciente'

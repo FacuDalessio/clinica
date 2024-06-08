@@ -26,7 +26,9 @@
                 <td>{{usuario.especialidad}}</td>
                 <td>{{usuario.mail}}</td>
                 <td>{{usuario.user}}</td>
-                <td>{{usuario.verificado}}</td>
+                <td *ngIf="usuario.verificado == 'N/A'">{{usuario.verificado}}</td>
+                <td *ngIf="usuario.verificado == false"><mat-icon (click)="habilitarDeshabilitar(usuario)" class="text-danger">close</mat-icon></td>
+                <td *ngIf="usuario.verificado == true"><mat-icon (click)="habilitarDeshabilitar(usuario)" class="text-success">check_circle</mat-icon></td>
             </tr>
             </tbody>
         </table>
