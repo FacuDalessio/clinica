@@ -3,6 +3,10 @@
     height: 90%;
 }
 
+.spinner{
+    margin: 5% auto;
+}
+
 .formContainer{
     margin: 4% auto 0 auto; 
     width: 40%;
@@ -55,4 +59,40 @@
     margin: 5% auto;
     display: flex;
     justify-content: center;
+}
+
+.paciente1{
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2FsethRogen.jpg?alt=media&token=1e385b88-97c3-4c24-b084-8801f754014a');
+    background-size: cover;
+    background-position: center; 
+}
+
+.paciente2{
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Fdarin1.jpg?alt=media&token=6c05e3ef-9374-4c57-9711-dcac6658b66b');
+    background-size: cover;
+    background-position: center; 
+}
+
+.paciente3{
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Fnancy1.jpg?alt=media&token=ca1e4e4a-a1a1-4a1e-a261-2190f1589660');
+    background-size: cover;
+    background-position: center; 
+}
+
+.especialista1{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86");
+    background-size: cover;
+    background-position: center; 
+}
+
+.especialista2{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Fmercedes1.jpg?alt=media&token=c328c407-5049-4aef-8ba2-80dc6edd7317");
+    background-size: cover;
+    background-position: center; 
+}
+
+.admin{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Fperetti.jpg?alt=media&token=b25d58aa-1370-4130-a62b-9b027c7d61e0");
+    background-size: cover;
+    background-position: center; 
 }

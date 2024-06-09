@@ -1,5 +1,6 @@
 .body{
     padding-top: 2%;
+    min-height: 90%;
 }
 .formContainer{
     margin: 4% auto 0 auto; 

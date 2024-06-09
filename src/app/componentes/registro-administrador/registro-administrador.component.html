@@ -1,5 +1,6 @@
 <div class="body bg-body-secondary">
-    <div class="formContainer">
+    <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
+    <div class="formContainer" [hidden]="onSpinner">
         <div class="card">
             <p class="titulo">Crear cuenta<span class="span">Administrador</span></p>
             <hr class="linea">

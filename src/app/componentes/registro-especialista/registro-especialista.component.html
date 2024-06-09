@@ -1,6 +1,6 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <div class="formContainer">
+    <div class="formContainer" [hidden]="onSpinner">
         <div class="card">
             <p class="titulo">Crear cuenta<span class="span">Especialista</span></p>
             <hr class="linea">

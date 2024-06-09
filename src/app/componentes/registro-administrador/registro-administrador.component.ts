@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { Administrador } from '../../entidades/administrador';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { sendEmailVerification } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-registro-administrador',
@@ -188,6 +189,9 @@ export class RegistroAdministradorComponent {
             img: this.imgUrl,
             user: 'admin'
         });
+    })
+    .then(response => {
+      return sendEmailVerification(this.usuarioService.getUserLogeado()!);
     })
     .then(response => {
         this.usuarioService.logOut();

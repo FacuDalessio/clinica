@@ -1,4 +1,5 @@
 <div class="body bg-body-secondary">
+    <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
     <div class="formContainer">
         <div class="card">
             <p class="titulo">Iniciar sesion</p>
@@ -35,12 +36,12 @@
             </div>
         </div>
         <div class="ingresoRapido">
-            <button class="btn btn-primary redondo">Paciente 1</button>
-            <button class="btn btn-primary redondo">Paciente 1</button>
-            <button class="btn btn-primary redondo">Paciente 1</button>
-            <button class="btn btn-primary redondo">Paciente 1</button>
-            <button class="btn btn-primary redondo">Paciente 1</button>
-            <button class="btn btn-primary redondo">Paciente 1</button>
+            <button class="btn btn-primary redondo paciente1" (click)="paciente1()"></button>
+            <button class="btn btn-primary redondo paciente2" (click)="paciente2()"></button>
+            <button class="btn btn-primary redondo paciente3" (click)="paciente3()"></button>
+            <button class="btn btn-primary redondo especialista1" (click)="especialista1()"></button>
+            <button class="btn btn-primary redondo especialista2" (click)="especialista2()"></button>
+            <button class="btn btn-primary redondo admin" (click)="admin()"></button>
         </div>
     </div>
     
