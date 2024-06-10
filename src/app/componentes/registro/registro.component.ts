@@ -3,7 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { repetirClaveValidator } from '../../validadores/clave.validator';
 import { Paciente } from '../../entidades/paciente';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { sendEmailVerification } from '@angular/fire/auth';
@@ -17,7 +17,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    RouterLink
   ],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
