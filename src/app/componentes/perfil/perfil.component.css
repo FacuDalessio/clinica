@@ -19,6 +19,12 @@
     margin: 0 1%;
 }
 
+.btnHorarios{
+    background-color: #E4002B;
+    border: #E4002B;
+    margin-top: 3%;
+}
+
 .datosHeader{
     margin: 2% 0;
     display: flex;

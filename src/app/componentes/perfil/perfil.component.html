@@ -34,6 +34,9 @@
                 <mat-icon class="icono">medication</mat-icon>
                 <p class="info">{{'Obra social: ' + usarioService.usuarioLogeado.obraSocial}}</p>
             </div>
+            <div class="infoDiv" *ngIf="usarioService.usuarioLogeado.user == 'especialista'">
+                <button class="btn btn-primary btnHorarios">Mis horarios</button>
+            </div>
         </div>
     </div>
 </div>

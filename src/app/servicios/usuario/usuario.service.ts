@@ -9,6 +9,17 @@ import { DocumentData, DocumentReference, query, where } from 'firebase/firestor
 })
 export class UsuarioService {
 
+  // usuarioLogeado: any = {
+  //   nombre: "Nicolas",
+  //   apellido: "Ferro",
+  //   edad: 54,
+  //   dni: "19837453",
+  //   mail: "03ofjt9p@cj.mintemail.com",
+  //   especialidad: "cardiologia",
+  //   user: 'especialista',
+  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86" 
+  // };
+
   usuarioLogeado: any;
 
   constructor(
