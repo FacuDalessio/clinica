@@ -9,6 +9,8 @@ import { DocumentData, DocumentReference, query, where } from 'firebase/firestor
 })
 export class UsuarioService {
 
+  usuarioLogeado: any;
+
   constructor(
     private auth:Auth,
     private firestore: Firestore
@@ -18,11 +20,12 @@ export class UsuarioService {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
-  login(email: string, password: string){
+  async login(email: string, password: string){
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
   logOut(){
+    this.usuarioLogeado = null;
     return signOut(this.auth);
   }
 
@@ -49,6 +52,7 @@ export class UsuarioService {
     if (user) {
         try {
             const userObj: any = await this.getUserByMail(user);
+            this.usuarioLogeado = userObj;
             if (userObj?.user === 'especialista') {
                 return !!userObj?.verificado;
             }
@@ -59,7 +63,7 @@ export class UsuarioService {
         }
     }
     return true;
-}
+  }
 
   async getUserByMail (mail: string){
     const collPacientes = collection(this.firestore, "usuarios");

@@ -1,0 +1,66 @@
+.body{
+    height: 82%;
+    margin-top: 4%;
+    padding: 2%;
+}
+
+.datos{
+    margin: auto;
+    width: 30%;
+    padding: 1% 0;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.redondo{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 1%;
+}
+
+.datosHeader{
+    margin: 2% 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list{
+    margin: auto;
+}
+
+.nombreUser{
+    text-align: center;
+    margin-left: 2%;
+}
+
+.nombreUser p{
+    font-size: larger;
+    font-weight: 500;
+}
+
+.linea{
+    color: #E4002B;
+    border-width: 2px;
+    width: 80%;
+    margin: 1% auto;
+}
+
+.icono{
+    color: #E4002B;
+}
+
+.infoDiv{
+    width: 60%;
+    display: flex;
+    margin: 1% auto;
+    justify-content: start;
+    align-items: center;
+}
+
+.info{
+    margin-left: 2%;
+    margin-bottom: 0;
+    font-size: larger;
+}

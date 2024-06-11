@@ -1,0 +1,39 @@
+<div class="body bg-body-secondary">
+    <div class="datos">
+        <div class="datosHeader">
+            <div class="img" *ngIf="usarioService.usuarioLogeado.user != 'paciente'">
+                <img [src]="usarioService.usuarioLogeado.img" alt="imgPerfil" class="img redondo">
+            </div>
+            <div class="img" *ngIf="usarioService.usuarioLogeado.user == 'paciente'">
+                <img [src]="usarioService.usuarioLogeado.imgs[0]" alt="imgPerfil" class="img redondo">
+            </div>
+            <div class="nombreUser">
+                <h3>{{usarioService.usuarioLogeado.nombre + ' ' + usarioService.usuarioLogeado.apellido}}</h3>
+                <p>{{usarioService.usuarioLogeado.user}}</p>
+            </div>
+        </div>
+        <hr class="linea">
+        <div class="datosBody">
+            <div class="infoDiv">
+                <mat-icon class="icono">mail</mat-icon>
+                <p class="info">{{'Mail: ' + usarioService.usuarioLogeado.mail}}</p>
+            </div>
+            <div class="infoDiv">
+                <mat-icon class="icono">calendar_month</mat-icon>
+                <p class="info">{{'Edad: ' + usarioService.usuarioLogeado.edad}}</p>
+            </div>
+            <div class="infoDiv">
+                <mat-icon class="icono">topic</mat-icon>
+                <p class="info">{{'Dni: ' + usarioService.usuarioLogeado.dni}}</p>
+            </div>
+            <div class="infoDiv" *ngIf="usarioService.usuarioLogeado.user == 'especialista'">
+                <mat-icon class="icono">medication</mat-icon>
+                <p class="info">{{'Especialidad: ' + usarioService.usuarioLogeado.especialidad}}</p>
+            </div>
+            <div class="infoDiv" *ngIf="usarioService.usuarioLogeado.user == 'paciente'">
+                <mat-icon class="icono">medication</mat-icon>
+                <p class="info">{{'Obra social: ' + usarioService.usuarioLogeado.obraSocial}}</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
+import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard'
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: "full" },
@@ -21,5 +22,9 @@ export const routes: Routes = [
     { path: 'usuarios',
         loadComponent: () => import('./componentes/usuarios-listado/usuarios-listado.component').then(c => c.UsuariosListadoComponent),
         canActivate: [adminGuard]
+    },
+    { path: 'perfil',
+        loadComponent: () => import('./componentes/perfil/perfil.component').then(c => c.PerfilComponent),
+        ...canActivate(()=> redirectUnauthorizedTo(['/login']))
     }
 ];
