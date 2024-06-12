@@ -36,6 +36,7 @@ export class UsuariosListadoComponent implements OnInit{
         let verificado = 'N/A';
         if(doc.data()['especialidad']){
           especialidad = doc.data()['especialidad'];
+          especialidad = especialidad[1] ? `${especialidad[0]}, ${especialidad[1]}` : especialidad[0];
           verificado = doc.data()['verificado'];
         }
         if(doc.data()['obraSocial'])

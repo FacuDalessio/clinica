@@ -28,14 +28,29 @@
             </div>
             <div class="infoDiv" *ngIf="usarioService.usuarioLogeado.user == 'especialista'">
                 <mat-icon class="icono">medication</mat-icon>
-                <p class="info">{{'Especialidad: ' + usarioService.usuarioLogeado.especialidad}}</p>
+                <p class="info">Especialidad: {{usarioService.usuarioLogeado.especialidad[1] ? usarioService.usuarioLogeado.especialidad[0] + ', ' + usarioService.usuarioLogeado.especialidad[1]
+                : usarioService.usuarioLogeado.especialidad[0]}}</p>
             </div>
             <div class="infoDiv" *ngIf="usarioService.usuarioLogeado.user == 'paciente'">
                 <mat-icon class="icono">medication</mat-icon>
                 <p class="info">{{'Obra social: ' + usarioService.usuarioLogeado.obraSocial}}</p>
             </div>
             <div class="infoDiv" *ngIf="usarioService.usuarioLogeado.user == 'especialista'">
-                <button class="btn btn-primary btnHorarios">Mis horarios</button>
+                <button class="btn btn-primary btnInfo">Mis horarios</button>
+                <button *ngIf="btnPrincipalAgregar" (click)="btnAgregarEspecialidad = true" class="btn btn-primary btnInfo">Agregar especialidad</button>
+            </div>
+            <div class="mb-2 input-group agregarEspecialidad" *ngIf="btnAgregarEspecialidad">
+                <div class="inputDiv">
+                    <select id="inputEspecialidad" [(ngModel)]="especialidadAgregada" class="form-select mb-2" (change)="onChangeEspecialidad($event)">
+                        <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</option>
+                        <option value="agregar">Agregar especialidad</option>
+                    </select>
+                    <div class="mb-2 mt-3" *ngIf="agregar">
+                        <input [(ngModel)]="inpEspecialidad" placeholder="Ingrese la especialidad" type="text" class="form-control mb-2" id="inputAgregar">
+                    </div>
+                    <button (click)="agregarEspecialidadDb()" class="btn btn-primary btnEspecialidad" *ngIf="agregar" [disabled]="!inpEspecialidad">Agregar</button>
+                    <button (click)="updateEspecialista()" class="btn btn-primary btnEspecialidad" *ngIf="!agregar" [disabled]="!especialidadAgregada">Agregar</button>
+                </div>
             </div>
         </div>
     </div>

@@ -19,10 +19,10 @@
     margin: 0 1%;
 }
 
-.btnHorarios{
+.btnInfo{
     background-color: #E4002B;
     border: #E4002B;
-    margin-top: 3%;
+    margin: 3%;
 }
 
 .datosHeader{
@@ -69,4 +69,14 @@
     margin-left: 2%;
     margin-bottom: 0;
     font-size: larger;
+}
+
+.btnEspecialidad{
+    background-color: #E4002B;
+    border: #E4002B;
+}
+
+.agregarEspecialidad{
+    display: flex;
+    justify-content: center;
 }

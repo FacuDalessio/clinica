@@ -1,6 +1,6 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <div class="opciones">
+    <div class="opciones" [hidden]="onSpinner">
         <button class="btn btn-primary redondo paciente"></button>
         <button routerLink="/registroEspecialista" class="btn btn-primary redondo especialista"></button>
     </div>

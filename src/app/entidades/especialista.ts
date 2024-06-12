@@ -3,12 +3,12 @@ export class Especialista{
     apellido: string;
     edad: number;
     dni: string;
-    especialidad: string;
+    especialidad: string[];
     mail: string;
     password: string;
     img: string;
 
-    constructor(nombreCompleto: { nombre: string; apellido: string }, edad: number, dni: string, especialidad: string, 
+    constructor(nombreCompleto: { nombre: string; apellido: string }, edad: number, dni: string, especialidad: string[], 
         mail: string, password: string,img: string) {
         this.nombre = nombreCompleto.nombre;
         this.apellido = nombreCompleto.apellido;

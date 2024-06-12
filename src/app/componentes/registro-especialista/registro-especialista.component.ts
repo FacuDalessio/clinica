@@ -214,12 +214,11 @@ export class RegistroEspecialistaComponent implements OnInit{
       { nombre: this.nombre?.value, apellido: this.apellido?.value },
       this.edad?.value,
       this.dni?.value,
-      this.especialidad?.value,
+      [this.especialidad?.value],
       this.mail?.value,
       this.password?.value,
       ''
     );
-
     this.mensajeError = '';
 
     this.usuarioService.registro(this.mail?.value, this.password?.value)

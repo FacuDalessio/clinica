@@ -9,18 +9,18 @@ import { DocumentData, DocumentReference, query, where } from 'firebase/firestor
 })
 export class UsuarioService {
 
-  // usuarioLogeado: any = {
-  //   nombre: "Nicolas",
-  //   apellido: "Ferro",
-  //   edad: 54,
-  //   dni: "19837453",
-  //   mail: "03ofjt9p@cj.mintemail.com",
-  //   especialidad: "cardiologia",
-  //   user: 'especialista',
-  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86" 
-  // };
+  usuarioLogeado: any = {
+    nombre: "Nicolas",
+    apellido: "Ferro",
+    edad: 54,
+    dni: "19837453",
+    mail: "03ofjt9p@cj.mintemail.com",
+    especialidad: ["cardiologia", "pediatria"],
+    user: 'especialista',
+    img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86" 
+  };
 
-  usuarioLogeado: any;
+  // usuarioLogeado: any;
 
   constructor(
     private auth:Auth,
@@ -79,11 +79,12 @@ export class UsuarioService {
   async getUserByMail (mail: string){
     const collPacientes = collection(this.firestore, "usuarios");
     const q = query(collPacientes, where("mail", "==", mail));
-    let usuario;
+    let usuario: any;
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach( doc => {
         usuario = doc.data();
+        usuario.ref = doc.ref;
       }); 
       return usuario;
     } catch (error) {
