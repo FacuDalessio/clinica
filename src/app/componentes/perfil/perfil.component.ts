@@ -4,6 +4,7 @@ import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { MatIconModule } from '@angular/material/icon';
 import { Firestore, QueryDocumentSnapshot, QuerySnapshot, addDoc, collection, onSnapshot, query } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -11,7 +12,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'

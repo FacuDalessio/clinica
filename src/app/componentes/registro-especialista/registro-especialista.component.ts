@@ -10,6 +10,7 @@ import { QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot } from 'fi
 import { Especialista } from '../../entidades/especialista';
 import { sendEmailVerification } from '@angular/fire/auth';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TurnoService } from '../../servicios/turno/turno.service';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -49,7 +50,8 @@ export class RegistroEspecialistaComponent implements OnInit{
     private router: Router,
     private usuarioService: UsuarioService,
     private firestore: Firestore,
-    private storage: Storage
+    private storage: Storage,
+    private turnoService: TurnoService
   ){}
 
   ngOnInit(): void {
@@ -244,9 +246,11 @@ export class RegistroEspecialistaComponent implements OnInit{
         return sendEmailVerification(this.usuarioService.getUserLogeado()!);
     })
     .then(response => {
-        this.usuarioService.logOut();
-        this.onSpinner = false;
-        this.router.navigate(['/login']);
+        this.turnoService.generarHorariosSemana(especialista, especialista.especialidad[0])
+        .then(response => {
+          this.onSpinner = false;
+          this.router.navigate(['/login']);
+        });
     })
     .catch(error => {
         console.log(error);

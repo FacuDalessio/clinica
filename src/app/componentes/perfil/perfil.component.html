@@ -36,7 +36,7 @@
                 <p class="info">{{'Obra social: ' + usarioService.usuarioLogeado.obraSocial}}</p>
             </div>
             <div class="infoDiv" *ngIf="usarioService.usuarioLogeado.user == 'especialista'">
-                <button class="btn btn-primary btnInfo">Mis horarios</button>
+                <button routerLink="/horarios" class="btn btn-primary btnInfo">Mis horarios</button>
                 <button *ngIf="btnPrincipalAgregar" (click)="btnAgregarEspecialidad = true" class="btn btn-primary btnInfo">Agregar especialidad</button>
             </div>
             <div class="mb-2 input-group agregarEspecialidad" *ngIf="btnAgregarEspecialidad">
