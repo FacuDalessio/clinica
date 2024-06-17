@@ -1,7 +1,6 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
     <div [hidden]="onSpinner">
-        <!-- <h1 class="titulo">Soliciar turno</h1> -->
         <div class="articleContainer">
             <article class="card">
                 <h3 class="tituloCard">Especialidad</h3>
@@ -25,6 +24,15 @@
                     </select>
                 </div>
             </article>
+            <article class="card" *ngIf="userIsAdmin">
+                <h3 class="tituloCard">Paciente</h3>
+                <p class="parrafo">Ingrese el DNI del paciente</p>
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="dniAbuscar" placeholder="Ingrese el DNI">
+                    <button class="btn btn-outline-secondary " (click)="buscarPaciente()" type="button">Buscar</button>
+                </div>
+                <p *ngIf="pacienteElegido" class="pacienteEncontrado mb-0 mt-1">{{pacienteElegido.nombre + ', ' + pacienteElegido.apellido}}</p>
+            </article>
         </div>
         <div class="fechas" [hidden]="!mostrarFechas">
             <div class="diaDiv" *ngFor="let dia of dias; let i = index">
@@ -33,6 +41,6 @@
                 </button>
             </div>
         </div>
-        <app-elegir-turno [dia]="diaElegido" [especialidad]="especialidadAux" [especialista]="especialistaElegido"></app-elegir-turno>
     </div>
+    <app-elegir-turno [dia]="diaElegido" [especialidad]="especialidadAux" [especialista]="especialistaElegido" [paciente]="pacienteElegido"></app-elegir-turno>
 </div>

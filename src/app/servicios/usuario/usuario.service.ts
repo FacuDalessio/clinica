@@ -31,6 +31,16 @@ export class UsuarioService {
   //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2FsethRogen.jpg?alt=media&token=1e385b88-97c3-4c24-b084-8801f754014a"
   // };
 
+  // usuarioLogeado: any = {
+  //   nombre: "Norman",
+  //   apellido: "Lacconi",
+  //   edad: 47,
+  //   dni: "19837453",
+  //   mail: "bvc6q5fh@cj.mintemail.com",
+  //   user: 'admin',
+  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Fperetti.jpg?alt=media&token=bbd2cfb7-e9d1-4d06-aed7-97321befb3dc"
+  // };
+
   usuarioLogeado: any;
 
   constructor(

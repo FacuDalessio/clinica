@@ -19,6 +19,7 @@ export class ElegirTurnoComponent implements OnChanges, OnInit {
 
   @Input() dia?: Date;
   @Input() especialista?: any;
+  @Input() paciente?: any;
   @Input() especialidad?: string;
   horarios: any[] = [];
   horarioAux?: any;
@@ -26,8 +27,7 @@ export class ElegirTurnoComponent implements OnChanges, OnInit {
 
   constructor(
     private turnoService: TurnoService,
-    private firestore: Firestore,
-    private userService: UsuarioService
+    private firestore: Firestore
   ){}
 
   ngOnInit(): void {
@@ -90,7 +90,7 @@ export class ElegirTurnoComponent implements OnChanges, OnInit {
           hora: hora,
           especialista: this.especialista,
           especialidad: this.especialidad,
-          paciente: this.userService.usuarioLogeado,
+          paciente: this.paciente,
           resenia: '',
           calificacion: 0,
           encuesta: '',

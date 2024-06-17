@@ -7,6 +7,7 @@ import { ElegirTurnoComponent } from './elegir-turno/elegir-turno.component';
 import { TurnoService } from '../../servicios/turno/turno.service';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { UsuarioService } from '../../servicios/usuario/usuario.service';
 
 @Component({
   selector: 'app-solicitar-turno',
@@ -24,6 +25,7 @@ import { RouterOutlet } from '@angular/router';
 export class SolicitarTurnoComponent implements OnInit{
 
   onSpinner: boolean = true;
+  // onSpinnerBuscarPaciente: boolean = false;
   especialidades: string[] = [];
   especialistas: any[] = [];
   especialistasAux: any[] = [];
@@ -32,13 +34,22 @@ export class SolicitarTurnoComponent implements OnInit{
   mostrarFechas: boolean = false;
   diaElegido?: Date;
   especialistaElegido?: any;
+  pacienteElegido?: any;
+  userIsAdmin: boolean = false;
+  dniAbuscar: string = '';
 
   constructor(
     private firestore: Firestore,
-    public turnoService: TurnoService
+    public turnoService: TurnoService,
+    private userService: UsuarioService
   ){}
 
   ngOnInit(): void {
+    if(this.userService.usuarioLogeado.user == 'admin'){
+      this.userIsAdmin = true;
+    }else{
+      this.pacienteElegido = this.userService.usuarioLogeado
+    }
     const qEspecialidades = query(collection(this.firestore, "especialidades"));
     onSnapshot(qEspecialidades, (snapshot: QuerySnapshot) => {
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
@@ -62,6 +73,17 @@ export class SolicitarTurnoComponent implements OnInit{
       dateAux.setDate(fechaActual.getDate() + i);
       if(this.turnoService.obtenerNombreDia(dateAux) != 'Domingo')
         this.dias.push(dateAux);
+    }
+  }
+
+  buscarPaciente(){
+    if (this.dniAbuscar.length == 8) {
+      const qEspecialistas = query(collection(this.firestore, "usuarios"), where("dni", "==", this.dniAbuscar));
+      onSnapshot(qEspecialistas, (snapshot: QuerySnapshot) => {
+        snapshot.forEach((doc: QueryDocumentSnapshot) => {
+          this.pacienteElegido = doc.data();
+        });
+      });
     }
   }
 
