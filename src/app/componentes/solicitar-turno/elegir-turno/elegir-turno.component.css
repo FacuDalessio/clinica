@@ -1,0 +1,19 @@
+.horaDiv{
+    flex-basis: calc(100% / 5);
+    margin: 1%;
+    border-radius: 2%;
+}
+
+.hora{
+    width: 100%;
+    background-color: #E4002B;
+    border: #E4002B;
+}
+
+.horarios {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+    margin: 2% auto;
+    justify-content: center;
+}

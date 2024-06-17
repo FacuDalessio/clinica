@@ -20,6 +20,12 @@ export class TurnoService {
     }
   }
 
+  obtenerNombreDia(fecha: Date): string {
+    const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+    const i = fecha.getDay();
+    return diasSemana[i];
+  }
+
   async generarHorariosSemana(especialista: any, especialidad: string){
     await Promise.all([
       this.agregarHorarioDia("Lunes", especialista, especialidad),

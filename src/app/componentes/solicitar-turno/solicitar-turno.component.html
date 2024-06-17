@@ -1,0 +1,38 @@
+<div class="body bg-body-secondary">
+    <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
+    <div [hidden]="onSpinner">
+        <!-- <h1 class="titulo">Soliciar turno</h1> -->
+        <div class="articleContainer">
+            <article class="card">
+                <h3 class="tituloCard">Especialidad</h3>
+                <p class="parrafo">Seleccione una especialidad</p>
+                <div class="inputDiv">
+                    <select id="inputEspecialidad" class="form-select" (change)="onChangeEspecialidad($event)">
+                        <option value="">Especialidad</option>
+                        <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</option>
+                    </select>
+                </div>
+            </article>
+            <article class="card">
+                <h3 class="tituloCard">Especialista</h3>
+                <p class="parrafo">Seleccione el especialista</p>
+                <div class="inputDiv">
+                    <select id="inputEspecialista" class="form-select" [(ngModel)]="especialistaElegido"  (ngModelChange)="onChangeEspecialista()">
+                        <option value="" selected>Especialista</option>
+                        <option *ngFor="let especialista of especialistasAux" [ngValue]="especialista">
+                            {{especialista.apellido + ', ' + especialista.nombre}}
+                        </option>
+                    </select>
+                </div>
+            </article>
+        </div>
+        <div class="fechas" [hidden]="!mostrarFechas">
+            <div class="diaDiv" *ngFor="let dia of dias; let i = index">
+                <button class="btn btn-primary" (click)="diaElegido = dia" >
+                    {{ turnoService.obtenerNombreDia(dia) }} - {{ dia | date:'dd/MM/yyyy' }}
+                </button>
+            </div>
+        </div>
+        <app-elegir-turno [dia]="diaElegido" [especialidad]="especialidadAux" [especialista]="especialistaElegido"></app-elegir-turno>
+    </div>
+</div>

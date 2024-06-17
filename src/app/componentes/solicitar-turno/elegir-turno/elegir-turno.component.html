@@ -1,0 +1,7 @@
+<div *ngIf="dia">
+    <div class="horarios" *ngIf="horarioAux">
+        <div class="horaDiv" *ngFor="let horaAux of horarioAux.hora; let i = index">
+            <button (click)="crearTurno(horaAux)" class="btn btn-primary hora" [disabled]="!horarioAux.disponibilidad[i]">{{horaAux}}</button>
+        </div>
+    </div>
+</div>

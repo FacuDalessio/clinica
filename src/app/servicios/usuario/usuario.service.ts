@@ -9,18 +9,29 @@ import { DocumentData, DocumentReference, query, where } from 'firebase/firestor
 })
 export class UsuarioService {
 
-  usuarioLogeado: any = {
-    nombre: "Nicolas",
-    apellido: "Ferro",
-    edad: 54,
-    dni: "19837453",
-    mail: "03ofjt9p@cj.mintemail.com",
-    especialidad: ["cardiologia", "pediatria"],
-    user: 'especialista',
-    img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86" 
-  };
+  // usuarioLogeado: any = {
+  //   nombre: "Nicolas",
+  //   apellido: "Ferro",
+  //   edad: 54,
+  //   dni: "19837453",
+  //   mail: "03ofjt9p@cj.mintemail.com",
+  //   especialidad: ["cardiologia", "pediatria"],
+  //   user: 'especialista',
+  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86" 
+  // };
 
-  // usuarioLogeado: any;
+  // usuarioLogeado: any = {
+  //   nombre: "Carlos",
+  //   apellido: "Perez",
+  //   edad: 47,
+  //   dni: "19837453",
+  //   mail: "dsy8ov10@cj.mintemail.com",
+  //   obraSocial: "Luis pasteur",
+  //   user: 'paciente',
+  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2FsethRogen.jpg?alt=media&token=1e385b88-97c3-4c24-b084-8801f754014a"
+  // };
+
+  usuarioLogeado: any;
 
   constructor(
     private auth:Auth,

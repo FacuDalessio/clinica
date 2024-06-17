@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
 import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard'
 import { especialistaGuard } from './guards/especialista.guard';
+import { pacienteGuard } from './guards/paciente.guard';
+import { solicitarTurnoGuard } from './guards/solicitar-turno.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: "full" },
@@ -31,5 +33,13 @@ export const routes: Routes = [
     { path: 'horarios',
         loadComponent: () => import('./componentes/horarios/horarios.component').then(c => c.HorariosComponent),
         canActivate: [especialistaGuard]
+    },
+    { path: 'solicitarTurno',
+        loadComponent: () => import('./componentes/solicitar-turno/solicitar-turno.component').then(c => c.SolicitarTurnoComponent),
+        canActivate: [solicitarTurnoGuard],
+        children: [{
+            path: 'elegirTurno',
+            loadComponent: () => import('./componentes/solicitar-turno/elegir-turno/elegir-turno.component').then(c => c.ElegirTurnoComponent)
+        }]
     }
 ];
