@@ -9,7 +9,7 @@
             <p class="titulo">Crear cuenta<span class="span">Especialista</span></p>
             <hr class="linea">
             <div class="card-body">
-                <form [formGroup]="form!">
+                <form [formGroup]="form">
                     <div class="alert alert-danger mb-2" *ngIf="mensajeError">
                         {{mensajeError}}
                     </div>
@@ -58,7 +58,7 @@
                             </select>
                             <div class="mb-2 mt-3" *ngIf="agregar">
                                 <input formControlName="inpAgregar" placeholder="Ingrese la especialidad" type="text" class="form-control mb-2" id="inputAgregar">
-                                <button (click)="agregarEspecialidad()" class="btn btn-primary" [disabled]="!form?.get('inpAgregar')?.value">Agregar</button>
+                                <button (click)="agregarEspecialidad()" class="btn btn-primary" [disabled]="!form.get('inpAgregar')?.value">Agregar</button>
                             </div>
                         </div>
                         <div class="invalid-feedback">
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <div class="mb-2 mt-3">
-                        <button (click)="registroEspecialista()" class="btn btn-primary" [disabled]="!form?.valid">Crear cuenta</button>
+                        <button (click)="registroEspecialista()" class="btn btn-primary" [disabled]="!form.valid">Crear cuenta</button>
                     </div>
                 </form>
             </div>
