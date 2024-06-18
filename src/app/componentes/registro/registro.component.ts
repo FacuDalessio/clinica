@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { repetirClaveValidator } from '../../validadores/clave.validator';
 import { Paciente } from '../../entidades/paciente';
@@ -10,6 +10,7 @@ import { sendEmailVerification } from '@angular/fire/auth';
 import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL } from 'firebase/storage';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-registro',
@@ -18,12 +19,14 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     CommonModule,
     MatProgressSpinnerModule,
-    RouterLink
+    RouterLink,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
-export class RegistroComponent {
+export class RegistroComponent{
 
   onSpinner: boolean = false;
   mensajeError: string = '';
@@ -38,7 +41,8 @@ export class RegistroComponent {
     'mail': new FormControl('', [Validators.required, Validators.email]),
     'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
     'repetirPassword': new FormControl('', [Validators.required]),
-    'imgs': new FormControl('', [Validators.required])
+    'imgs': new FormControl('', [Validators.required]),
+    'recaptcha': new FormControl('', [Validators.required])
   }, repetirClaveValidator());
 
   constructor(
@@ -82,6 +86,11 @@ export class RegistroComponent {
 
   get imgs() {
     return this.form.get('imgs');
+  }
+
+  recaptchaHasError() {
+    const control = this.form?.get('recaptcha');
+    return control?.touched && control?.invalid ? 'Captcha es requerido' : '';
   }
 
   nombreHasError() : string{

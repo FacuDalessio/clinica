@@ -9,7 +9,7 @@
             <p class="titulo">Crear cuenta<span class="span">Paciente</span></p>
             <hr class="linea">
             <div class="card-body">
-                <form [formGroup]="form">
+                <form [formGroup]="form!">
                     <div class="alert alert-danger mb-2" *ngIf="mensajeError">
                         {{mensajeError}}
                     </div>
@@ -94,8 +94,14 @@
                             {{imgsHasError()}}
                         </div>
                     </div>
+                    <div class="mb-2 input-group has-validation">
+                        <re-captcha formControlName="recaptcha" siteKey="6Lc2bfspAAAAAC5z3J_72LCuegpU6eGuSM1cxQOA"></re-captcha>
+                        <div class="invalid-feedback">
+                            {{recaptchaHasError()}}
+                        </div>
+                    </div>
                     <div class="mb-2 mt-3">
-                        <button (click)="registroPaciente()" class="btn btn-primary" [disabled]="!form.valid">Crear cuenta</button>
+                        <button (click)="registroPaciente()" class="btn btn-primary" [disabled]="!form?.valid">Crear cuenta</button>
                     </div>
                 </form>
             </div>

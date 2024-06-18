@@ -11,6 +11,7 @@ import { Especialista } from '../../entidades/especialista';
 import { sendEmailVerification } from '@angular/fire/auth';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TurnoService } from '../../servicios/turno/turno.service';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -20,7 +21,9 @@ import { TurnoService } from '../../servicios/turno/turno.service';
     CommonModule,
     FormsModule,
     MatProgressSpinnerModule,
-    RouterLink
+    RouterLink,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   templateUrl: './registro-especialista.component.html',
   styleUrl: './registro-especialista.component.css'
@@ -43,7 +46,8 @@ export class RegistroEspecialistaComponent implements OnInit{
     'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
     'repetirPassword': new FormControl('', [Validators.required]),
     'img': new FormControl('', [Validators.required]),
-    'inpAgregar': new FormControl('')
+    'inpAgregar': new FormControl(''),
+    'recaptcha': new FormControl('', [Validators.required])
   }, repetirClaveValidator());
 
   constructor(
@@ -117,6 +121,11 @@ export class RegistroEspecialistaComponent implements OnInit{
 
   get img() {
     return this.form.get('img');
+  }
+
+  recaptchaHasError() {
+    const control = this.form?.get('recaptcha');
+    return control?.touched && control?.invalid ? 'Captcha es requerido' : '';
   }
 
   nombreHasError() : string{
