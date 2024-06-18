@@ -1,0 +1,112 @@
+.body{
+    flex: 1;
+    margin-top: 6%;
+}
+
+.spinner{
+    margin: 5% auto;
+}
+.articleContainer{
+    display: flex;
+    justify-content: center;
+}
+.filtro, .cancelarAccion{
+    width: 30%;
+    height: 30%;
+    padding: 2%;
+    margin: 0 5%;
+}
+
+.cancelarAccion{
+    margin: auto;
+}
+
+.botonesCancelar .btn{
+    background-color: #E4002B;
+    border: #E4002B;
+    width: 40%;
+}
+
+.botonesCancelar{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.parrafo, .tituloCard{
+    text-align: center;
+}
+
+.turno{
+    width: 50%;
+    margin: auto;
+    padding: 1%;
+    padding-bottom: 0;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.5);
+}
+
+.fecha, .datos{
+    display: flex;
+    align-items: center;
+}
+
+.fecha p, .datos p{
+    margin-right: 1%;
+}
+
+.confirmado, .pendiente, .cancelado, .finalizado{
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.pendiente{
+    background-color: #ffbf69;
+    color: #bb3e03;
+}
+
+.confirmado, .finalizado{
+    background-color: #a7c957;
+    color: #386641;
+}
+
+.cancelado{
+    color: #540b0e;
+    background-color: #d62828;
+}
+
+.span{
+    font-weight: 600;
+}
+
+.cancelar{
+    margin-left: auto;
+}
+
+.accion, .cancelar{
+    background-color: #E4002B;
+    border: #E4002B;
+    width: 10%;
+}
+
+.acciones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2%;
+}
+
+.ml{
+    margin-left: 2%;
+}
+
+.noEncontrado{
+    margin: 5% auto;
+    background-color: #d6282875;
+    width: 30%;
+    height: 30%;
+    padding: 2%;
+}
+
+.noEncontrado h3{
+    color: #6a040f;
+}

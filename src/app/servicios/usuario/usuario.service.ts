@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
-import { Firestore, collection, doc, getDocs, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, updateDoc } from '@angular/fire/firestore';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { DocumentData, DocumentReference, query, where } from 'firebase/firestore';
 
@@ -14,10 +14,11 @@ export class UsuarioService {
   //   apellido: "Ferro",
   //   edad: 54,
   //   dni: "19837453",
+  //   obraSocial: "N/A",
   //   mail: "03ofjt9p@cj.mintemail.com",
-  //   especialidad: ["cardiologia", "pediatria"],
+  //   especialidad: ["pediatria", "cardiologia"],
   //   user: 'especialista',
-  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86" 
+  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86"
   // };
 
   // usuarioLogeado: any = {

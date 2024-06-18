@@ -8,6 +8,7 @@ import { TurnoService } from '../../servicios/turno/turno.service';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
+import {MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'app-solicitar-turno',
@@ -17,7 +18,8 @@ import { UsuarioService } from '../../servicios/usuario/usuario.service';
     CommonModule,
     ElegirTurnoComponent,
     FormsModule,
-    RouterOutlet
+    RouterOutlet,
+    MatRadioModule
   ],
   templateUrl: './solicitar-turno.component.html',
   styleUrl: './solicitar-turno.component.css'
@@ -25,11 +27,10 @@ import { UsuarioService } from '../../servicios/usuario/usuario.service';
 export class SolicitarTurnoComponent implements OnInit{
 
   onSpinner: boolean = true;
-  // onSpinnerBuscarPaciente: boolean = false;
   especialidades: string[] = [];
   especialistas: any[] = [];
   especialistasAux: any[] = [];
-  especialidadAux: string = '';
+  especialidadAux?: string;
   dias: Date[] = [];
   mostrarFechas: boolean = false;
   diaElegido?: Date;
@@ -87,12 +88,10 @@ export class SolicitarTurnoComponent implements OnInit{
     }
   }
 
-  onChangeEspecialidad($event: any){
+  onChangeEspecialidad(){
     this.especialistasAux = [];
     this.diaElegido = undefined;
-    this.especialidadAux = '';
-    if ($event.target.value) {
-      this.especialidadAux = $event.target.value;
+    if (this.especialistasAux) {
       this.especialistas.forEach((especialista: any) => {
         especialista.especialidad.forEach((especialidad: string) => {
           if(especialidad == this.especialidadAux){

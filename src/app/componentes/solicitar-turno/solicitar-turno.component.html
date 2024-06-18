@@ -1,27 +1,26 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <div [hidden]="onSpinner">
+    <div [hidden]="onSpinner" class="flexCss">
         <div class="articleContainer">
             <article class="card">
                 <h3 class="tituloCard">Especialidad</h3>
                 <p class="parrafo">Seleccione una especialidad</p>
                 <div class="inputDiv">
-                    <select id="inputEspecialidad" class="form-select" (change)="onChangeEspecialidad($event)">
-                        <option value="">Especialidad</option>
-                        <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</option>
-                    </select>
+                    <mat-radio-group [(ngModel)]="especialidadAux" (ngModelChange)="onChangeEspecialidad()">
+                        <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</mat-radio-button>
+                    </mat-radio-group>
                 </div>
             </article>
             <article class="card">
                 <h3 class="tituloCard">Especialista</h3>
                 <p class="parrafo">Seleccione el especialista</p>
                 <div class="inputDiv">
-                    <select id="inputEspecialista" class="form-select" [(ngModel)]="especialistaElegido"  (ngModelChange)="onChangeEspecialista()">
-                        <option value="" selected>Especialista</option>
-                        <option *ngFor="let especialista of especialistasAux" [ngValue]="especialista">
+                    <mat-radio-group [(ngModel)]="especialistaElegido"  (ngModelChange)="onChangeEspecialista()">
+                        <mat-radio-button *ngFor="let especialista of especialistasAux" [value]="especialista">
                             {{especialista.apellido + ', ' + especialista.nombre}}
-                        </option>
-                    </select>
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <p *ngIf="especialidadAux && especialistasAux.length == 0">No hay especialistas disponibles</p>
                 </div>
             </article>
             <article class="card" *ngIf="userIsAdmin">

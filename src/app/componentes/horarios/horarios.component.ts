@@ -55,8 +55,7 @@ export class HorariosComponent implements OnInit{
     this.horarios.forEach((horario: any) =>{
       if(horario.especialidad == this.especialidad[this.indiceEspecialidad] && horario.dia == this.dias[this.indice])
         this.horarioAux = horario;
-    })
-    console.log(this.horarioAux);
+    });
   }
 
   async disponibleOcupado(i: number){

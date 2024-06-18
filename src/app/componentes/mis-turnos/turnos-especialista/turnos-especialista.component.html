@@ -1,0 +1,75 @@
+<div *ngIf="userService.usuarioLogeado.user == 'especialista'" class="body">
+    <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
+    <div [hidden]="onSpinner || ejecutandoAccion">
+        <div class="articleContainer">
+            <article class="card filtro">
+                <h3 class="tituloCard">Especialidad</h3>
+                <p class="parrafo">Seleccione una especialidad</p>
+                <div class="inputDiv">
+                    <mat-radio-group [(ngModel)]="especialidadAux" (ngModelChange)="onChangeEspecialidad()">
+                        <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </article>
+            <article class="card filtro">
+                <h3 class="tituloCard">Paciente</h3>
+                <p class="parrafo">Seleccione al paciente</p>
+                <div class="inputDiv">
+                    <mat-radio-group [(ngModel)]="pacienteElegido"  (ngModelChange)="onChangePaciente()">
+                        <mat-radio-button *ngFor="let paciente of pacientesAux" [value]="paciente">
+                            {{paciente.apellido + ', ' + paciente.nombre}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <p *ngIf="especialidadAux && pacientesAux.length == 0">No hay pacientes disponibles</p>
+                </div>
+            </article>
+        </div>
+    </div>
+    <div *ngIf="mostrarLista && !ejecutandoAccion" class="turnos">
+        <article *ngIf="turnosAux.length == 0" class="card noEncontrado">
+            <h3 class="tituloCard">No se encontraron turnos</h3>
+        </article>
+        <article class="mb-5 mt-5 card turno" *ngFor="let turno of turnosAux">
+            <div class="fecha">
+                <p>{{turno.fecha | date:'dd/MM/yyyy'}}</p>
+                <p>{{turno.hora + ' Hs'}}</p>
+            </div>
+            <div class="datos">
+                <p *ngIf="!turno.aceptado && !turno.finalizado && !turno.cancelado" class="pendiente">Pendiente</p>
+                <p *ngIf="turno.aceptado && !turno.finalizado && !turno.cancelado" class="confirmado">Confirmado</p>
+                <p *ngIf="turno.cancelado" class="cancelado">Cancelado</p>
+                <p *ngIf="turno.finalizado && !turno.cancelado" class="finalizado">Finalizado</p>
+                <p><span class="span">Paciente: </span>{{turno.paciente.nombre + ', ' + turno.paciente.apellido}}</p>
+                <p><span class="span">Especialidad: </span>{{turno.especialidad}}</p>
+                <button *ngIf="!turno.finalizado && !turno.cancelado && !turno.aceptado" class="btn btn-primary aceptar" (click)="aceptarTurno(turno)">Aceptar</button>
+                <button *ngIf="!turno.finalizado && !turno.cancelado && !turno.aceptado" class="btn btn-primary rechazar" (click)="ejecutarCancelar(turno)">Rechazar</button>
+                <button *ngIf="!turno.finalizado && !turno.cancelado && turno.aceptado" class="btn btn-primary aceptar" (click)="ejecutarFinalizar(turno)">Finalizar</button>
+                <button *ngIf="!turno.finalizado && !turno.cancelado && turno.aceptado" class="btn btn-primary rechazar" (click)="ejecutarCancelar(turno)">Cancelar</button>
+                <button *ngIf="turno.finalizado && turno.resenia && !turno.verResenia" class="btn btn-primary aceptar" (click)="turno.verResenia = true">Reseña</button>
+                <button *ngIf="turno.verResenia" class="btn btn-primary cerrar" (click)="turno.verResenia = false">Cerrar</button>
+            </div>
+            <p *ngIf="turno.motivoCancelamiento"><span class="span">Motivo de cancelamiento: </span>{{turno.motivoCancelamiento}}</p>
+            <p *ngIf="turno.verResenia"><span class="span">Reseña: </span>{{turno.resenia}}</p>
+        </article>
+    </div>
+    <div *ngIf="accion == 'cancelar' && ejecutandoAccion" class="ejecutandoAccion cancelarAccion card">
+        <h3 class=" mb-3">Cancelar turno</h3>
+        <div class="input-group mb-3">
+            <input [(ngModel)]="motivoCancelamiento" type="text" class="form-control" placeholder="Ingrese el motivo">
+        </div>
+        <div class="botonesCancelar">
+            <button [disabled]="motivoCancelamiento.length < 4" class="btn btn-primary" (click)="cancelarTurno()">Cancelar turno</button>
+            <button class="btn btn-primary" (click)="ejecutandoAccion = false">Volver</button>
+        </div>
+    </div>
+    <div *ngIf="accion == 'finalizar' && ejecutandoAccion" class="ejecutandoAccion finalizarAccion card">
+        <h3 class=" mb-3">Finalizar turno</h3>
+        <div class="input-group mb-3">
+            <input [(ngModel)]="resenia" type="text" class="form-control" placeholder="Ingrese la reseña">
+        </div>
+        <div class="botonesCancelar">
+            <button [disabled]="resenia.length < 4" class="btn btn-primary" (click)="finalizarTurno()">Finalizar turno</button>
+            <button class="btn btn-primary" (click)="ejecutandoAccion = false">Volver</button>
+        </div>
+    </div>
+</div>

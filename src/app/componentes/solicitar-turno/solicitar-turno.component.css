@@ -1,8 +1,17 @@
-.body{
-    height: 84%;
-    max-height: 100%;
-    margin-top: 4%;
-    padding: 2%;
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.flexCss{
+    flex: 1;
+    margin-top: 6%;
 }
 
 .spinner{

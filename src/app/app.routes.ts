@@ -41,5 +41,9 @@ export const routes: Routes = [
             path: 'elegirTurno',
             loadComponent: () => import('./componentes/solicitar-turno/elegir-turno/elegir-turno.component').then(c => c.ElegirTurnoComponent)
         }]
-    }
+    },
+    { path: 'misTurnos',
+        loadComponent: () => import('./componentes/mis-turnos/mis-turnos.component').then(c => c.MisTurnosComponent),
+        // ...canActivate(()=> redirectUnauthorizedTo(['/login']))
+    },
 ];

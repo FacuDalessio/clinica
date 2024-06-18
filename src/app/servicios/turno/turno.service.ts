@@ -15,7 +15,17 @@ export class TurnoService {
         await updateDoc(ref, horario);
         return true;
     } catch (error) {
-        console.error("Error al actualizar usuario:", error);
+        console.error("Error al actualizar el horario:", error);
+        return false;
+    }
+  }
+
+  async updateTurno(turno: any, ref: DocumentReference<DocumentData, DocumentData>): Promise<boolean> {
+    try {
+        await updateDoc(ref, turno);
+        return true;
+    } catch (error) {
+        console.error("Error al actualizar el turno:", error);
         return false;
     }
   }
