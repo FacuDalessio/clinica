@@ -44,10 +44,12 @@
                 <button *ngIf="!turno.finalizado && !turno.cancelado" class="btn btn-primary cancelar" (click)="ejecutarCancelar(turno)">Cancelar</button>
             </div>
             <p *ngIf="turno.motivoCancelamiento"><span class="span">Motivo de cancelamiento: </span>{{turno.motivoCancelamiento}}</p>
+            <p *ngIf="turno.verResenia"><span class="span">Reseña: </span>{{turno.resenia}}</p>
             <div class="acciones">
-                <button *ngIf="turno.resenia && !turno.cancelado" class="btn btn-primary accion">Reseña</button>
-                <button *ngIf="turno.resenia && !turno.cancelado" class="btn btn-primary accion ml">Encuesta</button>
-                <button *ngIf="turno.calificar && !turno.cancelado" class="btn btn-primary accion ml">Calificar</button>
+                <button *ngIf="turno.resenia && !turno.cancelado && !turno.verResenia" class="btn btn-primary accion" (click)="turno.verResenia = true">Reseña</button>
+                <button *ngIf="turno.resenia && !turno.cancelado && !turno.verResenia && !turno.encuesta" class="btn btn-primary accion ml" (click)="ejecutarEncuesta(turno)">Encuesta</button>
+                <button *ngIf="turno.finalizado && !turno.cancelado && !turno.verResenia && !turno.calificacion" class="btn btn-primary accion ml" (click)="ejecutarCalificacion(turno)">Calificar</button>
+                <button *ngIf="turno.verResenia" class="btn btn-primary accion ml" (click)="turno.verResenia = false">Cerrar</button>
             </div>
         </article>
     </div>
@@ -58,6 +60,33 @@
         </div>
         <div class="botonesCancelar">
             <button [disabled]="motivoCancelamiento.length < 4" class="btn btn-primary" (click)="cancelarTurno()">Cancelar turno</button>
+            <button class="btn btn-primary" (click)="ejecutandoAccion = false">Volver</button>
+        </div>
+    </div>
+    <div *ngIf="accion == 'encuesta' && ejecutandoAccion" class="ejecutandoAccion cancelarAccion card">
+        <h3 class=" mb-3">Encuesta</h3>
+        <p>¿que le parecio la atencion?</p>
+        <div class="input-group mb-3">
+            <input [(ngModel)]="encuestaComentario" type="text" class="form-control">
+        </div>
+        <div class="botonesCancelar">
+            <button [disabled]="encuestaComentario.length < 4" class="btn btn-primary" (click)="guardarEncuesta()">Enviar</button>
+            <button class="btn btn-primary" (click)="ejecutandoAccion = false">Volver</button>
+        </div>
+    </div>
+    <div *ngIf="accion == 'calificacion' && ejecutandoAccion" class="ejecutandoAccion calificacionAccion card">
+        <h3 class=" mb-3">Calificacion</h3>
+        <div class="input-group mb-3">
+            <mat-radio-group [(ngModel)]="calificacion">
+                <mat-radio-button [value]="1">1 - Muy mala</mat-radio-button>
+                <mat-radio-button [value]="2">2 - Mala</mat-radio-button>
+                <mat-radio-button [value]="3">3 - Normal</mat-radio-button>
+                <mat-radio-button [value]="4">4 - Buena</mat-radio-button>
+                <mat-radio-button [value]="5">5 - Muy buena</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="botonesCancelar">
+            <button [disabled]="!calificacion" class="btn btn-primary" (click)="guardarCalificacion()">Enviar</button>
             <button class="btn btn-primary" (click)="ejecutandoAccion = false">Volver</button>
         </div>
     </div>

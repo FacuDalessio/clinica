@@ -17,6 +17,14 @@
     margin: 0 5%;
 }
 
+.calificacionAccion{
+    width: 40%;
+    height: 30%;
+    padding: 2%;
+    margin: 0 5%;
+    margin: auto;
+}
+
 .cancelarAccion{
     margin: auto;
 }

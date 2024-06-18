@@ -35,7 +35,9 @@ export class TurnosPacienteComponent implements OnInit{
   ejecutandoAccion: boolean = false;
   accion?: string;
   motivoCancelamiento: string = '';
+  encuestaComentario: string = '';
   turnoEnAccion?: any;
+  calificacion?: number;
 
   constructor(
     public userService: UsuarioService,
@@ -64,6 +66,7 @@ export class TurnosPacienteComponent implements OnInit{
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
         let turno: any = doc.data();
         turno.ref = doc.ref;
+        turno.verResenia = false;
         this.turnos.push(turno);
       });
     });
@@ -98,6 +101,88 @@ export class TurnosPacienteComponent implements OnInit{
     }
   }
 
+  ejecutarCalificacion(turno: any){
+    this.calificacion = undefined;
+    this.ejecutandoAccion = true;
+    this.turnoEnAccion = turno;
+    this.accion = 'calificacion';
+  }
+
+  guardarCalificacion(){
+    Swal.fire({
+      title: "¿Queres enviar la calificacion?",
+      text: `Fecha del turno: ${this.turnoEnAccion.fecha.getDate()}/${this.turnoEnAccion.fecha.getMonth() + 1}/${this.turnoEnAccion.fecha.getFullYear()} ${this.turnoEnAccion.hora}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: 'No',
+      confirmButtonText: "Si"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.turnoEnAccion.calificacion = this.calificacion;
+        delete this.turnoEnAccion.verResenia;
+        this.turnoService.updateTurno(this.turnoEnAccion, this.turnoEnAccion.ref)
+        .then(response =>{
+          Swal.fire({
+            title: "Enviado!",
+            text: "Se envio la calificacion con exito",
+            icon: "success"
+          });
+          this.ejecutandoAccion = false;
+        })
+        .catch(err =>{
+          Swal.fire({
+            title: "Error!",
+            text: "Se produjo un error al enviar la calificacion",
+            icon: "error"
+          });
+        });
+      }
+    });
+  }
+
+  ejecutarEncuesta(turno: any){
+    this.encuestaComentario = '';
+    this.ejecutandoAccion = true;
+    this.turnoEnAccion = turno;
+    this.accion = 'encuesta';
+  }
+
+  guardarEncuesta(){
+    Swal.fire({
+      title: "¿Queres enviar la encuesta?",
+      text: `Fecha del turno: ${this.turnoEnAccion.fecha.getDate()}/${this.turnoEnAccion.fecha.getMonth() + 1}/${this.turnoEnAccion.fecha.getFullYear()} ${this.turnoEnAccion.hora}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: 'No',
+      confirmButtonText: "Si"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.turnoEnAccion.encuesta = this.encuestaComentario;
+        delete this.turnoEnAccion.verResenia;
+        this.turnoService.updateTurno(this.turnoEnAccion, this.turnoEnAccion.ref)
+        .then(response =>{
+          Swal.fire({
+            title: "Enviado!",
+            text: "Se envio la encuesta con exito",
+            icon: "success"
+          });
+          this.ejecutandoAccion = false;
+        })
+        .catch(err =>{
+          Swal.fire({
+            title: "Error!",
+            text: "Se produjo un error al enviar la encuesta",
+            icon: "error"
+          });
+        });
+      }
+    });
+  }
+
   ejecutarCancelar(turno: any){
     this.motivoCancelamiento = '';
     this.ejecutandoAccion = true;
@@ -120,6 +205,7 @@ export class TurnosPacienteComponent implements OnInit{
         this.turnoEnAccion.cancelado = true;
         this.turnoEnAccion.finalizado = true;
         this.turnoEnAccion.motivoCancelamiento = this.motivoCancelamiento;
+        delete this.turnoEnAccion.verResenia;
         this.turnoService.updateTurno(this.turnoEnAccion, this.turnoEnAccion.ref)
         .then(response =>{
           Swal.fire({
