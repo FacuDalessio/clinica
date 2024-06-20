@@ -1,11 +1,13 @@
 <div class="body bg-body-secondary">
     <div class="datos">
         <div class="datosHeader">
-            <div class="img" *ngIf="usarioService.usuarioLogeado.user != 'paciente'">
+            <div *ngIf="usarioService.usuarioLogeado.user != 'paciente'">
                 <img [src]="usarioService.usuarioLogeado.img" alt="imgPerfil" class="img redondo">
             </div>
-            <div class="img" *ngIf="usarioService.usuarioLogeado.user == 'paciente'">
-                <img [src]="usarioService.usuarioLogeado.imgs[0]" alt="imgPerfil" class="img redondo">
+            <div class="imgPaciente" *ngIf="usarioService.usuarioLogeado.user == 'paciente'">
+                <button class="btn btn-primary btnCambiarImagen" (click)="cambiarImagenPaciente()"><</button>
+                <img [src]="usarioService.usuarioLogeado.imgs[indiceImagenPaciente]" alt="imgPerfil" class="img redondo">
+                <button class="btn btn-primary btnCambiarImagen" (click)="cambiarImagenPaciente()">></button>
             </div>
             <div class="nombreUser">
                 <h3>{{usarioService.usuarioLogeado.nombre + ' ' + usarioService.usuarioLogeado.apellido}}</h3>

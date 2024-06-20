@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Query } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { MatIconModule } from '@angular/material/icon';
 import { Firestore, QueryDocumentSnapshot, QuerySnapshot, addDoc, collection, onSnapshot, query } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -26,6 +26,7 @@ export class PerfilComponent implements OnInit{
   agregar: boolean = false;
   btnAgregarEspecialidad: boolean = false;
   btnPrincipalAgregar: boolean = false;
+  indiceImagenPaciente: number = 0;
 
   constructor(
     public usarioService: UsuarioService,
@@ -39,7 +40,7 @@ export class PerfilComponent implements OnInit{
         this.especialidades.push(doc.data()['detalle']);
       });
     });
-    if(!this.usarioService.usuarioLogeado.especialidad[1]){
+    if(this.usarioService.usuarioLogeado.especialidad && this.usarioService.usuarioLogeado.especialidad != 'N/A' && !this.usarioService.usuarioLogeado.especialidad[1]){
       this.btnPrincipalAgregar = true;
     }
   }
@@ -65,5 +66,13 @@ export class PerfilComponent implements OnInit{
     this.btnPrincipalAgregar = false;
     this.usarioService.usuarioLogeado.especialidad.push(this.especialidadAgregada);
     this.usarioService.updateUsuario(this.usarioService.usuarioLogeado, this.usarioService.usuarioLogeado.ref);
+  }
+
+  cambiarImagenPaciente(){
+    if (this.indiceImagenPaciente == 0) {
+      this.indiceImagenPaciente = 1;
+    }else{
+      this.indiceImagenPaciente = 0;
+    }
   }
 }

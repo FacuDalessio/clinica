@@ -4,6 +4,20 @@
     padding: 2%;
 }
 
+.imgPaciente{
+    display: flex;
+    align-items: center;
+    margin-left: -2%;
+    justify-content: space-around;
+}
+
+.btnCambiarImagen{
+    background-color: #E4002B;
+    border: #E4002B;
+    height: 1%;
+    margin: 2%;
+}
+
 .datos{
     margin: auto;
     width: 30%;
