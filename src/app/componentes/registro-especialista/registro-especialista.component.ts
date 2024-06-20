@@ -225,7 +225,7 @@ export class RegistroEspecialistaComponent implements OnInit{
       { nombre: this.nombre?.value, apellido: this.apellido?.value },
       this.edad?.value,
       this.dni?.value,
-      [this.especialidad?.value],
+      this.especialidad?.value,
       this.mail?.value,
       this.password?.value,
       ''
@@ -243,7 +243,7 @@ export class RegistroEspecialistaComponent implements OnInit{
             apellido: especialista.apellido,
             edad: especialista.edad,
             dni: especialista.dni,
-            especialidad: especialista.especialidad,
+            especialidad: [especialista.especialidad],
             mail: especialista.mail.toLowerCase(),
             password: especialista.password,
             img: this.imgUrl,
@@ -257,6 +257,7 @@ export class RegistroEspecialistaComponent implements OnInit{
     .then(response => {
         this.turnoService.generarHorariosSemana(especialista, especialista.especialidad[0])
         .then(response => {
+          this.usuarioService.logOut();
           this.onSpinner = false;
           this.router.navigate(['/login']);
         });
