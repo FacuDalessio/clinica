@@ -1,18 +1,16 @@
 <div class="body bg-body-secondary">
-    <div class="dias">
-        <button (click)="restarDia()" class="btn btn-primary atras"><</button>
-        <h1 class="dia">{{dias[indice]}}</h1>
-        <button (click)="sumarDia()" class="btn btn-primary adelante">></button>
-    </div>
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <div *ngIf="!onSpinner && horarioAux.hora" class="horarios">
+    <div *ngIf="!onSpinner && horarioAux && horarioAux.hora" class="horarios card">
+        
+    </div>
+    <!-- <div *ngIf="!onSpinner && horarioAux && horarioAux.hora" class="horarios">
         <div class="horaDiv" *ngFor="let horaAux of horarioAux.hora; let i = index">
             <button (click)="disponibleOcupado(i)" class="btn btn-primary" [class.disponible]="horarioAux.disponibilidad[i]" [class.ocupado]="!horarioAux.disponibilidad[i]">{{horaAux}}</button>
         </div>
-    </div>
-    <div class="dias">
+    </div> -->
+    <!-- <div class="dias">
         <button (click)="restarEspecialidad()" class="btn btn-primary atras"><</button>
         <h1 class="dia">{{especialidad[indiceEspecialidad]}}</h1>
         <button (click)="sumarEspecialidad()" class="btn btn-primary adelante">></button>
-    </div>
+    </div> -->
 </div>

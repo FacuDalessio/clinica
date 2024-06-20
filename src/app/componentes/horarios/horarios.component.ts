@@ -33,12 +33,24 @@ export class HorariosComponent implements OnInit{
   ){}
 
   async ngOnInit() {
-    const collPacientes = collection(this.firestore, "horarios");
-    const q = query(collPacientes, where("mail", "==", this.usuarioService.usuarioLogeado.mail));
+    const collHoarios = collection(this.firestore, "horarios");
+    const q = query(collHoarios, where("mail", "==", this.usuarioService.usuarioLogeado.mail));
     let horario: any;
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach( doc => {
+        horario = doc.data();
+        horario.ref = doc.ref;
+        this.horarios.push(horario);
+      });
+      if (this.horarios.length == 0) {
+        await this.turnoService.generarHorariosSemana(this.usuarioService.usuarioLogeado, this.usuarioService.usuarioLogeado.especialidad[0]);
+        if (this.usuarioService.usuarioLogeado.especialidad[1]) {
+          await this.turnoService.generarHorariosSemana(this.usuarioService.usuarioLogeado, this.usuarioService.usuarioLogeado.especialidad[1]);
+        }
+      }
+      const querySnapshot2 = await getDocs(q);
+      querySnapshot2.forEach( doc => {
         horario = doc.data();
         horario.ref = doc.ref;
         this.horarios.push(horario);

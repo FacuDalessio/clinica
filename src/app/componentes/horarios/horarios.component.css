@@ -4,46 +4,19 @@
     padding: 2%;
 }
 
-.dia{
-    text-align: center;
+.horarios{
+    width: 50%;
+    margin: auto;
 }
 
-.horarios {
+.diaDiv{
     display: flex;
-    flex-wrap: wrap;
-    width: 60%;
-    margin: 2% auto;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .spinner{
     margin: 5% auto;
-}
-
-.horaDiv{
-    flex-basis: calc(100% / 5);
-    margin: 1%;
-    border-radius: 2%;
-}
-
-.ocupado{
-    width: 100%;
-    background-color: #E4002B;
-    border: #E4002B;
-}
-
-.disponible{
-    width: 100%;
-    background-color: #4f772d;
-    border: #4f772d;
-}
-
-.dias{
-    display: flex;
-    align-items: center;
-    width: 60%;
-    justify-content: space-between;
-    margin: auto;
 }
 
 .adelante, .atras{

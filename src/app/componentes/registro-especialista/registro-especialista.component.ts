@@ -255,12 +255,9 @@ export class RegistroEspecialistaComponent implements OnInit{
         return sendEmailVerification(this.usuarioService.getUserLogeado()!);
     })
     .then(response => {
-        this.turnoService.generarHorariosSemana(especialista, especialista.especialidad[0])
-        .then(response => {
-          this.usuarioService.logOut();
-          this.onSpinner = false;
-          this.router.navigate(['/login']);
-        });
+      this.usuarioService.logOut();
+      this.onSpinner = false;
+      this.router.navigate(['/login']);
     })
     .catch(error => {
         console.log(error);
