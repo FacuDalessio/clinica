@@ -2,13 +2,16 @@ import { Routes } from '@angular/router';
 import { adminGuard } from './guards/admin.guard';
 import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard'
 import { especialistaGuard } from './guards/especialista.guard';
-import { pacienteGuard } from './guards/paciente.guard';
 import { solicitarTurnoGuard } from './guards/solicitar-turno.guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: "full" },
+    // { path: '', redirectTo: '/home', pathMatch: "full" },
+    { path: '',
+        loadComponent: () => import('./componentes/bienvenido/bienvenido.component').then(c => c.BienvenidoComponent)
+    },
     { path: 'home',
-        loadComponent: () => import('./componentes/bienvenido/bienvenido.component').then(c => c.BienvenidoComponent) 
+        loadComponent: () => import('./componentes/home/home.component').then(c => c.HomeComponent),
+        ...canActivate(()=> redirectUnauthorizedTo(['']))
     },
     { path: 'registro',
         loadComponent: () => import('./componentes/registro/registro.component').then(c => c.RegistroComponent) 
@@ -44,6 +47,6 @@ export const routes: Routes = [
     },
     { path: 'misTurnos',
         loadComponent: () => import('./componentes/mis-turnos/mis-turnos.component').then(c => c.MisTurnosComponent),
-        // ...canActivate(()=> redirectUnauthorizedTo(['/login']))
+        ...canActivate(()=> redirectUnauthorizedTo(['/login']))
     },
 ];
