@@ -20,6 +20,18 @@ export class TurnoService {
     }
   }
 
+  updateHorarios(horarios: any[]): boolean {
+    try {
+      horarios.forEach(async (horario: any) =>{
+        await updateDoc(horario.ref, horario);
+      })
+      return true;
+    } catch (error) {
+        console.error("Error al actualizar el horario:", error);
+        return false;
+    }
+  }
+
   async updateTurno(turno: any, ref: DocumentReference<DocumentData, DocumentData>): Promise<boolean> {
     try {
         await updateDoc(ref, turno);
@@ -61,6 +73,8 @@ export class TurnoService {
       especialista: `${especialista.nombre}, ${especialista.apellido}`,
       mail: especialista.mail.toLowerCase(),
       especialidad: especialidad,
+      desde: 0,
+      hasta: 0
     };
     return horario;
   }

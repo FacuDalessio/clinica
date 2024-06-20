@@ -1,7 +1,17 @@
 .body{
-    height: 82%;
-    margin-top: 4%;
-    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.flex{
+    flex: 1;
+    margin-top: 10%;
 }
 
 .horarios{
@@ -19,7 +29,13 @@
     margin: 5% auto;
 }
 
-.adelante, .atras{
+.adelante, .atras, .btnGuardar{
     background-color: #E4002B;
     border: #E4002B;
+}
+
+.dias{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }

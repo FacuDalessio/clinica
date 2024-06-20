@@ -1,16 +1,107 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <div *ngIf="!onSpinner && horarioAux && horarioAux.hora" class="horarios card">
-        
+    <div class="flex">
+        <div *ngIf="!onSpinner && horariosAux.length > 0" class="horarios card">
+            <div class="dias">
+                <button (click)="restarEspecialidad()" class="btn btn-primary atras"><</button>
+                <h1 class="dia">{{especialidad[indiceEspecialidad]}}</h1>
+                <button (click)="sumarEspecialidad()" class="btn btn-primary adelante">></button>
+            </div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Dia</th>
+                    <th scope="col">Desde</th>
+                    <th scope="col">Hasta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Lunes</th>
+                    <td>
+                        <select class="form-select" [(ngModel)]="lunes.desde">
+                            <option *ngFor="let hora of lunes.hora; let i = index" [value]="i" [selected]="lunes.desde == i">{{hora}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" [(ngModel)]="lunes.hasta">
+                            <option *ngFor="let hora of lunes.hora; let i = index" [value]="i" [selected]="lunes.hasta == i">{{hora}}</option>
+                        </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Martes</th>
+                    <td>
+                        <select class="form-select" [(ngModel)]="martes.desde">
+                            <option *ngFor="let hora of martes.hora; let i = index" [value]="i" [selected]="martes.desde == i">{{hora}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" [(ngModel)]="martes.hasta">
+                            <option *ngFor="let hora of martes.hora; let i = index" [value]="i" [selected]="martes.hasta == i">{{hora}}</option>
+                        </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Miercoles</th>
+                    <td>
+                        <select class="form-select" [(ngModel)]="miercoles.desde">
+                            <option *ngFor="let hora of miercoles.hora; let i = index" [value]="i" [selected]="miercoles.desde == i">{{hora}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" [(ngModel)]="miercoles.hasta">
+                            <option *ngFor="let hora of miercoles.hora; let i = index" [value]="i" [selected]="miercoles.hasta == i">{{hora}}</option>
+                        </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Jueves</th>
+                    <td>
+                        <select class="form-select" [(ngModel)]="jueves.desde">
+                            <option *ngFor="let hora of jueves.hora; let i = index" [value]="i" [selected]="jueves.desde == i">{{hora}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" [(ngModel)]="jueves.hasta">
+                            <option *ngFor="let hora of jueves.hora; let i = index" [value]="i" [selected]="jueves.hasta == i">{{hora}}</option>
+                        </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Viernes</th>
+                    <td>
+                        <select class="form-select" [(ngModel)]="viernes.desde">
+                            <option *ngFor="let hora of viernes.hora; let i = index" [value]="i" [selected]="viernes.desde == i">{{hora}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" [(ngModel)]="viernes.hasta">
+                            <option *ngFor="let hora of viernes.hora; let i = index" [value]="i" [selected]="viernes.hasta == i">{{hora}}</option>
+                        </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Sabado</th>
+                    <td>
+                        <select class="form-select" [(ngModel)]="sabado.desde">
+                            <option *ngFor="let hora of sabado.hora; let i = index" [value]="i" [selected]="sabado.desde == i">{{hora}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" [(ngModel)]="sabado.hasta">
+                            <option *ngFor="let hora of sabado.hora; let i = index" [value]="i" [selected]="sabado.hasta == i">{{hora}}</option>
+                        </select>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+            <button (click)="guardarHorarios()" class="btn btn-primary btnGuardar">Guardar</button>
+        </div>
     </div>
     <!-- <div *ngIf="!onSpinner && horarioAux && horarioAux.hora" class="horarios">
         <div class="horaDiv" *ngFor="let horaAux of horarioAux.hora; let i = index">
             <button (click)="disponibleOcupado(i)" class="btn btn-primary" [class.disponible]="horarioAux.disponibilidad[i]" [class.ocupado]="!horarioAux.disponibilidad[i]">{{horaAux}}</button>
         </div>
-    </div> -->
-    <!-- <div class="dias">
-        <button (click)="restarEspecialidad()" class="btn btn-primary atras"><</button>
-        <h1 class="dia">{{especialidad[indiceEspecialidad]}}</h1>
-        <button (click)="sumarEspecialidad()" class="btn btn-primary adelante">></button>
     </div> -->
 </div>
