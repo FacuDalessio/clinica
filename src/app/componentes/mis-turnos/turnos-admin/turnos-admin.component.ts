@@ -75,16 +75,24 @@ export class TurnosAdminComponent implements OnInit{
   onChangeEspecialidad(){
     this.especialistasAux = [];
     this.especialistaElegido = undefined;
+    this.turnosAux = [];
     if (this.especialidadAux) {
       this.turnos.forEach((turno: any) => {
         if (turno.especialidad == this.especialidadAux) {
           if(!(turno.fecha instanceof Date))
             turno.fecha = turno.fecha.toDate();
           this.turnosAux.push(turno);
+          
           this.especialistas.forEach((especialista: any) => {
             especialista.especialidad.forEach((especialidad: string) => {
               if(especialidad == this.especialidadAux){
-                this.especialistasAux.push(especialista);
+                let cont = 0;
+                this.especialistasAux.forEach((esp: any) =>{
+                  if(esp.dni == turno.especialista.dni)
+                    cont++;
+                });
+                  if(cont == 0)
+                    this.especialistasAux.push(especialista);
               }
             })
           });
