@@ -27,7 +27,7 @@ import {MatRadioModule} from '@angular/material/radio';
 export class SolicitarTurnoComponent implements OnInit{
 
   onSpinner: boolean = true;
-  especialidades: string[] = [];
+  especialidades: any[] = [];
   especialistas: any[] = [];
   especialistasAux: any[] = [];
   especialidadAux?: string;
@@ -54,7 +54,7 @@ export class SolicitarTurnoComponent implements OnInit{
     const qEspecialidades = query(collection(this.firestore, "especialidades"));
     onSnapshot(qEspecialidades, (snapshot: QuerySnapshot) => {
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
-        this.especialidades.push(doc.data()['detalle']);
+        this.especialidades.push(doc.data());
       });
       this.onSpinner = false;
     });
@@ -88,9 +88,11 @@ export class SolicitarTurnoComponent implements OnInit{
     }
   }
 
-  onChangeEspecialidad(){
+  onChangeEspecialidad(especialidad: any){
     this.especialistasAux = [];
     this.diaElegido = undefined;
+    this.especialidadAux = especialidad.detalle;
+    this.especialistaElegido = null;
     if (this.especialistasAux) {
       this.especialistas.forEach((especialista: any) => {
         especialista.especialidad.forEach((especialidad: string) => {
@@ -102,7 +104,8 @@ export class SolicitarTurnoComponent implements OnInit{
     }
   }
 
-  onChangeEspecialista() {
+  onChangeEspecialista(especialista: any) {
+    this.especialistaElegido = especialista;
     this.mostrarFechas = false;
     this.diaElegido = undefined;
     if (this.especialistaElegido) {

@@ -5,23 +5,20 @@
             <article class="card">
                 <h3 class="tituloCard">Especialidad</h3>
                 <p class="parrafo">Seleccione una especialidad</p>
-                <div class="inputDiv">
-                    <mat-radio-group [(ngModel)]="especialidadAux" (ngModelChange)="onChangeEspecialidad()">
-                        <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</mat-radio-button>
-                    </mat-radio-group>
+                <p class="parrafo" *ngIf="especialidadAux"><span class="span">Seleccionado: </span>{{especialidadAux}}</p>
+                <div class="botones">
+                    <button (click)="onChangeEspecialidad(especialidad)" class="btn btn-primary redondo" *ngFor="let especialidad of especialidades"  [style.backgroundImage]="'url(' + especialidad.img + ')'"></button>
                 </div>
             </article>
             <article class="card">
                 <h3 class="tituloCard">Especialista</h3>
-                <p class="parrafo">Seleccione el especialista</p>
-                <div class="inputDiv">
-                    <mat-radio-group [(ngModel)]="especialistaElegido"  (ngModelChange)="onChangeEspecialista()">
-                        <mat-radio-button *ngFor="let especialista of especialistasAux" [value]="especialista">
-                            {{especialista.apellido + ', ' + especialista.nombre}}
-                        </mat-radio-button>
-                    </mat-radio-group>
-                    <p *ngIf="especialidadAux && especialistasAux.length == 0">No hay especialistas disponibles</p>
+                <p class="parrafo">Seleccione un especialista</p>
+                <p class="parrafo" *ngIf="especialistaElegido"><span class="span">Seleccionado: </span>{{especialistaElegido.apellido + ", " + especialistaElegido.nombre}}</p>
+                <div class="botones" *ngFor="let especialista of especialistasAux">
+                    <button (click)="onChangeEspecialista(especialista)" class="btn btn-primary redondo" [style.backgroundImage]="'url(' + especialista.img + ')'"></button>
+                    <p>{{especialista.apellido + ", " + especialista.nombre}}</p>
                 </div>
+                <p *ngIf="especialidadAux && especialistasAux.length == 0">No hay especialistas disponibles</p>
             </article>
             <article class="card" *ngIf="userIsAdmin">
                 <h3 class="tituloCard">Paciente</h3>
@@ -35,8 +32,8 @@
         </div>
         <div class="fechas" [hidden]="!mostrarFechas">
             <div class="diaDiv" *ngFor="let dia of dias; let i = index">
-                <button class="btn btn-primary" (click)="diaElegido = dia" >
-                    {{ turnoService.obtenerNombreDia(dia) }} - {{ dia | date:'dd/MM/yyyy' }}
+                <button class="btn btn-primary btnDia" (click)="diaElegido = dia" [class.seleccionado]="diaElegido == dia">
+                    {{ turnoService.obtenerNombreDia(dia) }} - {{ dia | date:'dd/MM' }}
                 </button>
             </div>
         </div>

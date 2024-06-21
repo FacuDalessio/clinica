@@ -5,12 +5,14 @@ import { CommonModule } from '@angular/common';
 import { QueryDocumentSnapshot, QuerySnapshot, addDoc, query } from 'firebase/firestore';
 import { UsuarioService } from '../../../servicios/usuario/usuario.service';
 import Swal from 'sweetalert2';
+import { HoraPipe } from '../../../pipes/hora.pipe';
 
 @Component({
   selector: 'app-elegir-turno',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    HoraPipe
   ],
   templateUrl: './elegir-turno.component.html',
   styleUrl: './elegir-turno.component.css'

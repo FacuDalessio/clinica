@@ -9,28 +9,31 @@ import { DocumentData, DocumentReference, query, where } from 'firebase/firestor
 })
 export class UsuarioService {
 
-  usuarioLogeado: any = {
-    nombre: "Nicolas",
-    apellido: "Ferro",
-    edad: 54,
-    dni: "19837453",
-    obraSocial: "N/A",
-    mail: "03ofjt9p@cj.mintemail.com",
-    especialidad: ["pediatria", "cardiologia"],
-    user: 'especialista',
-    img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86"
-  };
-
   // usuarioLogeado: any = {
-  //   nombre: "Carlos",
-  //   apellido: "Perez",
-  //   edad: 47,
+  //   nombre: "Nicolas",
+  //   apellido: "Ferro",
+  //   edad: 54,
   //   dni: "19837453",
-  //   mail: "dsy8ov10@cj.mintemail.com",
-  //   obraSocial: "Luis pasteur",
-  //   user: 'paciente',
-  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2FsethRogen.jpg?alt=media&token=1e385b88-97c3-4c24-b084-8801f754014a"
+  //   obraSocial: "N/A",
+  //   mail: "03ofjt9p@cj.mintemail.com",
+  //   especialidad: ["pediatria", "cardiologia"],
+  //   user: 'especialista',
+  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Ffrancella1.jpg?alt=media&token=3a1ab86b-e6d2-4909-bc43-3d83116bdc86"
   // };
+
+  usuarioLogeado: any = {
+    nombre: "Carlos",
+    apellido: "Perez",
+    edad: 47,
+    dni: "20738293",
+    mail: "dsy8ov10@cj.mintemail.com",
+    obraSocial: "Luis pasteur",
+    user: 'paciente',
+    imgs: [
+      "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2FsethRogen.jpg?alt=media&token=1e385b88-97c3-4c24-b084-8801f754014a",
+      "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2FsethRogen2.jpg?alt=media&token=778a9f0a-2a2a-46c4-ace0-a866b989b1e5"
+    ]
+  };
 
   // usuarioLogeado: any = {
   //   nombre: "Norman",

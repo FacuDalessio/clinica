@@ -14,6 +14,19 @@ html, body {
     margin-top: 6%;
 }
 
+.redondo{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    margin: 0 1%;
+    background-color: #E4002B;
+    border: #E4002B;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-image: url("../../../assets/especialista.jpg");
+}
+
 .spinner{
     margin: 5% auto;
 }
@@ -67,10 +80,20 @@ html, body {
     margin: 0 5%;
 }
 
-.btn{
+.btnDia{
     background-color: #E4002B;
     border: #E4002B;
     width: 30%;
     margin: 0 auto;
     color: white;
+}
+
+.seleccionado{
+    background-color: #84a98c;
+    border: #84a98c;
+}
+
+.span{
+    font-weight: 700;
+    color: #84a98c;   
 }
