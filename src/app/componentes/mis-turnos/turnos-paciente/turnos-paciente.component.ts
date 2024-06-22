@@ -85,12 +85,21 @@ export class TurnosPacienteComponent implements OnInit{
             this.historiasMedicas.push(historiaMedica);
           }
         });
+        this.historiasMedicas.forEach((historia: any) =>{
+          this.turnos.forEach((turno: any) =>{
+            if (turno.id == historia.turno) {
+              turno.verHistoria = historia;
+            }
+          });
+        });
     });
   }
 
   onChangeBuscar(){
     this.turnosAux = [];
     this.mostrarLista = true;
+    this.especialidadAux = '';
+    this.especialistasAux = [];
     if (this.buscar != '') {
       this.turnos.forEach((turno: any) =>{
         if (turno.especialista.apellido == this.buscar || turno.especialista.nombre == this.buscar || turno.fecha.getDate() == this.buscar || turno.fecha.getMonth() == this.buscar
@@ -118,6 +127,7 @@ export class TurnosPacienteComponent implements OnInit{
     this.especialistasAux = [];
     this.mostrarLista = false;
     this.especialistaElegido = undefined;
+    this.buscar = '';
     if (this.especialidadAux) {
       this.especialistas.forEach((especialista: any) => {
         especialista.especialidad.forEach((especialidad: string) => {

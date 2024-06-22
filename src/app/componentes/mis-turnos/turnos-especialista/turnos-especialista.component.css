@@ -40,6 +40,14 @@
     margin: auto;
 }
 
+.datosFijos, .datosDinamicos{
+    display: flex;
+    align-items: center;
+}
+
+.datosFijos p, .datosDinamicos p{
+    margin-right: 1%;
+}
 
 .articleContainer{
     display: flex;

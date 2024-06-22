@@ -2,11 +2,6 @@
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
     <div [hidden]="onSpinner || ejecutandoAccion">
         <div class="articleContainer">
-            <!-- <article class="card filtro">
-                <h3 class="tituloCard">Especialidad</h3>
-                <p class="parrafo">Seleccione una especialidad</p>
-                
-            </article> -->
             <article class="card buscar">
                 <div class="mb-2 input-group">
                     <div class="inputDiv inputBuscar">
@@ -31,18 +26,6 @@
                     <p *ngIf="especialidadAux && especialistasAux.length == 0">No hay especialistas disponibles</p>
                 </div>
             </article>
-            <!-- <article class="card filtro">
-                <h3 class="tituloCard">Especialista</h3>
-                <p class="parrafo">Seleccione el especialista</p>
-                <div class="inputDiv">
-                    <mat-radio-group [(ngModel)]="especialistaElegido"  (ngModelChange)="onChangeEspecialista()">
-                        <mat-radio-button *ngFor="let especialista of especialistasAux" [value]="especialista">
-                            {{especialista.apellido + ', ' + especialista.nombre}}
-                        </mat-radio-button>
-                    </mat-radio-group>
-                    <p *ngIf="especialidadAux && especialistasAux.length == 0">No hay especialistas disponibles</p>
-                </div>
-            </article> -->
         </div>
     </div>
     <div *ngIf="mostrarLista && !ejecutandoAccion" class="turnos">
@@ -70,6 +53,20 @@
                 <button *ngIf="turno.resenia && !turno.cancelado && !turno.verResenia && !turno.encuesta" class="btn btn-primary accion ml" (click)="ejecutarEncuesta(turno)">Encuesta</button>
                 <button *ngIf="turno.finalizado && !turno.cancelado && !turno.verResenia && !turno.calificacion" class="btn btn-primary accion ml" (click)="ejecutarCalificacion(turno)">Calificar</button>
                 <button *ngIf="turno.verResenia" class="btn btn-primary accion ml" (click)="turno.verResenia = false">Cerrar</button>
+            </div>
+            <div class="historiaMedica" *ngIf="turno.verHistoria">
+                <hr class="linea">
+                <div class="datosFijos">
+                    <p><span class="span">Altura: </span>{{turno.verHistoria.altura}}</p>
+                    <p><span class="span">Peso: </span>{{turno.verHistoria.peso}}</p>
+                    <p><span class="span">Temperatura: </span>{{turno.verHistoria.temperatura}}</p>
+                    <p><span class="span">Presion: </span>{{turno.verHistoria.presion}}</p>
+                </div>
+                <div class="datosDinamicos">
+                    <p *ngIf="turno.verHistoria.clave1"><span class="span">{{turno.verHistoria.clave1}} </span>{{turno.verHistoria.valor1}}</p>
+                    <p *ngIf="turno.verHistoria.clave2"><span class="span">{{turno.verHistoria.clave2}} </span>{{turno.verHistoria.valor2}}</p>
+                    <p *ngIf="turno.verHistoria.clave3"><span class="span">{{turno.verHistoria.clave3}} </span>{{turno.verHistoria.valor3}}</p>
+                </div>
             </div>
         </article>
     </div>

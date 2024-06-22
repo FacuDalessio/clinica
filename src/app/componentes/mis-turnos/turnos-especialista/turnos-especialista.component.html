@@ -26,27 +26,6 @@
                     <p *ngIf="especialidadAux && pacientesAux.length == 0">No hay pacientes disponibles</p>
                 </div>
             </article>
-            <!-- <article class="card filtro">
-                <h3 class="tituloCard">Especialidad</h3>
-                <p class="parrafo">Seleccione una especialidad</p>
-                <div class="inputDiv">
-                    <mat-radio-group [(ngModel)]="especialidadAux" (ngModelChange)="onChangeEspecialidad()">
-                        <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</mat-radio-button>
-                    </mat-radio-group>
-                </div>
-            </article> -->
-            <!-- <article class="card filtro">
-                <h3 class="tituloCard">Paciente</h3>
-                <p class="parrafo">Seleccione al paciente</p>
-                <div class="inputDiv">
-                    <mat-radio-group [(ngModel)]="pacienteElegido"  (ngModelChange)="onChangePaciente()">
-                        <mat-radio-button *ngFor="let paciente of pacientesAux" [value]="paciente">
-                            {{paciente.apellido + ', ' + paciente.nombre}}
-                        </mat-radio-button>
-                    </mat-radio-group>
-                    <p *ngIf="especialidadAux && pacientesAux.length == 0">No hay pacientes disponibles</p>
-                </div>
-            </article> -->
         </div>
     </div>
     <div *ngIf="mostrarLista && !ejecutandoAccion" class="turnos">
@@ -74,6 +53,20 @@
             </div>
             <p *ngIf="turno.motivoCancelamiento"><span class="span">Motivo de cancelamiento: </span>{{turno.motivoCancelamiento}}</p>
             <p *ngIf="turno.verResenia"><span class="span">Reseña: </span>{{turno.resenia}}</p>
+            <div class="historiaMedica" *ngIf="turno.verHistoria">
+                <hr class="linea">
+                <div class="datosFijos">
+                    <p><span class="span">Altura: </span>{{turno.verHistoria.altura}}</p>
+                    <p><span class="span">Peso: </span>{{turno.verHistoria.peso}}</p>
+                    <p><span class="span">Temperatura: </span>{{turno.verHistoria.temperatura}}</p>
+                    <p><span class="span">Presion: </span>{{turno.verHistoria.presion}}</p>
+                </div>
+                <div class="datosDinamicos">
+                    <p *ngIf="turno.verHistoria.clave1"><span class="span">{{turno.verHistoria.clave1}} </span>{{turno.verHistoria.valor1}}</p>
+                    <p *ngIf="turno.verHistoria.clave2"><span class="span">{{turno.verHistoria.clave2}} </span>{{turno.verHistoria.valor2}}</p>
+                    <p *ngIf="turno.verHistoria.clave3"><span class="span">{{turno.verHistoria.clave3}} </span>{{turno.verHistoria.valor3}}</p>
+                </div>
+            </div>
         </article>
     </div>
     <div *ngIf="accion == 'cancelar' && ejecutandoAccion" class="ejecutandoAccion cancelarAccion card">

@@ -38,6 +38,15 @@
     width: 80%;
 }
 
+.datosFijos, .datosDinamicos{
+    display: flex;
+    align-items: center;
+}
+
+.datosFijos p, .datosDinamicos p{
+    margin-right: 1%;
+}
+
 .buscar{
     width: 30%;
     height: 30%;

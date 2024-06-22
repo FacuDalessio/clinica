@@ -91,6 +91,13 @@ export class TurnosEspecialistaComponent implements OnInit{
             this.historiasMedicas.push(historiaMedica);
           }
         });
+        this.historiasMedicas.forEach((historia: any) =>{
+          this.turnos.forEach((turno: any) =>{
+            if (turno.id == historia.turno) {
+              turno.verHistoria = historia;
+            }
+          });
+        });
     });
   }
 
@@ -139,6 +146,7 @@ export class TurnosEspecialistaComponent implements OnInit{
     this.mostrarLista = true;
     this.especialidadAux = '';
     this.pacienteElegido = null;
+    this.pacientesAux = [];
     if (this.buscar != '') {
       this.turnos.forEach((turno: any) =>{
         if (turno.paciente.apellido == this.buscar || turno.paciente.nombre == this.buscar || turno.fecha.getDate() == this.buscar || turno.fecha.getMonth() == this.buscar
@@ -198,6 +206,7 @@ export class TurnosEspecialistaComponent implements OnInit{
     this.pacienteElegido = undefined;
     this.turnosAux= [];
     this.mostrarLista = false;
+    this.buscar = '';
     if (this.especialidadAux) {
       this.turnos.forEach((turno: any) => {
         if (turno.especialidad == this.especialidadAux) {
