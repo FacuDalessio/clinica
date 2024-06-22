@@ -62,14 +62,79 @@
             <button class="btn btn-primary" (click)="ejecutandoAccion = false">Volver</button>
         </div>
     </div>
-    <div *ngIf="accion == 'finalizar' && ejecutandoAccion" class="ejecutandoAccion finalizarAccion card">
-        <h3 class=" mb-3">Finalizar turno</h3>
+    <div *ngIf="accion == 'finalizar' && ejecutandoAccion" class="ejecutandoAccion finalizarAccion card" [hidden]="onSpinner">
+        <h3 class=" mb-3 titulo">Finalizar turno</h3>
         <div class="input-group mb-3">
             <input [(ngModel)]="resenia" type="text" class="form-control" placeholder="Ingrese la reseña">
         </div>
-        <div class="botonesCancelar">
-            <button [disabled]="resenia.length < 4" class="btn btn-primary" (click)="finalizarTurno()">Finalizar turno</button>
-            <button class="btn btn-primary" (click)="ejecutandoAccion = false">Volver</button>
+        <div class="formContainer card">
+            <p class="titulo">Historia clinica</p>
+            <hr class="linea">
+            <div class="card-body">
+                <form [formGroup]="form">
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="alturaHasError()">
+                            <label class="form-label" for="inputAltura">Altura</label>
+                            <input [class.is-invalid]="alturaHasError()" formControlName="altura" placeholder="Ingrese la altura" type="number" class="form-control" id="inputAltura">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{alturaHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="pesoHasError()">
+                            <label class="form-label" for="inputPeso">Peso</label>
+                            <input [class.is-invalid]="pesoHasError()" formControlName="peso" placeholder="Ingrese el peso" type="number" class="form-control" id="inputPeso">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{pesoHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="temperaturaHasError()">
+                            <label class="form-label" for="inputTemperatura">Temperatura</label>
+                            <input [class.is-invalid]="temperaturaHasError()" formControlName="temperatura" placeholder="Ingrese la temperatura" type="number" class="form-control" id="inputTemperatura">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{temperaturaHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group has-validation">
+                        <div class="inputDiv" [class.is-invalid]="presionHasError()">
+                            <label class="form-label" for="inputPresion">Presion</label>
+                            <input [class.is-invalid]="presionHasError()" formControlName="presion" placeholder="Ingrese la altura" type="number" class="form-control" id="inputPresion">
+                        </div>
+                        <div class="invalid-feedback">
+                            {{presionHasError()}}
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group">
+                        <div class="inputDiv cargaDatos">
+                            <label class="form-label" for="inputClave1">Dato 1</label>
+                            <input  formControlName="clave1" placeholder="Ingrese la clave" type="text" class="form-control" id="inputClave1">
+                            <input  formControlName="valor1" placeholder="Ingrese el valor" type="text" class="form-control" id="inputValor1">
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group">
+                        <div class="inputDiv cargaDatos">
+                            <label class="form-label" for="inputClave2">Dato 2</label>
+                            <input  formControlName="clave2" placeholder="Ingrese la clave" type="text" class="form-control" id="inputClave2">
+                            <input  formControlName="valor2" placeholder="Ingrese el valor" type="text" class="form-control" id="inputValor2">
+                        </div>
+                    </div>
+                    <div class="mb-2 input-group">
+                        <div class="inputDiv cargaDatos">
+                            <label class="form-label" for="inputClave1">Dato 3</label>
+                            <input  formControlName="clave3" placeholder="Ingrese la clave" type="text" class="form-control" id="inputClave3">
+                            <input  formControlName="valor3" placeholder="Ingrese el valor" type="text" class="form-control" id="inputValor3">
+                        </div>
+                    </div>
+                    <div class="mb-2 mt-3">
+                        <button class="btn btn-primary btnFinalizar" (click)="finalizarTurno()" [disabled]="!form.valid || resenia.length < 4">Finalizar turno</button>
+                        <button class="btn btn-primary btnFinalizar" (click)="ejecutandoAccion = false">Volver</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

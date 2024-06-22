@@ -6,6 +6,7 @@ import { QueryDocumentSnapshot, QuerySnapshot, addDoc, query } from 'firebase/fi
 import { UsuarioService } from '../../../servicios/usuario/usuario.service';
 import Swal from 'sweetalert2';
 import { HoraPipe } from '../../../pipes/hora.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-elegir-turno',
@@ -29,7 +30,8 @@ export class ElegirTurnoComponent implements OnChanges, OnInit {
 
   constructor(
     private turnoService: TurnoService,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -104,6 +106,7 @@ export class ElegirTurnoComponent implements OnChanges, OnInit {
             text: "Su turno se agendo con exito",
             icon: "success"
           });
+          this.router.navigate(['/misTurnos'])
         })
         .catch(err =>{
           Swal.fire({

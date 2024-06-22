@@ -2,17 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../../servicios/usuario/usuario.service';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { TurnoService } from '../../../servicios/turno/turno.service';
 import Swal from 'sweetalert2';
 import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore';
-import { Firestore, collection, onSnapshot, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, onSnapshot, where } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-turnos-especialista',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
     CommonModule,
     MatProgressSpinnerModule,
     FormsModule,
@@ -37,6 +38,18 @@ export class TurnosEspecialistaComponent implements OnInit{
   resenia: string = '';
   turnoEnAccion?: any;
   accion?: string;
+  form: FormGroup = new FormGroup({
+    'altura': new FormControl('', [Validators.required]),
+    'peso': new FormControl('', [Validators.required]),
+    'temperatura': new FormControl('', [Validators.required]),
+    'presion': new FormControl('', [Validators.required]),
+    'clave1': new FormControl(''),
+    'clave2': new FormControl(''),
+    'clave3': new FormControl(''),
+    'valor3': new FormControl(''),
+    'valor2': new FormControl(''),
+    'valor1': new FormControl('')
+  });
 
   constructor(
     public userService: UsuarioService,
@@ -63,6 +76,78 @@ export class TurnosEspecialistaComponent implements OnInit{
           this.turnos.push(turno);
       });
     });
+  }
+
+  get altura() {
+    return this.form.get('altura')?.value;
+  }
+
+  get peso() {
+    return this.form.get('peso')?.value;
+  }
+
+  get temperatura() {
+    return this.form.get('temperatura')?.value;
+  }
+
+  get presion() {
+    return this.form.get('presion')?.value;
+  }
+
+  get clave1() {
+    return this.form.get('clave1')?.value;
+  }
+
+  get clave2() {
+    return this.form.get('clave2')?.value;
+  }
+
+  get clave3() {
+    return this.form.get('clave3')?.value;
+  }
+
+  get valor1() {
+    return this.form.get('valor1')?.value;
+  }
+
+  get valor2() {
+    return this.form.get('valor2')?.value;
+  }
+
+  get valor3() {
+    return this.form.get('valor3')?.value;
+  }
+
+  alturaHasError() : string{
+    if (this.altura?.dirty || this.altura?.touched) {
+      if(this.altura?.hasError('required'))
+        return 'La altura es requerida';
+    }
+    return '';
+  }
+
+  pesoHasError() : string{
+    if (this.peso?.dirty || this.peso?.touched) {
+      if(this.peso?.hasError('required'))
+        return 'El peso es requerido';
+    }
+    return '';
+  }
+
+  temperaturaHasError() : string{
+    if (this.temperatura?.dirty || this.temperatura?.touched) {
+      if(this.temperatura?.hasError('required'))
+        return 'La temperatura es requerida';
+    }
+    return '';
+  }
+
+  presionHasError() : string{
+    if (this.presion?.dirty || this.presion?.touched) {
+      if(this.presion?.hasError('required'))
+        return 'La presion es requerida';
+    }
+    return '';
   }
 
   onChangeEspecialidad(){
@@ -127,17 +212,37 @@ export class TurnosEspecialistaComponent implements OnInit{
       confirmButtonText: "Si"
     }).then((result) => {
       if (result.isConfirmed) {
+        this.onSpinner = true;
         this.turnoEnAccion.finalizado = true;
         this.turnoEnAccion.resenia = this.resenia;
         delete this.turnoEnAccion.verResenia;
         this.turnoService.updateTurno(this.turnoEnAccion, this.turnoEnAccion.ref)
         .then(response =>{
-          Swal.fire({
-            title: "Finalizado!",
-            text: "El turno finalizo con exito",
-            icon: "success"
-          });
-          this.ejecutandoAccion = false;
+          let col = collection(this.firestore, 'historiaMedica');
+          addDoc(col, {
+              altura: this.altura,
+              peso: this.peso,
+              temperatura: this.temperatura,
+              presion: this.presion,
+              clave1: this.clave1,
+              clave2: this.clave2,
+              clave3: this.clave3,
+              valor3: this.valor3,
+              valor2: this.valor2,
+              valor1: this.valor1,
+              turno: this.turnoEnAccion.ref.id,
+              paciente: this.turnoEnAccion.paciente.mail,
+              especialista: this.turnoEnAccion.especialista.mail
+          })
+          .then(response => {
+            Swal.fire({
+              title: "Finalizado!",
+              text: "El turno finalizo con exito",
+              icon: "success"
+            });
+            this.ejecutandoAccion = false;
+            this.onSpinner = false;
+          })
         })
         .catch(err =>{
           Swal.fire({
