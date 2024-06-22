@@ -55,6 +55,30 @@ export class HistoriaMedicaComponent implements OnInit{
         this.onSpinner = false;
       });
     }
+
+    if (this.userService.usuarioLogeado.user == 'admin') {
+      const qEspecialistas = query(collection(this.firestore, "historiaMedica"));
+      onSnapshot(qEspecialistas, (snapshot: QuerySnapshot) => {
+        snapshot.forEach((doc: QueryDocumentSnapshot) => {
+          if (JSON.parse(localStorage.getItem('user')!) == 'paciente') {
+            if (doc.data()['paciente'].mail == JSON.parse(localStorage.getItem('emailUsuario')!)) {
+              const historiaMedica: any = doc.data();
+              historiaMedica.ref = doc.ref;
+              historiaMedica.fecha = historiaMedica.fecha.toDate();
+              this.historiasMedicas.push(historiaMedica);
+            }
+          }else{
+            if (doc.data()['especialista'].mail == JSON.parse(localStorage.getItem('emailUsuario')!)) {
+              const historiaMedica: any = doc.data();
+              historiaMedica.ref = doc.ref;
+              historiaMedica.fecha = historiaMedica.fecha.toDate();
+              this.historiasMedicas.push(historiaMedica);
+            }
+          }
+        });
+        this.onSpinner = false;
+      });
+    }
   }
 
   async verTurno(historiaMedica: any){

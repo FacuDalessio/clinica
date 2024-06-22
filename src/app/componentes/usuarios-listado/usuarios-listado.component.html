@@ -14,6 +14,7 @@
                 <th scope="col">Mail</th>
                 <th scope="col">Usuario</th>
                 <th scope="col">Habilitado</th>
+                <th scope="col">Historia medica</th>
             </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -29,10 +30,11 @@
                 <td *ngIf="usuario.verificado == 'N/A'">{{usuario.verificado}}</td>
                 <td *ngIf="usuario.verificado == false"><mat-icon (click)="habilitarDeshabilitar(usuario)" class="text-danger">close</mat-icon></td>
                 <td *ngIf="usuario.verificado == true"><mat-icon (click)="habilitarDeshabilitar(usuario)" class="text-success">check_circle</mat-icon></td>
+                <td><mat-icon (click)="verHistoriaMedica(usuario)">medical_information</mat-icon></td>
             </tr>
             </tbody>
         </table>
-        <p class="linkRegistro mt-2">Para crear una cuenta de un usuario administrador, ingrese <span><a href="/registroAdministrador">aca</a></span>.</p>
+        <p class="linkRegistro mt-10">Para crear una cuenta de un usuario administrador, ingrese <span><a href="/registroAdministrador">aca</a></span>.</p>
     </article>
     
 </div>

@@ -4,6 +4,7 @@ import { DocumentData, DocumentReference, Firestore, QueryDocumentSnapshot, Quer
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios-listado',
@@ -23,7 +24,8 @@ export class UsuariosListadoComponent implements OnInit{
 
   constructor(
     private firestore: Firestore,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -71,5 +73,14 @@ export class UsuariosListadoComponent implements OnInit{
       console.log('error en actualizar');
       usuario.verificado = false;
     }
+  }
+
+  verHistoriaMedica(usuario: any){
+    console.log(usuario);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('emailUsuario', JSON.stringify(usuario.mail));
+      localStorage.setItem('user', JSON.stringify(usuario.user));
+    }
+    this.router.navigate(['/historiaMedica']);
   }
 }
