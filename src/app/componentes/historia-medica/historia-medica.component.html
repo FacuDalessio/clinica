@@ -1,0 +1,43 @@
+<div class="body bg-body-secondary">
+    <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
+    <div class="historiasMedicas" [hidden]="onSpinner">
+        <h1 class="titulo">Historias medicas</h1>
+        <article *ngIf="historiasMedicas.length == 0" class="card noEncontrado">
+            <h3 class="tituloCard">No se encontraron historias medicas</h3>
+        </article>
+        <article class="mb-5 mt-5 card historiaMedica" *ngFor="let historiaMedica of historiasMedicas">
+            <div class="fecha">
+                <p>{{historiaMedica.fecha | date:'dd/MM/yyyy'}}</p>
+            </div>
+            <div class="datos">
+                <p><span class="span">Especialista: </span>{{historiaMedica.especialista.nombre + ', ' + historiaMedica.especialista.apellido}}</p>
+                <p><span class="span">Paciente: </span>{{historiaMedica.paciente.nombre + ', ' + historiaMedica.paciente.apellido}}</p>
+            </div>
+            <div class="datosFijos">
+                <p><span class="span">Altura: </span>{{historiaMedica.altura}}</p>
+                <p><span class="span">Peso: </span>{{historiaMedica.peso}}</p>
+                <p><span class="span">Temperatura: </span>{{historiaMedica.temperatura}}</p>
+                <p><span class="span">Presion: </span>{{historiaMedica.presion}}</p>
+            </div>
+            <div class="datosDinamicos">
+                <p *ngIf="historiaMedica.clave1"><span class="span">{{historiaMedica.clave1}} </span>{{historiaMedica.valor1}}</p>
+                <p *ngIf="historiaMedica.clave2"><span class="span">{{historiaMedica.clave2}} </span>{{historiaMedica.valor2}}</p>
+                <p *ngIf="historiaMedica.clave3"><span class="span">{{historiaMedica.clave3}} </span>{{historiaMedica.valor3}}</p>
+            </div>
+            <button class="btn btn-primary verTurno" *ngIf="!historiaMedica.verTurno" (click)="verTurno(historiaMedica)">Ver turno</button>
+            <div class="turno" *ngIf="historiaMedica.verTurno">
+                <hr class="linea">
+                <div class="fecha">
+                    <p><span class="span">Hora: </span>{{historiaMedica.verTurno.hora + ' Hs'}}</p>
+                </div>
+                <div class="datos">
+                    <p class="finalizado">Finalizado</p>
+                    <p><span class="span">Especialista: </span>{{historiaMedica.verTurno.especialista.nombre + ', ' + historiaMedica.verTurno.especialista.apellido}}</p>
+                    <p><span class="span">Especialidad: </span>{{historiaMedica.verTurno.especialidad}}</p>
+                </div>
+                <p><span class="span">Reseña: </span>{{historiaMedica.verTurno.resenia}}</p>
+            </div>
+            <button class="btn btn-primary cerrar" *ngIf="historiaMedica.verTurno" (click)="historiaMedica.verTurno = false">Cerrar</button>
+        </article>
+    </div>
+</div>

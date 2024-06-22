@@ -6,11 +6,17 @@
             <p class="parrafo">Revisa y administra tus turnos</p>
             <button routerLink="/misTurnos" class="btn btn-primary">Ver turnos</button>
         </article>
-        <article class="card">
+        <article class="card" *ngIf="userService.usuarioLogeado && !(userService.usuarioLogeado.user == 'especialista')">
             <mat-icon class="icon">edit_calendar</mat-icon>
             <h3 class="tituloCard">Solicitar turno</h3>
             <p class="parrafo">Agenda una cita con nuestros profesionales.</p>
             <button routerLink="/solicitarTurno" class="btn btn-primary">Solicitar</button>
+        </article>
+        <article *ngIf="userService.usuarioLogeado && userService.usuarioLogeado.user == 'especialista'" class="card">
+            <mat-icon class="icon">medical_information</mat-icon>
+            <h3 class="tituloCard">Pacientes</h3>
+            <p class="parrafo">Ver las historias medicas de tus pacientes.</p>
+            <button routerLink="/historiaMedica" class="btn btn-primary">Ver</button>
         </article>
     </div>
 </div>

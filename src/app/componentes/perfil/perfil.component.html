@@ -37,9 +37,10 @@
                 <mat-icon class="icono">medication</mat-icon>
                 <p class="info">{{'Obra social: ' + usarioService.usuarioLogeado.obraSocial}}</p>
             </div>
-            <div class="infoDiv" *ngIf="usarioService.usuarioLogeado.user == 'especialista'">
-                <button routerLink="/horarios" class="btn btn-primary btnInfo">Mis horarios</button>
-                <button *ngIf="btnPrincipalAgregar" (click)="btnAgregarEspecialidad = true" class="btn btn-primary btnInfo">Agregar especialidad</button>
+            <div class="infoDiv">
+                <button routerLink="/horarios" *ngIf="usarioService.usuarioLogeado.user == 'especialista'" class="btn btn-primary btnInfo">Mis horarios</button>
+                <button routerLink="/historiaMedica" *ngIf="usarioService.usuarioLogeado.user == 'paciente'" class="btn btn-primary btnInfo">Ver historias clinicas</button>
+                <button *ngIf="btnPrincipalAgregar && usarioService.usuarioLogeado.user == 'especialista'" (click)="btnAgregarEspecialidad = true" class="btn btn-primary btnInfo">Agregar especialidad</button>
             </div>
             <div class="mb-2 input-group agregarEspecialidad" *ngIf="btnAgregarEspecialidad">
                 <div class="inputDiv">

@@ -49,4 +49,8 @@ export const routes: Routes = [
         loadComponent: () => import('./componentes/mis-turnos/mis-turnos.component').then(c => c.MisTurnosComponent),
         ...canActivate(()=> redirectUnauthorizedTo(['/login']))
     },
+    { path: 'historiaMedica',
+        loadComponent: () => import('./componentes/historia-medica/historia-medica.component').then(c => c.HistoriaMedicaComponent),
+        ...canActivate(()=> redirectUnauthorizedTo(['/login']))
+    }
 ];

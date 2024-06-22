@@ -231,8 +231,9 @@ export class TurnosEspecialistaComponent implements OnInit{
               valor2: this.valor2,
               valor1: this.valor1,
               turno: this.turnoEnAccion.ref.id,
-              paciente: this.turnoEnAccion.paciente.mail,
-              especialista: this.turnoEnAccion.especialista.mail
+              paciente: this.turnoEnAccion.paciente,
+              especialista: this.turnoEnAccion.especialista,
+              fecha: this.turnoEnAccion.fecha
           })
           .then(response => {
             Swal.fire({
