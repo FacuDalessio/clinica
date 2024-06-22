@@ -7,7 +7,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { TurnoService } from '../../../servicios/turno/turno.service';
 import Swal from 'sweetalert2';
 import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore';
-import { Firestore, addDoc, collection, onSnapshot, where } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, onSnapshot, orderBy, where } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-turnos-especialista',
@@ -68,7 +68,7 @@ export class TurnosEspecialistaComponent implements OnInit{
       this.onSpinner = false;
     });
 
-    const qTurnos = query(collection(this.firestore, "turnos"));
+    const qTurnos = query(collection(this.firestore, "turnos"), orderBy('fecha', 'desc'));
     onSnapshot(qTurnos, (snapshot: QuerySnapshot) => {
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
         let turno: any = doc.data();

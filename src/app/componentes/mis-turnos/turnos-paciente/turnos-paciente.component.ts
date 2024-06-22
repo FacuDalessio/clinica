@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../../servicios/usuario/usuario.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore';
-import { Firestore, collection, onSnapshot, where } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot, orderBy, where } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { TurnoService } from '../../../servicios/turno/turno.service';
@@ -63,7 +63,7 @@ export class TurnosPacienteComponent implements OnInit{
       });
     });
 
-    const qTurnos = query(collection(this.firestore, "turnos"), where("paciente", "==", this.userService.usuarioLogeado));
+    const qTurnos = query(collection(this.firestore, "turnos"), orderBy('fecha', 'desc'));
     onSnapshot(qTurnos, (snapshot: QuerySnapshot) => {
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
         let turno: any = doc.data();
@@ -71,7 +71,9 @@ export class TurnosPacienteComponent implements OnInit{
         turno.id = doc.ref.id;
         turno.fecha = turno.fecha.toDate();
         turno.verResenia = false;
-        this.turnos.push(turno);
+        if (turno.paciente.dni == this.userService.usuarioLogeado.dni)
+          this.turnos.push(turno);
+        
       });
     });
 
