@@ -10,5 +10,5 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideFirebaseApp(() => initializeApp({"projectId":"clinica-af1bb","appId":"1:653605611366:web:096556018fa9d4ec9d0aa7","storageBucket":"clinica-af1bb.appspot.com","apiKey":"AIzaSyAcNAVEtMfJAXPkW_wBzxTPOeUsvuvubYY","authDomain":"clinica-af1bb.firebaseapp.com","messagingSenderId":"653605611366"})), 
-  provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideAnimationsAsync(), provideStorage(() => getStorage())]
+  provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideAnimationsAsync(), provideStorage(() => getStorage()), provideAnimationsAsync()]
 };

@@ -38,5 +38,5 @@
             </div>
         </div>
     </div>
-    <app-elegir-turno [dia]="diaElegido" [especialidad]="especialidadAux" [especialista]="especialistaElegido" [paciente]="pacienteElegido"></app-elegir-turno>
+    <app-elegir-turno [@shownHidden]="diaElegido ? 'shown' : 'hidden'" [dia]="diaElegido" [especialidad]="especialidadAux" [especialista]="especialistaElegido" [paciente]="pacienteElegido"></app-elegir-turno>
 </div>

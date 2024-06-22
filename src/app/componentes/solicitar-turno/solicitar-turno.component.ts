@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import {MatRadioModule} from '@angular/material/radio';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-solicitar-turno',
@@ -20,6 +21,24 @@ import {MatRadioModule} from '@angular/material/radio';
     FormsModule,
     RouterOutlet,
     MatRadioModule
+  ],
+  animations: [
+    trigger('shownHidden', [
+      state('shown', style({
+        opacity: 1,
+        width: "100%"
+      })),
+      state('hidden', style({
+        opacity: 0,
+        width: "0%"
+      })),
+      transition('shown => hidden', [
+        animate('1s')
+      ]),
+      transition('hidden => shown', [
+        animate('1s')
+      ])
+    ])
   ],
   templateUrl: './solicitar-turno.component.html',
   styleUrl: './solicitar-turno.component.css'
@@ -93,6 +112,7 @@ export class SolicitarTurnoComponent implements OnInit{
     this.diaElegido = undefined;
     this.especialidadAux = especialidad.detalle;
     this.especialistaElegido = null;
+    this.mostrarFechas = false;
     if (this.especialistasAux) {
       this.especialistas.forEach((especialista: any) => {
         especialista.especialidad.forEach((especialidad: string) => {
