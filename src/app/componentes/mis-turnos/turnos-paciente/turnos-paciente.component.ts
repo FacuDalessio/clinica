@@ -85,7 +85,7 @@ export class TurnosPacienteComponent implements OnInit{
             this.historiasMedicas.push(historiaMedica);
           }
         });
-      });
+    });
   }
 
   onChangeBuscar(){

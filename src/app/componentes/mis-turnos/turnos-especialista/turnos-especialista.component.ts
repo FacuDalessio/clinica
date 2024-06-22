@@ -28,6 +28,7 @@ export class TurnosEspecialistaComponent implements OnInit{
   pacientes: any[] = [];
   pacientesAux: any[] = [];
   especialidades: any[] = [];
+  historiasMedicas: any[] = [];
   turnos: any[] = [];
   turnosAux: any[] = [];
   especialidadAux: string = '';
@@ -38,6 +39,7 @@ export class TurnosEspecialistaComponent implements OnInit{
   resenia: string = '';
   turnoEnAccion?: any;
   accion?: string;
+  buscar?: string;
   form: FormGroup = new FormGroup({
     'altura': new FormControl('', [Validators.required]),
     'peso': new FormControl('', [Validators.required]),
@@ -71,10 +73,24 @@ export class TurnosEspecialistaComponent implements OnInit{
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
         let turno: any = doc.data();
         turno.ref = doc.ref;
+        turno.id = doc.ref.id;
+        turno.fecha = turno.fecha.toDate();
         turno.verResenia = false;
         if (turno.especialista.dni == this.userService.usuarioLogeado.dni)
           this.turnos.push(turno);
       });
+    });
+
+    const qHistoriaMedicas = query(collection(this.firestore, "historiaMedica"));
+      onSnapshot(qHistoriaMedicas, (snapshot: QuerySnapshot) => {
+        snapshot.forEach((doc: QueryDocumentSnapshot) => {
+          if (doc.data()['especialista'].mail == this.userService.usuarioLogeado.mail) {
+            const historiaMedica: any = doc.data();
+            historiaMedica.ref = doc.ref;
+            historiaMedica.fecha = historiaMedica.fecha.toDate();
+            this.historiasMedicas.push(historiaMedica);
+          }
+        });
     });
   }
 
@@ -116,6 +132,33 @@ export class TurnosEspecialistaComponent implements OnInit{
 
   get valor3() {
     return this.form.get('valor3')?.value;
+  }
+
+  onChangeBuscar(){
+    this.turnosAux = [];
+    this.mostrarLista = true;
+    this.especialidadAux = '';
+    this.pacienteElegido = null;
+    if (this.buscar != '') {
+      this.turnos.forEach((turno: any) =>{
+        if (turno.paciente.apellido == this.buscar || turno.paciente.nombre == this.buscar || turno.fecha.getDate() == this.buscar || turno.fecha.getMonth() == this.buscar
+              || turno.fecha.getFullYear() == this.buscar || turno.especialidad == this.buscar || turno.hora == this.buscar || (this.buscar == 'finalizado' && turno.finalizado)
+              || (this.buscar == 'cancelado' && turno.cancelado)) {
+          this.turnosAux.push(turno);
+        }
+      });
+      this.historiasMedicas.forEach((historia: any) =>{
+        if (historia.altura == this.buscar || historia.presion == this.buscar || historia.temperatura == this.buscar || historia.peso == this.buscar || historia.clave1 == this.buscar
+          || historia.clave2 == this.buscar || historia.clave3 == this.buscar || historia.valor1 == this.buscar || historia.valor2 == this.buscar || historia.valor3 == this.buscar) {
+          
+          this.turnos.forEach((turno: any) =>{
+            if (turno.id == historia.turno) {
+              this.turnosAux.push(turno); 
+            }
+          });
+        }
+      });
+    }
   }
 
   alturaHasError() : string{

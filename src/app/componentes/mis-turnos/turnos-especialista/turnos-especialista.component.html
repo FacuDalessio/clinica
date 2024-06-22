@@ -2,7 +2,31 @@
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
     <div [hidden]="onSpinner || ejecutandoAccion">
         <div class="articleContainer">
+            <article class="card buscar">
+                <div class="mb-2 input-group">
+                    <div class="inputDiv inputBuscar">
+                        <label class="form-label" for="inputFiltro">Buscar</label>
+                        <input placeholder="Ingrese una palabra clave" [(ngModel)]="buscar" (change)="onChangeBuscar()" type="text" class="form-control" id="inputFiltro">
+                    </div>
+                </div>
+            </article>
             <article class="card filtro">
+                <div class="inputDiv">
+                    <mat-radio-group [(ngModel)]="especialidadAux" (ngModelChange)="onChangeEspecialidad()">
+                        <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <hr class="linea">
+                <div class="inputDiv">
+                    <mat-radio-group [(ngModel)]="pacienteElegido"  (ngModelChange)="onChangePaciente()">
+                        <mat-radio-button *ngFor="let paciente of pacientesAux" [value]="paciente">
+                            {{paciente.apellido + ', ' + paciente.nombre}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <p *ngIf="especialidadAux && pacientesAux.length == 0">No hay pacientes disponibles</p>
+                </div>
+            </article>
+            <!-- <article class="card filtro">
                 <h3 class="tituloCard">Especialidad</h3>
                 <p class="parrafo">Seleccione una especialidad</p>
                 <div class="inputDiv">
@@ -10,8 +34,8 @@
                         <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</mat-radio-button>
                     </mat-radio-group>
                 </div>
-            </article>
-            <article class="card filtro">
+            </article> -->
+            <!-- <article class="card filtro">
                 <h3 class="tituloCard">Paciente</h3>
                 <p class="parrafo">Seleccione al paciente</p>
                 <div class="inputDiv">
@@ -22,7 +46,7 @@
                     </mat-radio-group>
                     <p *ngIf="especialidadAux && pacientesAux.length == 0">No hay pacientes disponibles</p>
                 </div>
-            </article>
+            </article> -->
         </div>
     </div>
     <div *ngIf="mostrarLista && !ejecutandoAccion" class="turnos">
