@@ -1,11 +1,11 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <div class="historiasMedicas" [hidden]="onSpinner">
+    <div class="historiasMedicas" [hidden]="onSpinner" [@shownHidden]="historiasMedicas.length > 0 ? 'shown' : 'hidden'">
         <h1 class="titulo">Historias medicas</h1>
         <article *ngIf="historiasMedicas.length == 0" class="card noEncontrado">
             <h3 class="tituloCard">No se encontraron historias medicas</h3>
         </article>
-        <article class="mb-5 mt-5 card historiaMedica" *ngFor="let historiaMedica of historiasMedicas">
+        <article class="mb-5 mt-5 card historiaMedica" *ngFor="let historiaMedica of historiasMedicas" >
             <div class="fecha">
                 <p>{{historiaMedica.fecha | date:'dd/MM/yyyy'}}</p>
             </div>

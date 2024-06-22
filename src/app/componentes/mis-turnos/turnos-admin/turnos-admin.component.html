@@ -25,8 +25,8 @@
             </article>
         </div>
     </div>
-    <div *ngIf="mostrarLista && !ejecutandoAccion" class="turnos">
-        <article *ngIf="turnosAux.length == 0" class="card noEncontrado">
+    <div  *ngIf="!ejecutandoAccion" class="turnos" [@shownHidden]="mostrarLista ? 'shown' : 'hidden'">
+        <article *ngIf="turnosAux.length == 0 && mostrarLista" class="card noEncontrado">
             <h3 class="tituloCard">No se encontraron turnos</h3>
         </article>
         <article class="mb-5 mt-5 card turno" *ngFor="let turno of turnosAux">

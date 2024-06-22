@@ -8,6 +8,7 @@ import { TurnoService } from '../../../servicios/turno/turno.service';
 import Swal from 'sweetalert2';
 import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore';
 import { Firestore, addDoc, collection, onSnapshot, orderBy, where } from '@angular/fire/firestore';
+import { animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-turnos-especialista',
@@ -18,6 +19,24 @@ import { Firestore, addDoc, collection, onSnapshot, orderBy, where } from '@angu
     MatProgressSpinnerModule,
     FormsModule,
     MatRadioModule
+  ],
+  animations: [
+    trigger('shownHidden', [
+      state('shown', style({
+        opacity: 1,
+        transform: 'translateY(0px)'
+      })),
+      state('hidden', style({
+        opacity: 0,
+        transform: 'translateY(100px)'
+      })),
+      transition('shown => hidden', [
+        animate('0.5s')
+      ]),
+      transition('hidden => shown', [
+        animate('0.5s')
+      ])
+    ])
   ],
   templateUrl: './turnos-especialista.component.html',
   styleUrl: './turnos-especialista.component.css'

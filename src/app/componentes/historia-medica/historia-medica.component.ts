@@ -4,6 +4,7 @@ import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore'
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-historia-medica',
@@ -11,6 +12,24 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   imports: [
     CommonModule,
     MatProgressSpinnerModule
+  ],
+  animations: [
+    trigger('shownHidden', [
+      state('shown', style({
+        opacity: 1,
+        transform: 'translateY(0px)'
+      })),
+      state('hidden', style({
+        opacity: 0,
+        transform: 'translateY(-100px)'
+      })),
+      transition('shown => hidden', [
+        animate('0.5s')
+      ]),
+      transition('hidden => shown', [
+        animate('0.5s')
+      ])
+    ])
   ],
   templateUrl: './historia-medica.component.html',
   styleUrl: './historia-medica.component.css'

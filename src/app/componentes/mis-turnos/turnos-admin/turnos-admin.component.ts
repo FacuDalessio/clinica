@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { TurnoService } from '../../../servicios/turno/turno.service';
 import Swal from 'sweetalert2';
+import { animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-turnos-admin',
@@ -17,6 +18,24 @@ import Swal from 'sweetalert2';
     MatProgressSpinnerModule,
     FormsModule,
     MatRadioModule
+  ],
+  animations: [
+    trigger('shownHidden', [
+      state('shown', style({
+        opacity: 1,
+        transform: 'translateY(0px)'
+      })),
+      state('hidden', style({
+        opacity: 0,
+        transform: 'translateY(100px)'
+      })),
+      transition('shown => hidden', [
+        animate('0.5s')
+      ]),
+      transition('hidden => shown', [
+        animate('0.5s')
+      ])
+    ])
   ],
   templateUrl: './turnos-admin.component.html',
   styleUrl: './turnos-admin.component.css'
