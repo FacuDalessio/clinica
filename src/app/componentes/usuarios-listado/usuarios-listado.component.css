@@ -6,7 +6,7 @@
 }
 
 .table{
-    width: 80%;
+    width: 95%;
     margin: auto;
     text-align: center;
 }
@@ -17,4 +17,24 @@
 
 .spinner{
     margin: auto;
+}
+
+.btn{
+    background-color: #E4002B;
+    border: #E4002B;
+    width: 95%;
+    margin: auto;
+}
+
+.card{
+    width: 80%;
+    margin: auto;
+    padding: 2%;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.5);
+}
+
+.linkRegistro{
+    width: 95%;
+    margin-top: 2%;
+    margin-left: 2.5%;
 }

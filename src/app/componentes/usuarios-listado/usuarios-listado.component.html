@@ -1,7 +1,7 @@
-<div class="body">
+<div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <article class="mb-5" *ngIf="!onSpinner">
-        <h1 class="titulo">Lista Usuarios</h1>
+    <h1 class="titulo">Lista Usuarios</h1>
+    <article class="mb-5 card" *ngIf="!onSpinner">
         <table class="table shadow-sm">
             <thead>
             <tr>
@@ -34,7 +34,8 @@
             </tr>
             </tbody>
         </table>
-        <p class="linkRegistro">Para crear una cuenta de un usuario administrador, ingrese <span><a href="/registroAdministrador">aca</a></span>.</p>
+        <button (click)="descargarCsv()" class="btn btn-primary">Descargar</button>
+        <p class="linkRegistro">Para crear una cuenta de un usuario administrador, ingrese <span><a routerLink="/registroAdministrador">aca</a></span>.</p>
     </article>
     
 </div>

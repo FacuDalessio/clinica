@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { DocumentData, DocumentReference, Firestore, QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot, orderBy, query } from '@angular/fire/firestore';
+import { Firestore, QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot, orderBy, query } from '@angular/fire/firestore';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import {MatTableModule} from '@angular/material/table';
+import { utils, writeFileXLSX } from 'xlsx';
 
 @Component({
   selector: 'app-usuarios-listado',
@@ -12,7 +14,9 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     MatProgressSpinnerModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    RouterLink
   ],
   templateUrl: './usuarios-listado.component.html',
   styleUrl: './usuarios-listado.component.css'
@@ -82,5 +86,13 @@ export class UsuariosListadoComponent implements OnInit{
       localStorage.setItem('user', JSON.stringify(usuario.user));
     }
     this.router.navigate(['/historiaMedica']);
+  }
+
+  descargarCsv(){
+    const ws = utils.json_to_sheet(this.usuarios);
+    const wb = utils.book_new();
+    utils.book_append_sheet(wb, ws, "Data");
+    writeFileXLSX(wb, "ListadoUsuarios.xlsx");
+
   }
 }
