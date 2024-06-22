@@ -29,6 +29,7 @@ export class TurnosPacienteComponent implements OnInit{
   turnos: any[] = [];
   turnosAux: any[] = [];
   especialistasAux: any[] = [];
+  historiasMedicas: any[] = [];
   especialidadAux: string = '';
   especialistaElegido?: any;
   mostrarLista: boolean = false;
@@ -38,6 +39,7 @@ export class TurnosPacienteComponent implements OnInit{
   encuestaComentario: string = '';
   turnoEnAccion?: any;
   calificacion?: number;
+  buscar?: string;
 
   constructor(
     public userService: UsuarioService,
@@ -66,10 +68,50 @@ export class TurnosPacienteComponent implements OnInit{
       snapshot.forEach((doc: QueryDocumentSnapshot) => {
         let turno: any = doc.data();
         turno.ref = doc.ref;
+        turno.id = doc.ref.id;
+        turno.fecha = turno.fecha.toDate();
         turno.verResenia = false;
         this.turnos.push(turno);
       });
     });
+
+    const qHistoriaMedicas = query(collection(this.firestore, "historiaMedica"));
+      onSnapshot(qHistoriaMedicas, (snapshot: QuerySnapshot) => {
+        snapshot.forEach((doc: QueryDocumentSnapshot) => {
+          if (doc.data()['paciente'].mail == this.userService.usuarioLogeado.mail) {
+            const historiaMedica: any = doc.data();
+            historiaMedica.ref = doc.ref;
+            historiaMedica.fecha = historiaMedica.fecha.toDate();
+            this.historiasMedicas.push(historiaMedica);
+          }
+        });
+      });
+  }
+
+  onChangeBuscar(){
+    this.turnosAux = [];
+    this.mostrarLista = true;
+    if (this.buscar != '') {
+      this.turnos.forEach((turno: any) =>{
+        if (turno.especialista.apellido == this.buscar || turno.especialista.nombre == this.buscar || turno.fecha.getDate() == this.buscar || turno.fecha.getMonth() == this.buscar
+              || turno.fecha.getFullYear() == this.buscar || turno.especialidad == this.buscar || turno.hora == this.buscar || (this.buscar == 'finalizado' && turno.finalizado)
+              || (this.buscar == 'cancelado' && turno.cancelado)) {
+          this.turnosAux.push(turno);
+        }
+      });
+  
+      this.historiasMedicas.forEach((historia: any) =>{
+        if (historia.altura == this.buscar || historia.presion == this.buscar || historia.temperatura == this.buscar || historia.peso == this.buscar || historia.clave1 == this.buscar
+          || historia.clave2 == this.buscar || historia.clave3 == this.buscar || historia.valor1 == this.buscar || historia.valor2 == this.buscar || historia.valor3 == this.buscar) {
+          
+          this.turnos.forEach((turno: any) =>{
+            if (turno.id == historia.turno) {
+              this.turnosAux.push(turno); 
+            }
+          });
+        }
+      });
+    }
   }
 
   onChangeEspecialidad(){
