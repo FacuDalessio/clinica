@@ -74,9 +74,51 @@ html, body {
     margin-bottom: 2%;
 }
 
+.descargar{
+    background-color: #E4002B;
+    border: #E4002B;
+}
+
 .finalizado{
     background-color: #a7c957;
     color: #386641;
     padding: 5px;
     border-radius: 10px;
+}
+
+.seleccionado{
+    background-color: #84a98c;
+    border: #84a98c;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.pacientes, .especialistas{
+    width: 80%;
+    height: 30%;
+    padding: 2%;
+    margin: 0 auto;
+    border: none;
+}
+
+.containerBotones{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.botones{
+    margin: 0 1%;
+}
+
+.redondo{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    margin: 0 1%;
+    background-color: #E4002B;
+    border: #E4002B;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; 
 }

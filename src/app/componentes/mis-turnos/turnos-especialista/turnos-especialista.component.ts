@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore';
 import { Firestore, addDoc, collection, onSnapshot, orderBy, where } from '@angular/fire/firestore';
 import { animate, state, style, transition, trigger} from '@angular/animations';
+import { NombreApellidoPipe } from '../../../pipes/nombre-apellido.pipe';
 
 @Component({
   selector: 'app-turnos-especialista',
@@ -18,7 +19,8 @@ import { animate, state, style, transition, trigger} from '@angular/animations';
     CommonModule,
     MatProgressSpinnerModule,
     FormsModule,
-    MatRadioModule
+    MatRadioModule,
+    NombreApellidoPipe
   ],
   animations: [
     trigger('shownHidden', [

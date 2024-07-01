@@ -10,6 +10,7 @@ import { RouterOutlet } from '@angular/router';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import {MatRadioModule} from '@angular/material/radio';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NombreApellidoPipe } from '../../pipes/nombre-apellido.pipe';
 
 @Component({
   selector: 'app-solicitar-turno',
@@ -20,7 +21,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ElegirTurnoComponent,
     FormsModule,
     RouterOutlet,
-    MatRadioModule
+    MatRadioModule,
+    NombreApellidoPipe
   ],
   animations: [
     trigger('shownHidden', [

@@ -1,6 +1,6 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <div class="formContainer">
+    <div class="formContainer"  @enterState>
         <div class="card">
             <p class="titulo">Iniciar sesion</p>
             <hr class="linea">
@@ -30,7 +30,7 @@
                     <div class="mb-2 mt-3">
                         <button (click)="login()" class="btn btn-primary" [disabled]="!form.valid">Iniciar sesion</button>
                     </div>
-                    <p class="mt-3">Si no tenes cuenta, podes crearte una <span><a href="/registro">aca</a></span>.</p>
+                    <p class="mt-3">Si no tenes cuenta, podes crearte una <span><a routerLink="/registro">aca</a></span>.</p>
                 </form>
             </div>
         </div>

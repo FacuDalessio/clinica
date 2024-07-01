@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioService } from '../../servicios/usuario/usuario.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,22 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    RouterLink
+  ],
+  animations: [
+    trigger('enterState', [
+      state('void', style({
+        opacity: 0,
+        transform: 'translateX(100%)'
+      })),
+      transition(':enter', [
+        animate(300, style({
+          transform: 'translateX(0)',
+          opacity: 1
+        }))
+      ])
+    ])
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'

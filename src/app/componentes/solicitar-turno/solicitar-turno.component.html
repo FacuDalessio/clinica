@@ -13,10 +13,10 @@
             <article class="card">
                 <h3 class="tituloCard">Especialista</h3>
                 <p class="parrafo">Seleccione un especialista</p>
-                <p class="parrafo" *ngIf="especialistaElegido"><span class="span">Seleccionado: </span>{{especialistaElegido.apellido + ", " + especialistaElegido.nombre}}</p>
+                <p class="parrafo" *ngIf="especialistaElegido"><span class="span">Seleccionado: </span>{{especialistaElegido | nombreApellido}}</p>
                 <div class="botones" *ngFor="let especialista of especialistasAux">
                     <button (click)="onChangeEspecialista(especialista)" class="btn btn-primary redondo" [style.backgroundImage]="'url(' + especialista.img + ')'"></button>
-                    <p>{{especialista.apellido + ", " + especialista.nombre}}</p>
+                    <p>{{especialista | nombreApellido}}</p>
                 </div>
                 <p *ngIf="especialidadAux && especialistasAux.length == 0">No hay especialistas disponibles</p>
             </article>

@@ -9,6 +9,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { TurnoService } from '../../../servicios/turno/turno.service';
 import Swal from 'sweetalert2';
 import { animate, state, style, transition, trigger} from '@angular/animations';
+import { NombreApellidoPipe } from '../../../pipes/nombre-apellido.pipe';
 
 @Component({
   selector: 'app-turnos-admin',
@@ -17,7 +18,8 @@ import { animate, state, style, transition, trigger} from '@angular/animations';
     CommonModule,
     MatProgressSpinnerModule,
     FormsModule,
-    MatRadioModule
+    MatRadioModule,
+    NombreApellidoPipe
   ],
   animations: [
     trigger('shownHidden', [

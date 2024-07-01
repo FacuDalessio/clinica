@@ -24,6 +24,9 @@ import { utils, writeFileXLSX } from 'xlsx';
 export class UsuariosListadoComponent implements OnInit{
 
   usuarios: any[] = [];
+  pacientes: any[] = [];
+  turnos: any[] = [];
+  turnosAux: any[] = [];
   onSpinner: boolean = true;
 
   constructor(
@@ -40,6 +43,7 @@ export class UsuariosListadoComponent implements OnInit{
         let obraSocial = 'N/A';
         let especialidad = 'N/A';
         let verificado = 'N/A';
+        let imgs = [];
         if(doc.data()['especialidad']){
           especialidad = doc.data()['especialidad'];
           especialidad = especialidad[1] ? `${especialidad[0]}, ${especialidad[1]}` : especialidad[0];
@@ -48,6 +52,9 @@ export class UsuariosListadoComponent implements OnInit{
         if(doc.data()['obraSocial'])
           obraSocial = doc.data()['obraSocial'];
           
+        if(doc.data()['imgs'])
+          imgs = doc.data()['imgs'];
+
         const usuario = {
           nombre: doc.data()['nombre'],
           apellido: doc.data()['apellido'],
@@ -58,9 +65,18 @@ export class UsuariosListadoComponent implements OnInit{
           mail: doc.data()['mail'],
           user: doc.data()['user'],
           verificado: verificado,
+          imgs: imgs,
           ref: doc.ref
         }
         this.usuarios.push(usuario);
+        if(usuario.user == 'paciente')
+          this.pacientes.push(usuario);
+      });
+      const qTurnos = query(collection(this.firestore, "turnos"), orderBy('fecha', 'desc'));
+      onSnapshot(qTurnos, (snapshot: QuerySnapshot) => {
+        snapshot.forEach((doc: QueryDocumentSnapshot) => {
+         this.turnos.push(doc.data());
+        });
       });
       this.onSpinner = false;
     });
@@ -94,5 +110,22 @@ export class UsuariosListadoComponent implements OnInit{
     utils.book_append_sheet(wb, ws, "Data");
     writeFileXLSX(wb, "ListadoUsuarios.xlsx");
 
+  }
+
+  descargarDatosPaciente(paciente: any){
+    this.turnosAux = [];
+    this.turnos.forEach((turno: any) =>{
+      if (turno.paciente.dni == paciente.dni)
+        this.turnosAux.push({
+          fecha: turno.fecha.toDate(),
+          especialista: turno.especialista.apellido + ', ' + turno.especialista.nombre,
+          especialidad: turno.especialidad
+        });
+    });
+
+    const ws = utils.json_to_sheet(this.turnosAux);
+    const wb = utils.book_new();
+    utils.book_append_sheet(wb, ws, "Data");
+    writeFileXLSX(wb, "Turnos" + paciente.apellido + paciente.nombre + ".xlsx");
   }
 }

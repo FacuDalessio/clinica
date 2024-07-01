@@ -1,6 +1,5 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <h1 class="titulo">Lista Usuarios</h1>
     <article class="mb-5 card" *ngIf="!onSpinner">
         <table class="table shadow-sm">
             <thead>
@@ -37,5 +36,10 @@
         <button (click)="descargarCsv()" class="btn btn-primary">Descargar</button>
         <p class="linkRegistro">Para crear una cuenta de un usuario administrador, ingrese <span><a routerLink="/registroAdministrador">aca</a></span>.</p>
     </article>
-    
+    <div class="containerBotones" *ngIf="!onSpinner">
+        <div class="botones" *ngFor="let paciente of pacientes">
+            <button (click)="descargarDatosPaciente(paciente)" class="btn btn-primary redondo" [style.backgroundImage]="'url(' + paciente.imgs[0] + ')'"></button>
+            <p>{{paciente.apellido + ", " + paciente.nombre}}</p>
+        </div>
+    </div>
 </div>

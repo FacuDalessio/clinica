@@ -20,7 +20,7 @@
                 <div class="inputDiv">
                     <mat-radio-group [(ngModel)]="pacienteElegido"  (ngModelChange)="onChangePaciente()">
                         <mat-radio-button *ngFor="let paciente of pacientesAux" [value]="paciente">
-                            {{paciente.apellido + ', ' + paciente.nombre}}
+                            {{paciente | nombreApellido}}
                         </mat-radio-button>
                     </mat-radio-group>
                     <p *ngIf="especialidadAux && pacientesAux.length == 0">No hay pacientes disponibles</p>
@@ -42,7 +42,7 @@
                 <p *ngIf="turno.aceptado && !turno.finalizado && !turno.cancelado" class="confirmado">Confirmado</p>
                 <p *ngIf="turno.cancelado" class="cancelado">Cancelado</p>
                 <p *ngIf="turno.finalizado && !turno.cancelado" class="finalizado">Finalizado</p>
-                <p><span class="span">Paciente: </span>{{turno.paciente.nombre + ', ' + turno.paciente.apellido}}</p>
+                <p><span class="span">Paciente: </span>{{turno.paciente | nombreApellido}}</p>
                 <p><span class="span">Especialidad: </span>{{turno.especialidad}}</p>
                 <button *ngIf="!turno.finalizado && !turno.cancelado && !turno.aceptado" class="btn btn-primary aceptar" (click)="aceptarTurno(turno)">Aceptar</button>
                 <button *ngIf="!turno.finalizado && !turno.cancelado && !turno.aceptado" class="btn btn-primary rechazar" (click)="ejecutarCancelar(turno)">Rechazar</button>

@@ -1,17 +1,37 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
     <div class="historiasMedicas" [hidden]="onSpinner" [@shownHidden]="historiasMedicas.length > 0 ? 'shown' : 'hidden'">
-        <h1 class="titulo">Historias medicas</h1>
-        <article *ngIf="historiasMedicas.length == 0" class="card noEncontrado">
+        
+        <article class="card pacientes bg-body-secondary" *ngIf="userService.usuarioLogeado.user == 'especialista'">
+            <div class="containerBotones">
+                <div class="botones" *ngFor="let paciente of pacientes" [class.seleccionado]="pacienteElegido && pacienteElegido.dni == paciente.dni">
+                    <button (click)="onChangePaciente(paciente)" class="btn btn-primary redondo" [style.backgroundImage]="'url(' + paciente.imgs[0] + ')'"></button>
+                    <p>{{paciente | nombreApellido}}</p>
+                </div>
+            </div>
+            <p *ngIf="pacientes.length == 0">No hay pacientes disponibles</p>
+        </article>
+
+        <article class="card especialistas bg-body-secondary" *ngIf="userService.usuarioLogeado.user == 'paciente'">
+            <div class="containerBotones">
+                <div class="botones" *ngFor="let especialista of especialistas">
+                    <button (click)="descargarPdfPorEspecialista(especialista)" class="btn btn-primary redondo" [style.backgroundImage]="'url(' + especialista.img + ')'"></button>
+                    <p>{{especialista | nombreApellido}}</p>
+                </div>
+            </div>
+        </article>
+
+        <h1 class="titulo">Historias medicas <span><button class="btn btn-primary descargar" (click)="descargarTodasLasHistorias()">Descargar todas</button></span></h1>
+        <article *ngIf="historiasMedicasAux.length == 0" class="card noEncontrado">
             <h3 class="tituloCard">No se encontraron historias medicas</h3>
         </article>
-        <article class="mb-5 mt-5 card historiaMedica" *ngFor="let historiaMedica of historiasMedicas" >
+        <article class="mb-5 mt-5 card historiaMedica" *ngFor="let historiaMedica of historiasMedicasAux" >
             <div class="fecha">
                 <p>{{historiaMedica.fecha | date:'dd/MM/yyyy'}}</p>
             </div>
             <div class="datos">
-                <p><span class="span">Especialista: </span>{{historiaMedica.especialista.nombre + ', ' + historiaMedica.especialista.apellido}}</p>
-                <p><span class="span">Paciente: </span>{{historiaMedica.paciente.nombre + ', ' + historiaMedica.paciente.apellido}}</p>
+                <p><span class="span">Especialista: </span>{{historiaMedica.especialista | nombreApellido}}</p>
+                <p><span class="span">Paciente: </span>{{historiaMedica.paciente | nombreApellido}}</p>
             </div>
             <div class="datosFijos">
                 <p><span class="span">Altura: </span>{{historiaMedica.altura}}</p>
@@ -32,7 +52,7 @@
                 </div>
                 <div class="datos">
                     <p class="finalizado">Finalizado</p>
-                    <p><span class="span">Especialista: </span>{{historiaMedica.verTurno.especialista.nombre + ', ' + historiaMedica.verTurno.especialista.apellido}}</p>
+                    <p><span class="span">Especialista: </span>{{historiaMedica.verTurno.especialista | nombreApellido}}</p>
                     <p><span class="span">Especialidad: </span>{{historiaMedica.verTurno.especialidad}}</p>
                 </div>
                 <p><span class="span">Reseña: </span>{{historiaMedica.verTurno.resenia}}</p>

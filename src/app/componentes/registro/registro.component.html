@@ -1,10 +1,10 @@
 <div class="body bg-body-secondary">
     <mat-spinner *ngIf="onSpinner" class="spinner"></mat-spinner>
-    <div class="opciones" [hidden]="onSpinner">
+    <div class="opciones" [hidden]="onSpinner" @enterState>
         <button class="btn btn-primary redondo paciente"></button>
         <button routerLink="/registroEspecialista" class="btn btn-primary redondo especialista"></button>
     </div>
-    <div class="formContainer" [hidden]="onSpinner">
+    <div class="formContainer" [hidden]="onSpinner" @enterState>
         <div class="card">
             <p class="titulo">Crear cuenta<span class="span">Paciente</span></p>
             <hr class="linea">

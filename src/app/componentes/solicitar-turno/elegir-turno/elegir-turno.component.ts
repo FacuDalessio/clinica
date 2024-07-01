@@ -1,9 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { TurnoService } from '../../../servicios/turno/turno.service';
-import { Firestore, collection, onSnapshot, where } from '@angular/fire/firestore';
+import { Firestore, collection, onSnapshot} from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { QueryDocumentSnapshot, QuerySnapshot, addDoc, query } from 'firebase/firestore';
-import { UsuarioService } from '../../../servicios/usuario/usuario.service';
 import Swal from 'sweetalert2';
 import { HoraPipe } from '../../../pipes/hora.pipe';
 import { Router } from '@angular/router';

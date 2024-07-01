@@ -11,6 +11,7 @@ import { Storage, ref, uploadBytes } from '@angular/fire/storage';
 import { getDownloadURL } from 'firebase/storage';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-registro',
@@ -22,6 +23,20 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
     RouterLink,
     RecaptchaModule,
     RecaptchaFormsModule
+  ],
+  animations: [
+    trigger('enterState', [
+      state('void', style({
+        opacity: 0,
+        transform: 'translateX(100%)'
+      })),
+      transition(':enter', [
+        animate(300, style({
+          transform: 'translateX(0)',
+          opacity: 1
+        }))
+      ])
+    ])
   ],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
