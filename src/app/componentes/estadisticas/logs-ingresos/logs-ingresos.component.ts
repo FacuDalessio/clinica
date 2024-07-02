@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Firestore, collection, onSnapshot, orderBy } from '@angular/fire/firestore';
 import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore';
 import { NombreApellidoPipe } from '../../../pipes/nombre-apellido.pipe';
 import { HoraPipe } from '../../../pipes/hora.pipe';
 import { utils, writeFileXLSX } from 'xlsx';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-logs-ingresos',
@@ -12,7 +13,8 @@ import { utils, writeFileXLSX } from 'xlsx';
   imports: [
     CommonModule,
     NombreApellidoPipe,
-    HoraPipe
+    HoraPipe,
+    MatPaginator
   ],
   templateUrl: './logs-ingresos.component.html',
   styleUrl: './logs-ingresos.component.css'
@@ -21,6 +23,10 @@ export class LogsIngresosComponent implements OnInit{
 
   @Output() onVolver = new EventEmitter<any>();
   logs: any[] = [];
+  pagedLogs: any[] = [];
+  pageSize: number = 10;
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(
     private firestore: Firestore
@@ -34,7 +40,18 @@ export class LogsIngresosComponent implements OnInit{
           log.fecha = log.fecha.toDate();
           this.logs.push(log);
         });
+        this.setPage(0)
     });
+  }
+
+  onPageChange(event: any) {
+    const pageIndex = event.pageIndex;
+    this.setPage(pageIndex);
+  }
+
+  setPage(pageIndex: number) {
+    const startIndex = pageIndex * this.pageSize;
+    this.pagedLogs = this.logs.slice(startIndex, startIndex + this.pageSize);
   }
 
   descargar(){

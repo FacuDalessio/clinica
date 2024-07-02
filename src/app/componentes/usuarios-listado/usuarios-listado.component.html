@@ -17,7 +17,7 @@
             </tr>
             </thead>
             <tbody class="table-group-divider">
-            <tr *ngFor="let usuario of usuarios">
+            <tr *ngFor="let usuario of pagedUsers">
                 <td scope="row">{{usuario.nombre}}</td>
                 <td>{{usuario.apellido}}</td>
                 <td>{{usuario.edad}}</td>
@@ -33,6 +33,9 @@
             </tr>
             </tbody>
         </table>
+        <mat-paginator [pageSize]="pageSize" [length]="usuarios.length"
+            (page)="onPageChange($event)">
+        </mat-paginator>
         <button (click)="descargarCsv()" class="btn btn-primary">Descargar</button>
         <p class="linkRegistro">Para crear una cuenta de un usuario administrador, ingrese <span><a routerLink="/registroAdministrador">aca</a></span>.</p>
     </article>

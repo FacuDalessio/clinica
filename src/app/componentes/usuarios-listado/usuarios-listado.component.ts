@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Firestore, QueryDocumentSnapshot, QuerySnapshot, collection, onSnapshot, orderBy, query } from '@angular/fire/firestore';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +7,7 @@ import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { Router, RouterLink } from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
 import { utils, writeFileXLSX } from 'xlsx';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-usuarios-listado',
@@ -16,7 +17,8 @@ import { utils, writeFileXLSX } from 'xlsx';
     MatProgressSpinnerModule,
     MatIconModule,
     MatTableModule,
-    RouterLink
+    RouterLink,
+    MatPaginator
   ],
   templateUrl: './usuarios-listado.component.html',
   styleUrl: './usuarios-listado.component.css'
@@ -28,6 +30,10 @@ export class UsuariosListadoComponent implements OnInit{
   turnos: any[] = [];
   turnosAux: any[] = [];
   onSpinner: boolean = true;
+  pageSize: number = 10;
+  pagedUsers: any[] = [];
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(
     private firestore: Firestore,
@@ -79,7 +85,18 @@ export class UsuariosListadoComponent implements OnInit{
         });
       });
       this.onSpinner = false;
+      this.setPage(0)
     });
+  }
+
+  onPageChange(event: any) {
+    const pageIndex = event.pageIndex;
+    this.setPage(pageIndex);
+  }
+
+  setPage(pageIndex: number) {
+    const startIndex = pageIndex * this.pageSize;
+    this.pagedUsers = this.usuarios.slice(startIndex, startIndex + this.pageSize);
   }
 
   async habilitarDeshabilitar(usuario: any){
