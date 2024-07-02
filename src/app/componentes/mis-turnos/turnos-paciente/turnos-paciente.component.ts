@@ -10,6 +10,7 @@ import { TurnoService } from '../../../servicios/turno/turno.service';
 import Swal from 'sweetalert2';
 import { animate, state, style, transition, trigger} from '@angular/animations';
 import { NombreApellidoPipe } from '../../../pipes/nombre-apellido.pipe';
+import { CamelCasePipe } from '../../../pipes/camel-case.pipe';
 
 @Component({
   selector: 'app-turnos-paciente',
@@ -19,7 +20,8 @@ import { NombreApellidoPipe } from '../../../pipes/nombre-apellido.pipe';
     MatProgressSpinnerModule,
     FormsModule,
     MatRadioModule,
-    NombreApellidoPipe
+    NombreApellidoPipe,
+    CamelCasePipe
   ],
   animations: [
     trigger('shownHidden', [

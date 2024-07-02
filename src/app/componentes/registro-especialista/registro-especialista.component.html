@@ -53,7 +53,7 @@
                         <div class="inputDiv" [class.is-invalid]="especialidadHasError()">
                             <label class="form-label" for="inputEspecialidad">Especialidad</label>
                             <select [class.is-invalid]="especialidadHasError()" id="inputEspecialidad" formControlName="especialidad" class="form-select" (change)="onChangeEspecialidad($event)">
-                                <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</option>
+                                <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad | camelCase}}</option>
                                 <option value="agregar">Agregar especialidad</option>
                             </select>
                             <div class="mb-2 mt-3" *ngIf="agregar">

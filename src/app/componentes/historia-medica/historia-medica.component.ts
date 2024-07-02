@@ -8,6 +8,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { NombreApellidoPipe } from '../../pipes/nombre-apellido.pipe';
+import { CamelCasePipe } from '../../pipes/camel-case.pipe';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -16,7 +17,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   imports: [
     CommonModule,
     MatProgressSpinnerModule,
-    NombreApellidoPipe
+    NombreApellidoPipe,
+    CamelCasePipe
   ],
   animations: [
     trigger('shownHidden', [

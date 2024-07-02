@@ -7,6 +7,7 @@ import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { Router, RouterLink } from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
 import { utils, writeFileXLSX } from 'xlsx';
+import { CamelCasePipe } from '../../pipes/camel-case.pipe';
 
 @Component({
   selector: 'app-usuarios-listado',
@@ -16,7 +17,8 @@ import { utils, writeFileXLSX } from 'xlsx';
     MatProgressSpinnerModule,
     MatIconModule,
     MatTableModule,
-    RouterLink
+    RouterLink,
+    CamelCasePipe
   ],
   templateUrl: './usuarios-listado.component.html',
   styleUrl: './usuarios-listado.component.css'

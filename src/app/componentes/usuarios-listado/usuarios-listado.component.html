@@ -18,14 +18,14 @@
             </thead>
             <tbody class="table-group-divider">
             <tr *ngFor="let usuario of usuarios">
-                <td scope="row">{{usuario.nombre}}</td>
-                <td>{{usuario.apellido}}</td>
+                <td scope="row">{{usuario.nombre | camelCase}}</td>
+                <td>{{usuario.apellido | camelCase}}</td>
                 <td>{{usuario.edad}}</td>
                 <td>{{usuario.dni}}</td>
                 <td>{{usuario.obraSocial}}</td>
-                <td>{{usuario.especialidad}}</td>
+                <td>{{usuario.especialidad | camelCase}}</td>
                 <td>{{usuario.mail}}</td>
-                <td>{{usuario.user}}</td>
+                <td>{{usuario.user | camelCase}}</td>
                 <td *ngIf="usuario.verificado == 'N/A'">{{usuario.verificado}}</td>
                 <td *ngIf="usuario.verificado == false"><mat-icon (click)="habilitarDeshabilitar(usuario)" class="text-danger">close</mat-icon></td>
                 <td *ngIf="usuario.verificado == true"><mat-icon (click)="habilitarDeshabilitar(usuario)" class="text-success">check_circle</mat-icon></td>

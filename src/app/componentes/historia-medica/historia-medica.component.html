@@ -53,7 +53,7 @@
                 <div class="datos">
                     <p class="finalizado">Finalizado</p>
                     <p><span class="span">Especialista: </span>{{historiaMedica.verTurno.especialista | nombreApellido}}</p>
-                    <p><span class="span">Especialidad: </span>{{historiaMedica.verTurno.especialidad}}</p>
+                    <p><span class="span">Especialidad: </span>{{historiaMedica.verTurno.especialidad | camelCase}}</p>
                 </div>
                 <p><span class="span">Reseña: </span>{{historiaMedica.verTurno.resenia}}</p>
             </div>
