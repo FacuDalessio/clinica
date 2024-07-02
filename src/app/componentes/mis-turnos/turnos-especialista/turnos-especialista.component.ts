@@ -10,6 +10,7 @@ import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore'
 import { Firestore, addDoc, collection, onSnapshot, orderBy, where } from '@angular/fire/firestore';
 import { animate, state, style, transition, trigger} from '@angular/animations';
 import { NombreApellidoPipe } from '../../../pipes/nombre-apellido.pipe';
+import { CamelCasePipe } from '../../../pipes/camel-case.pipe';
 
 @Component({
   selector: 'app-turnos-especialista',
@@ -20,7 +21,8 @@ import { NombreApellidoPipe } from '../../../pipes/nombre-apellido.pipe';
     MatProgressSpinnerModule,
     FormsModule,
     MatRadioModule,
-    NombreApellidoPipe
+    NombreApellidoPipe,
+    CamelCasePipe
   ],
   animations: [
     trigger('shownHidden', [

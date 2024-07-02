@@ -13,7 +13,7 @@
             <article class="card filtro">
                 <div class="inputDiv">
                     <mat-radio-group [(ngModel)]="especialidadAux" (ngModelChange)="onChangeEspecialidad()">
-                        <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</mat-radio-button>
+                        <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad | camelCase}}</mat-radio-button>
                     </mat-radio-group>
                 </div>
                 <hr class="linea">

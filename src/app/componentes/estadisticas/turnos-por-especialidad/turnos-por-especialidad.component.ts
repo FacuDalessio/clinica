@@ -4,13 +4,15 @@ import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore';
 import { utils, writeFileXLSX } from 'xlsx';
+import { ClickAfueraDirective } from '../../../directivas/click-afuera.directive';
 
 @Component({
   selector: 'app-turnos-por-especialidad',
   standalone: true,
   imports: [
     CommonModule,
-    NgxChartsModule
+    NgxChartsModule,
+    ClickAfueraDirective
   ],
   templateUrl: './turnos-por-especialidad.component.html',
   styleUrl: './turnos-por-especialidad.component.css'
@@ -22,6 +24,7 @@ export class TurnosPorEspecialidadComponent implements OnInit{
   especialidades: any[] = [];
   contTurnos: any[] = [];
   datosGrafico: any[] = [];
+  cont: number = 0;
 
   viewVBC: [number, number] = [800, 300];
   animationsVBC = false;
@@ -56,6 +59,14 @@ export class TurnosPorEspecialidadComponent implements OnInit{
           this.generarDatosGrafico();
         });
     });
+  }
+
+  cerrarComponente(){
+    if(this.cont > 0){
+      this.onVolver.emit();
+    }else{
+      this.cont++;
+    }
   }
 
   generarDatosGrafico(){

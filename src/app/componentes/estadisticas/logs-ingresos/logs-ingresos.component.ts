@@ -5,6 +5,7 @@ import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore'
 import { NombreApellidoPipe } from '../../../pipes/nombre-apellido.pipe';
 import { HoraPipe } from '../../../pipes/hora.pipe';
 import { utils, writeFileXLSX } from 'xlsx';
+import { ClickAfueraDirective } from '../../../directivas/click-afuera.directive';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
@@ -14,6 +15,7 @@ import { MatPaginator } from '@angular/material/paginator';
     CommonModule,
     NombreApellidoPipe,
     HoraPipe,
+    ClickAfueraDirective,
     MatPaginator
   ],
   templateUrl: './logs-ingresos.component.html',
@@ -23,6 +25,7 @@ export class LogsIngresosComponent implements OnInit{
 
   @Output() onVolver = new EventEmitter<any>();
   logs: any[] = [];
+  cont: number = 0;
   pagedLogs: any[] = [];
   pageSize: number = 10;
 
@@ -52,6 +55,14 @@ export class LogsIngresosComponent implements OnInit{
   setPage(pageIndex: number) {
     const startIndex = pageIndex * this.pageSize;
     this.pagedLogs = this.logs.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  cerrarComponente(){
+    if(this.cont > 0){
+      this.onVolver.emit();
+    }else{
+      this.cont++;
+    }
   }
 
   descargar(){

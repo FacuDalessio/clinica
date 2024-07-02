@@ -22,8 +22,8 @@ export class AppComponent {
     private usuarioService: UsuarioService
   ){}
 
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeunloadHandler(event: any) {
-  //   this.usuarioService.logOut();
-  // }
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event: any) {
+    this.usuarioService.logOut();
+  }
 }

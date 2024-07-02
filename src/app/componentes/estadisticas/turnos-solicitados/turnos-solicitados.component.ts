@@ -8,6 +8,7 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ClickAfueraDirective } from '../../../directivas/click-afuera.directive';
 
 @Component({
   selector: 'app-turnos-solicitados',
@@ -20,7 +21,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatDatepickerModule, 
     FormsModule, 
     ReactiveFormsModule, 
-    JsonPipe
+    JsonPipe,
+    ClickAfueraDirective
   ],
   templateUrl: './turnos-solicitados.component.html',
   styleUrl: './turnos-solicitados.component.css'
@@ -37,6 +39,7 @@ export class TurnosSolicitadosComponent implements OnInit{
     desde: new FormControl<Date | null>(null, [Validators.required]),
     hasta: new FormControl<Date | null>(null, [Validators.required]),
   });
+  cont: number = 0;
 
   viewVBC: [number, number] = [800, 300];
   animationsVBC = false;
@@ -75,6 +78,14 @@ export class TurnosSolicitadosComponent implements OnInit{
 
   get hasta(){
     return this.fechas.get('hasta')!.value;
+  }
+
+  cerrarComponente(){
+    if(this.cont > 0){
+      this.onVolver.emit();
+    }else{
+      this.cont++;
+    }
   }
 
   generarGrafico(){

@@ -13,7 +13,7 @@
             <article class="card filtro">
                 <div class="inputDiv">
                     <mat-radio-group [(ngModel)]="especialidadAux" (ngModelChange)="onChangeEspecialidad()">
-                        <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</mat-radio-button>
+                        <mat-radio-button *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad | camelCase}}</mat-radio-button>
                     </mat-radio-group>
                 </div>
                 <hr class="linea">
@@ -43,7 +43,7 @@
                 <p *ngIf="turno.cancelado" class="cancelado">Cancelado</p>
                 <p *ngIf="turno.finalizado && !turno.cancelado" class="finalizado">Finalizado</p>
                 <p><span class="span">Especialista: </span>{{turno.especialista | nombreApellido}}</p>
-                <p><span class="span">Especialidad: </span>{{turno.especialidad}}</p>
+                <p><span class="span">Especialidad: </span>{{turno.especialidad | camelCase }}</p>
                 <button *ngIf="!turno.finalizado && !turno.cancelado" class="btn btn-primary cancelar" (click)="ejecutarCancelar(turno)">Cancelar</button>
             </div>
             <p *ngIf="turno.motivoCancelamiento"><span class="span">Motivo de cancelamiento: </span>{{turno.motivoCancelamiento}}</p>

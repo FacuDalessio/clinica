@@ -12,6 +12,7 @@ import { sendEmailVerification } from '@angular/fire/auth';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TurnoService } from '../../servicios/turno/turno.service';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import { CamelCasePipe } from '../../pipes/camel-case.pipe';
 
 @Component({
   selector: 'app-registro-especialista',
@@ -23,7 +24,8 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
     MatProgressSpinnerModule,
     RouterLink,
     RecaptchaModule,
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    CamelCasePipe
   ],
   templateUrl: './registro-especialista.component.html',
   styleUrl: './registro-especialista.component.css'

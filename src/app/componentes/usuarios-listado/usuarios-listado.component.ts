@@ -7,6 +7,7 @@ import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { Router, RouterLink } from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
 import { utils, writeFileXLSX } from 'xlsx';
+import { CamelCasePipe } from '../../pipes/camel-case.pipe';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
@@ -18,6 +19,7 @@ import { MatPaginator } from '@angular/material/paginator';
     MatIconModule,
     MatTableModule,
     RouterLink,
+    CamelCasePipe,
     MatPaginator
   ],
   templateUrl: './usuarios-listado.component.html',
