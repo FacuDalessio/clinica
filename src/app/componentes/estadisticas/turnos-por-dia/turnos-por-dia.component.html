@@ -1,0 +1,19 @@
+<div class="body">
+    <article class="mb-5 card" >
+        <button (click)="onVolver.emit()" class="btn btn-primary btnVolver">Volver</button>
+        <div class="grafico">
+            <ngx-charts-bar-vertical
+            [results]="datosGrafico"
+            [view]="viewVBC"
+            [animations]="animationsVBC"
+            [legend]="legendVBC"
+            [xAxis]="xAxisVBC"
+            [yAxis]="yAxisLabelVBC"
+            [showYAxisLabel]="showYAxisLabelVBC"
+            [yAxisLabel]="yAxisLabelVBC"
+        ></ngx-charts-bar-vertical>
+        </div>
+        <button (click)="descargar()" class="btn btn-primary btnDescargar">Descargar</button>
+    </article>
+</div>
+

@@ -195,21 +195,3 @@ export class HorariosComponent implements OnInit{
     }
   }
 }
-
-// await this.turnoService.generarHorariosSemana({
-//   nombre: 'maria',
-//   apellido: 'torsello',
-//   mail: 'jr31eaoi@cj.mintemail.com'
-// }, 'dermatologia');
-
-// await this.turnoService.generarHorariosSemana({
-//   nombre: 'nico',
-//   apellido: 'ferro',
-//   mail: '03ofjt9p@cj.mintemail.com'
-// }, 'pediatria');
-
-// await this.turnoService.generarHorariosSemana({
-//   nombre: 'nico',
-//   apellido: 'ferro',
-//   mail: '03ofjt9p@cj.mintemail.com'
-// }, 'cardiologia');
