@@ -1,0 +1,26 @@
+<div class="body">
+    <article class="mb-5 card" >
+        <button (click)="onVolver.emit()" class="btn btn-primary btnVolver">Volver</button>
+        <table class="table shadow-sm">
+            <thead>
+            <tr>
+                <th scope="col">Usuario</th>
+                <th scope="col">Dni</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Hora</th>
+            </tr>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr *ngFor="let log of logs">
+                <td scope="row">{{log.user | nombreApellido}}</td>
+                <td scope="row">{{log.user.dni}}</td>
+                <td scope="row">{{log.user.mail}}</td>
+                <td>{{log.fecha | date:'dd/MM/YYYY'}}</td>
+                <td>{{log.fecha | hora}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <button (click)="descargar()" class="btn btn-primary btnDescargar">Descargar</button>
+    </article>
+</div>

@@ -5,6 +5,7 @@ import { UsuarioService } from '../../servicios/usuario/usuario.service';
 import { Router, RouterLink } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +44,8 @@ export class LoginComponent {
 
   constructor(
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private firestore: Firestore
   ){}
 
   get mail() {
@@ -89,6 +91,11 @@ export class LoginComponent {
           if(!!response){
             this.onSpinner = false;
             this.router.navigate(['/home']);
+            let col = collection(this.firestore, 'logsIngresos');
+            addDoc(col, {
+              user: this.usuarioService.usuarioLogeado,
+              fecha: new Date()
+            })
           }else{
             this.onSpinner = false;
             this.mensajeError = 'El admin no te verifico';

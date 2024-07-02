@@ -52,5 +52,9 @@ export const routes: Routes = [
     { path: 'historiaMedica',
         loadComponent: () => import('./componentes/historia-medica/historia-medica.component').then(c => c.HistoriaMedicaComponent),
         ...canActivate(()=> redirectUnauthorizedTo(['/login']))
+    },
+    { path: 'estadisticas',
+        loadComponent: () => import('./componentes/estadisticas/estadisticas.component').then(c => c.EstadisticasComponent),
+        canActivate: [adminGuard]
     }
 ];

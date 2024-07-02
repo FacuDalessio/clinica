@@ -1,0 +1,45 @@
+<div class="body bg-body-secondary">
+    <div class="articleContainer container">
+        <div class="row">
+            <article class="card col">
+                <mat-icon class="icon">login</mat-icon>
+                <h3 class="tituloCard">Ingresos</h3>
+                <p class="parrafo">Aca podes ver los logs de los usuarios que ingresaron al sistema</p>
+                <button (click)="verLogs = true" class="btn btn-primary">Ver logs</button>
+            </article>
+            <article class="card col">
+                <mat-icon class="icon">medical_information</mat-icon>
+                <h3 class="tituloCard">Turnos por especialidad</h3>
+                <p class="parrafo">Aca podes ver los turnos por especialidad</p>
+                <button class="btn btn-primary">Ver turnos</button>
+            </article>
+        </div>
+
+        <app-logs-ingresos (onVolver)="verLogs = false" *ngIf="verLogs" class="datos"></app-logs-ingresos>
+        <app-turnos-por-especialidad (onVolver)="verTurnosPorEspecialidad = false" *ngIf="verTurnosPorEspecialidad" class="datos"></app-turnos-por-especialidad>
+
+        <div class="row mt-5">
+            <article class="card col">
+                <mat-icon class="icon">login</mat-icon>
+                <h3 class="tituloCard">Ingresos</h3>
+                <p class="parrafo">Aca podes ver los logs de los usuarios que ingresaron al sistema</p>
+                <button (click)="verLogs = true" class="btn btn-primary">Ver logs</button>
+            </article>
+            <article class="card col">
+                <mat-icon class="icon">medical_information</mat-icon>
+                <h3 class="tituloCard">Turnos por especialidad</h3>
+                <p class="parrafo">Aca podes ver los turnos por especialidad</p>
+                <button class="btn btn-primary">Ver turnos</button>
+            </article>
+        </div>
+
+        <div class="row mt-5 mb-5">
+            <article class="card col">
+                <mat-icon class="icon">login</mat-icon>
+                <h3 class="tituloCard">Ingresos</h3>
+                <p class="parrafo">Aca podes ver los logs de los usuarios que ingresaron al sistema</p>
+                <button (click)="verLogs = true" class="btn btn-primary">Ver logs</button>
+            </article>
+        </div>
+    </div>
+</div>
