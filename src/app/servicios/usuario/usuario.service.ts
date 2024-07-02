@@ -35,17 +35,17 @@ export class UsuarioService {
   //   ]
   // };
 
-  usuarioLogeado: any = {
-    nombre: "Norman",
-    apellido: "Lacconi",
-    edad: 47,
-    dni: "19837453",
-    mail: "bvc6q5fh@cj.mintemail.com",
-    user: 'admin',
-    img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Fperetti.jpg?alt=media&token=bbd2cfb7-e9d1-4d06-aed7-97321befb3dc"
-  };
+  // usuarioLogeado: any = {
+  //   nombre: "Norman",
+  //   apellido: "Lacconi",
+  //   edad: 47,
+  //   dni: "19837453",
+  //   mail: "bvc6q5fh@cj.mintemail.com",
+  //   user: 'admin',
+  //   img: "https://firebasestorage.googleapis.com/v0/b/clinica-af1bb.appspot.com/o/images%2Fperetti.jpg?alt=media&token=bbd2cfb7-e9d1-4d06-aed7-97321befb3dc"
+  // };
 
-  // usuarioLogeado: any;
+  usuarioLogeado: any;
 
   constructor(
     private auth:Auth,
