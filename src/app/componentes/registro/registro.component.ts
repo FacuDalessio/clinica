@@ -12,6 +12,9 @@ import { getDownloadURL } from 'firebase/storage';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ValidacionInputDirective } from '../../directivas/validacion-input.directive';
+import { NoPegarDirective } from '../../directivas/no-pegar.directive';
+
 
 @Component({
   selector: 'app-registro',
@@ -22,7 +25,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     MatProgressSpinnerModule,
     RouterLink,
     RecaptchaModule,
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    ValidacionInputDirective,
+    NoPegarDirective
   ],
   animations: [
     trigger('enterState', [

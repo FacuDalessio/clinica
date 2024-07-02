@@ -5,6 +5,7 @@ import { QueryDocumentSnapshot, QuerySnapshot, query } from 'firebase/firestore'
 import { NombreApellidoPipe } from '../../../pipes/nombre-apellido.pipe';
 import { HoraPipe } from '../../../pipes/hora.pipe';
 import { utils, writeFileXLSX } from 'xlsx';
+import { ClickAfueraDirective } from '../../../directivas/click-afuera.directive';
 
 @Component({
   selector: 'app-logs-ingresos',
@@ -12,7 +13,8 @@ import { utils, writeFileXLSX } from 'xlsx';
   imports: [
     CommonModule,
     NombreApellidoPipe,
-    HoraPipe
+    HoraPipe,
+    ClickAfueraDirective
   ],
   templateUrl: './logs-ingresos.component.html',
   styleUrl: './logs-ingresos.component.css'
@@ -21,6 +23,7 @@ export class LogsIngresosComponent implements OnInit{
 
   @Output() onVolver = new EventEmitter<any>();
   logs: any[] = [];
+  cont: number = 0;
 
   constructor(
     private firestore: Firestore
@@ -35,6 +38,14 @@ export class LogsIngresosComponent implements OnInit{
           this.logs.push(log);
         });
     });
+  }
+
+  cerrarComponente(){
+    if(this.cont > 0){
+      this.onVolver.emit();
+    }else{
+      this.cont++;
+    }
   }
 
   descargar(){

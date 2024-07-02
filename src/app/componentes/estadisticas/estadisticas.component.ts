@@ -19,7 +19,7 @@ import { TurnosFinalizadosComponent } from './turnos-finalizados/turnos-finaliza
     TurnosPorEspecialidadComponent,
     TurnosPorDiaComponent,
     TurnosSolicitadosComponent,
-    TurnosFinalizadosComponent
+    TurnosFinalizadosComponent,
   ],
   templateUrl: './estadisticas.component.html',
   styleUrl: './estadisticas.component.css'
