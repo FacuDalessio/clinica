@@ -2,13 +2,13 @@
     <div class="articleContainer container">
         <div class="row">
             <article class="card col">
-                <mat-icon class="icon">login</mat-icon>
+                <!-- <mat-icon class="icon">login</mat-icon> -->
                 <h3 class="tituloCard">Ingresos</h3>
                 <p class="parrafo">Aca podes ver los logs de los usuarios que ingresaron al sistema</p>
                 <button (click)="verLogs = true" class="btn btn-primary">Ver logs</button>
             </article>
             <article class="card col">
-                <mat-icon class="icon">medical_information</mat-icon>
+                <!-- <mat-icon class="icon">medical_information</mat-icon> -->
                 <h3 class="tituloCard">Turnos por especialidad</h3>
                 <p class="parrafo">Aca podes ver la cantidad de turnos por especialidad</p>
                 <button (click)="verTurnosPorEspecialidad = true" class="btn btn-primary">Ver turnos</button>
@@ -18,28 +18,30 @@
         <app-logs-ingresos (onVolver)="verLogs = false" *ngIf="verLogs" class="datos"></app-logs-ingresos>
         <app-turnos-por-especialidad (onVolver)="verTurnosPorEspecialidad = false" *ngIf="verTurnosPorEspecialidad" class="datos"></app-turnos-por-especialidad>
         <app-turnos-por-dia (onVolver)="verTurnosPorDia = false" *ngIf="verTurnosPorDia" class="datos"></app-turnos-por-dia>
+        <app-turnos-solicitados (onVolver)="verTurnosSolicitados = false" *ngIf="verTurnosSolicitados" class="datos"></app-turnos-solicitados>
+        <app-turnos-finalizados (onVolver)="verTurnosFinalizados = false" *ngIf="verTurnosFinalizados" class="datos"></app-turnos-finalizados>
 
         <div class="row mt-5">
             <article class="card col">
-                <mat-icon class="icon">login</mat-icon>
+                <!-- <mat-icon class="icon">login</mat-icon> -->
                 <h3 class="tituloCard">Turnos por dia</h3>
                 <p class="parrafo">Aca podes ver la cantidad de turnos por dia</p>
                 <button (click)="verTurnosPorDia = true" class="btn btn-primary">Ver turnos</button>
             </article>
             <article class="card col">
-                <mat-icon class="icon">medical_information</mat-icon>
-                <h3 class="tituloCard">Turnos por especialidad</h3>
-                <p class="parrafo">Aca podes ver los turnos por especialidad</p>
-                <button class="btn btn-primary">Ver turnos</button>
+                <!-- <mat-icon class="icon">medical_information</mat-icon> -->
+                <h3 class="tituloCard">Turnos solicitados por medico</h3>
+                <p class="parrafo">Aca podes ver los turnos solicitados por medico en un lapso de tiempo</p>
+                <button (click)="verTurnosSolicitados = true" class="btn btn-primary">Ver turnos</button>
             </article>
         </div>
 
         <div class="row mt-5 mb-5">
             <article class="card col">
-                <mat-icon class="icon">login</mat-icon>
-                <h3 class="tituloCard">Ingresos</h3>
-                <p class="parrafo">Aca podes ver los logs de los usuarios que ingresaron al sistema</p>
-                <button (click)="verLogs = true" class="btn btn-primary">Ver logs</button>
+                <!-- <mat-icon class="icon">login</mat-icon> -->
+                <h3 class="tituloCard">Turnos finalizados por medico</h3>
+                <p class="parrafo">Aca podes ver los turnos finalizados por medico en un lapso de tiempo</p>
+                <button (click)="verTurnosFinalizados = true" class="btn btn-primary">Ver turnos</button>
             </article>
         </div>
     </div>

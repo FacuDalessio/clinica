@@ -1,0 +1,41 @@
+<div class="body">
+    <article class="card">
+        <button (click)="onVolver.emit()" class="btn btn-primary btnVolver">Volver</button>
+        <div class="fechas">
+            <mat-form-field class="form">
+                <mat-label>Ingresa los rangos de fecha</mat-label>
+                <mat-date-range-input [formGroup]="fechas" [rangePicker]="picker">
+                  <input matStartDate formControlName="desde" placeholder="Desde">
+                  <input matEndDate formControlName="hasta" placeholder="Hasta">
+                </mat-date-range-input>
+                <mat-hint>DD/MM/AAAA – DD/MM/AAAA</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              
+                @if (fechas.controls.desde.hasError('matStartDateInvalid')) {
+                  <mat-error>Fecha desde es invalida</mat-error>
+                }
+                @if (fechas.controls.hasta.hasError('matEndDateInvalid')) {
+                  <mat-error>Fecha hasta es invalida</mat-error>
+                }
+            </mat-form-field>
+            <button (click)="generarGrafico()" class="btn btn-primary btnBuscar" [disabled]="!fechas.valid">Buscar</button>
+        </div>
+    </article>
+    <article class="mb-5 card" *ngIf="mostrarGrafico">
+        <div class="grafico">
+            <ngx-charts-bar-vertical
+            [results]="datosGrafico"
+            [view]="viewVBC"
+            [animations]="animationsVBC"
+            [legend]="legendVBC"
+            [xAxis]="xAxisVBC"
+            [yAxis]="yAxisLabelVBC"
+            [showYAxisLabel]="showYAxisLabelVBC"
+            [yAxisLabel]="yAxisLabelVBC"
+        ></ngx-charts-bar-vertical>
+        </div>
+        <button (click)="descargar()" class="btn btn-primary btnDescargar">Descargar</button>
+    </article>
+</div>
+
