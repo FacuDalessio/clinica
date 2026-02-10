@@ -1,15 +1,9 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# ==============================================
+# Clínica Online — Monorepo .gitignore
+# Frontend: Angular 17  |  Backend: Java Spring Boot
+# ==============================================
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
-
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# -------------------- GENERAL --------------------
 
 # IDEs and editors
 .idea/
@@ -28,20 +22,67 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-
 # System files
 .DS_Store
 Thumbs.db
 
-# Firebase
-.firebase
+# Logs
 *-debug.log
+npm-debug.log
+yarn-error.log
+
+# -------------------- FRONTEND (Angular) --------------------
+
+# Node
+frontend/node_modules/
+
+# Compiled output
+frontend/dist/
+frontend/tmp/
+frontend/out-tsc/
+frontend/bazel-out/
+
+# Angular cache
+frontend/.angular/cache
+
+# Sass
+frontend/.sass-cache/
+
+# Test
+frontend/connect.lock
+frontend/coverage/
+frontend/libpeerconnection.log
+frontend/testem.log
+frontend/typings/
+
+# -------------------- BACKEND (Spring Boot) --------------------
+
+# Maven
+backend/clinica/target/
+backend/clinica/.mvn/wrapper/maven-wrapper.jar
+
+# Gradle (por si migrás en el futuro)
+backend/clinica/build/
+backend/clinica/.gradle/
+
+# Java compiled
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Spring Boot
+backend/clinica/application-local.properties
+backend/clinica/application-dev.properties
+
+# -------------------- FIREBASE (Legacy — para limpieza) --------------------
+
+.firebase
+.firebaserc
+firebase.json
 .runtimeconfig.json
+
+ANALISIS_MIGRACION_SPRING.md
+TP_Lab_4 _Clínica OnLine_ 2023_2do_CUATRI-Final.pdf
