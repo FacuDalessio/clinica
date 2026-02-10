@@ -1,14 +1,13 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { QueryDocumentSnapshot, QuerySnapshot, query, where } from 'firebase/firestore';
 import { utils, writeFileXLSX } from 'xlsx';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { ClickAfueraDirective } from '../../../directivas/click-afuera.directive';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-turnos-finalizados',
@@ -17,17 +16,15 @@ import { ClickAfueraDirective } from '../../../directivas/click-afuera.directive
   imports: [
     CommonModule,
     NgxChartsModule,
-    MatFormFieldModule, 
-    MatDatepickerModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
-    JsonPipe,
-    ClickAfueraDirective
+    MatFormFieldModule,
+    MatDatepickerModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './turnos-finalizados.component.html',
   styleUrl: './turnos-finalizados.component.css'
 })
-export class TurnosFinalizadosComponent implements OnInit{
+export class TurnosFinalizadosComponent implements OnInit {
   @Output() onVolver = new EventEmitter<any>();
 
   turnos: any[] = [];
@@ -52,48 +49,48 @@ export class TurnosFinalizadosComponent implements OnInit{
 
   constructor(
     private firestore: Firestore
-  ){}
+  ) { }
 
   ngOnInit(): void {
     const qEspecialistas = query(collection(this.firestore, "usuarios"), where("user", "==", "especialista"));
-      onSnapshot(qEspecialistas, (snapshot: QuerySnapshot) => {
-        snapshot.forEach((doc: QueryDocumentSnapshot) => {
-          this.medicos.push(doc.data());
-          this.contTurnos.push(0);
-        });
+    onSnapshot(qEspecialistas, (snapshot: QuerySnapshot) => {
+      snapshot.forEach((doc: QueryDocumentSnapshot) => {
+        this.medicos.push(doc.data());
+        this.contTurnos.push(0);
+      });
     });
     const q = query(collection(this.firestore, "turnos"));
-      onSnapshot(q, (snapshot: QuerySnapshot) => {
-        snapshot.forEach((doc: QueryDocumentSnapshot) => {
-          const turno: any = doc.data();
-          turno.fecha = turno.fecha.toDate();
-          this.turnos.push(turno);
-        });
+    onSnapshot(q, (snapshot: QuerySnapshot) => {
+      snapshot.forEach((doc: QueryDocumentSnapshot) => {
+        const turno: any = doc.data();
+        turno.fecha = turno.fecha.toDate();
+        this.turnos.push(turno);
+      });
     });
   }
 
-  get desde(){
+  get desde() {
     return this.fechas.get('desde')!.value;
   }
 
-  get hasta(){
+  get hasta() {
     return this.fechas.get('hasta')!.value;
   }
 
-  cerrarComponente(){
-    if(this.cont > 0){
+  cerrarComponente() {
+    if (this.cont > 0) {
       this.onVolver.emit();
-    }else{
+    } else {
       this.cont++;
     }
   }
 
-  generarGrafico(){
-    this.medicos.forEach((medico, index) =>{
+  generarGrafico() {
+    this.medicos.forEach((medico, index) => {
       this.contTurnos[index] = 0;
     });
-    this.turnos.forEach((turno: any) =>{
-      this.medicos.forEach((medico: any, index) =>{
+    this.turnos.forEach((turno: any) => {
+      this.medicos.forEach((medico: any, index) => {
         if (!turno.cancelado && turno.finalizado && turno.especialista.dni == medico.dni && turno.fecha >= this.desde! && turno.fecha <= this.hasta!) {
           this.contTurnos[index]++;
         }
@@ -103,9 +100,9 @@ export class TurnosFinalizadosComponent implements OnInit{
     this.mostrarGrafico = true;
   }
 
-  generarDatosGrafico(){
+  generarDatosGrafico() {
     this.datosGrafico = [];
-    this.medicos.forEach((medico: any, index) =>{
+    this.medicos.forEach((medico: any, index) => {
       this.datosGrafico.push({
         "name": `${medico.apellido}, ${medico.nombre}`,
         "value": this.contTurnos[index]
@@ -113,9 +110,9 @@ export class TurnosFinalizadosComponent implements OnInit{
     });
   }
 
-  descargar(){
+  descargar() {
     const datosGuardar: any[] = [];
-    this.datosGrafico.forEach((dato: any) =>{
+    this.datosGrafico.forEach((dato: any) => {
       datosGuardar.push({
         nombre: dato.name,
         cantidadTurnos: dato.value,
