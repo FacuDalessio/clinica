@@ -77,6 +77,8 @@ backend/clinica/.gradle/
 backend/clinica/application-local.properties
 backend/clinica/application-dev.properties
 
+backend/clinica/resources/sql/*
+
 # -------------------- FIREBASE (Legacy — para limpieza) --------------------
 
 .firebase
