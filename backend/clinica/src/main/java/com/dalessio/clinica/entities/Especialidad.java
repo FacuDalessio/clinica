@@ -1,4 +1,4 @@
-package com.dalessio.clinica.entity;
+package com.dalessio.clinica.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -26,6 +26,6 @@ public class Especialidad {
     @Column(length = 100, unique = true, nullable = false)
     private String detalle;
 
-    @ManyToMany(mappedBy = "especialidades")
-    private Set<Usuario> especialistas = new HashSet<>();
+    @ManyToMany(mappedBy = "especialidades", fetch = FetchType.LAZY)
+    private Set<Especialista> especialistas = new HashSet<>();
 }

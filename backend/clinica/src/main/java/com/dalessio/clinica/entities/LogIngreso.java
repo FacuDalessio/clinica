@@ -1,4 +1,4 @@
-package com.dalessio.clinica.entity;
+package com.dalessio.clinica.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

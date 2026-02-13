@@ -1,6 +1,6 @@
-package com.dalessio.clinica.entity;
+package com.dalessio.clinica.entities;
 
-import com.dalessio.clinica.enums.EstadoTurno;
+import com.dalessio.clinica.enums.DiaSemana;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -10,47 +10,33 @@ import lombok.AllArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "turno", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "especialista_id", "fecha", "hora" })
-})
+@Table(name = "horario")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Turno {
+public class Horario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(nullable = false)
-    private LocalDate fecha;
-
-    @NotNull
-    @Column(nullable = false)
-    private LocalTime hora;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EstadoTurno estado = EstadoTurno.PENDIENTE;
+    private DiaSemana dia;
 
-    @Column(columnDefinition = "TEXT")
-    private String resenia;
+    @NotNull
+    @Column(name = "hora_desde", nullable = false)
+    private LocalTime horaDesde;
 
-    private Integer calificacion;
-
-    @Column(columnDefinition = "TEXT")
-    private String encuesta;
-
-    @Column(name = "motivo_cancelamiento", columnDefinition = "TEXT")
-    private String motivoCancelamiento;
+    @NotNull
+    @Column(name = "hora_hasta", nullable = false)
+    private LocalTime horaHasta;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -62,16 +48,9 @@ public class Turno {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "especialista_id", nullable = false)
-    private Usuario especialista;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "paciente_id", nullable = false)
-    private Usuario paciente;
+    private Especialista especialista;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "especialidad_id", nullable = false)
     private Especialidad especialidad;
-
-    @OneToOne(mappedBy = "turno", fetch = FetchType.LAZY)
-    private HistoriaMedica historiaMedica;
 }

@@ -1,6 +1,5 @@
-package com.dalessio.clinica.entity;
+package com.dalessio.clinica.entities;
 
-import com.dalessio.clinica.enums.TipoUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -14,16 +13,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario {
+public abstract class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,14 +53,6 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_usuario", nullable = false)
-    private TipoUsuario tipoUsuario;
-
-    @Column(name = "obra_social", length = 100)
-    private String obraSocial;
-
     @Column(nullable = false)
     private Boolean verificado = false;
 
@@ -76,13 +67,4 @@ public class Usuario {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "usuario_especialidad", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "especialidad_id"))
-    private Set<Especialidad> especialidades = new HashSet<>();
-
-    // Helper method for adding specialty
-    public void addEspecialidad(Especialidad especialidad) {
-        this.especialidades.add(especialidad);
-        especialidad.getEspecialistas().add(this);
-    }
 }

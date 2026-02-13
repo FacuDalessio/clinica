@@ -1,4 +1,4 @@
-package com.dalessio.clinica.entity;
+package com.dalessio.clinica.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -30,11 +30,11 @@ public class HistoriaMedica {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paciente_id", nullable = false)
-    private Usuario paciente;
+    private Paciente paciente;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "especialista_id", nullable = false)
-    private Usuario especialista;
+    private Especialista especialista;
 
     @NotNull
     @Column(nullable = false)
